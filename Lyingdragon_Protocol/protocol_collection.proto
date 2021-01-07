@@ -1,0 +1,80 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_LoadCollectionInfo {
+        optional ProtocolType type = 1 [default = C_2_S_COLLECTION_LOAD_INFO];
+}
+
+message S2C_LoadCollectionInfo {
+        optional ProtocolType type = 1 [default = S_2_C_COLLECTION_LOAD_INFO];
+        optional int32 collection_tech_level = 3;
+        optional int32 per_day_collection_total_num = 5;
+        optional int32 per_day_collection_num = 6;
+        optional int32 force_collection_need_coin = 8;
+        optional double collect_master_add = 12;
+        optional int32 popularity = 15;
+        optional int32 resident_level_num = 16;
+        optional int32 cool_refresh_time = 17;
+        optional int32 force_times = 18;
+        optional int32 money = 19;
+}
+
+message C2S_Collection {
+        optional ProtocolType type = 1 [default = C_2_S_COLLECTION_DO];
+}
+
+message S2C_Collection {
+        optional ProtocolType type = 1 [default = S_2_C_COLLECTION_DO];
+        optional int32 popularity = 2;
+        optional int32 collection_tech_level = 3;
+        optional int32 is_have_golden_coins = 4;
+        optional int32 is_have_contribute = 5;
+        optional int32 cool_refresh_time = 6;
+        optional int32 collection_event_id = 7;
+        optional int32 money = 8;
+        optional int32 ret = 9;
+        optional double factor = 10;
+}
+
+message C2S_ForceCollection {
+        optional ProtocolType type  = 1 [default = C_2_S_COLLECTION_DO_FORCE];
+}
+
+message S2C_ForceCollection {
+        optional ProtocolType type = 1 [default = S_2_C_COLLECTION_DO_FORCE];
+        optional int32 popularity = 2;
+        optional int32 collection_tech_level = 3;
+        optional int32 is_have_golden_coins = 4;
+        optional int32 is_have_contribute = 5;
+        optional int32 next_force_cost = 6;
+        optional int32 collection_event_id = 7;
+        optional int32 force_cost = 8;
+        optional int32 money = 9;
+        optional int32 ret = 10;
+        optional double factor = 11;
+}
+
+message C2S_EventSelect {
+        optional ProtocolType type = 1 [default = C_2_S_COLLECTION_EVENT_SELECT];
+        optional int32 event_id = 2;
+        optional int32 index = 3;
+}
+
+message S2C_EventSelect {
+        optional ProtocolType type  = 1 [default = S_2_C_COLLECTION_EVENT_SELECT];
+        optional int32 event_id = 2;
+        optional int32 index = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_FramHarvest {
+        optional ProtocolType type = 1 [default = C_2_S_COLLECTION_FRAM_HARVEST];
+}
+
+message S2C_FramHarvest {
+        optional ProtocolType type = 1 [default = S_2_C_COLLECTION_FRAM_HARVEST];
+        optional int32 ret = 2;
+        optional int32 fram_harvest = 3;
+        optional int32 cd_time = 4;
+}

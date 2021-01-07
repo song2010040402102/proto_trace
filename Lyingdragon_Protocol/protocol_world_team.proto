@@ -1,0 +1,246 @@
+import "protocol_base.proto";
+import "protocol_world2.proto";
+
+package Lyingdragon.Protocol;
+
+message WorldTeam {
+    optional int64 team_obj_id = 1;
+    optional int64 leader_role_id = 2;
+    optional string leader_name = 3;
+    optional int32 cur_army_count = 4;
+    optional MovePos pos = 5;
+    optional int32 state = 6;
+    optional int32 team_type = 7;
+    optional int64 enemy_obj_id = 8;
+    repeated MovePos path_points = 9;
+    optional int32 crop_id = 10;
+}
+
+message S2C_WorldTeamCreateNtf {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_CREATE_NTF];
+    optional int32 ret = 2;
+    optional int64 leader_role_id = 3;
+    optional int64 team_obj_id = 4;
+    optional MovePos team_pos = 5;
+    optional string leader_name = 6;
+}
+
+message S2C_WorldTeamFinishNtf {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_FINISH_NTF];
+    optional int32 ret = 2;
+    optional WorldTeam team = 3;
+}
+
+message S2C_WorldTeamMergeNtf {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_MERGE_NTF];
+    optional int32 ret = 2;
+    optional int32 army_id = 3;
+    optional int64 army_obj_id = 4;
+    optional int64 team_obj_id = 5;
+    optional MovePos army_pos = 6;
+}
+
+message S2C_WorldTeamJoinNtfCrop {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_JOIN_NTF_CROP];
+    optional int32 ret = 2;
+    optional int64 team_obj_id = 3;
+}
+
+message S2C_WorldTeamLeaveNtfCrop {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_LEAVE_NTF_CROP];
+    optional int32 ret = 2;
+    optional int64 team_obj_id = 3;
+}
+
+message S2C_WorldTeamKickNtf {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_KICK_NTF];
+    optional int32 ret = 2;
+    optional int64 team_obj_id = 3;
+    repeated World2Object armys = 4;
+}
+
+message S2C_WorldTeamDismissNtf {
+    enum Reason {
+        LEADER_DISMISS = 1;     // 队长解散
+        ARMY_NO_ENOUGH = 2;     // 队伍数量不足
+        LEADER_NOT_REACH = 3;   // 队长未到达
+        LEADER_KILLED = 4;      // 队长被杀
+        CROP_DISMISS = 5;       // 军团解散
+        NO_ENEMY = 6;           // 怪物没了
+    };
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_DISMISS_NTF];
+    optional int32 ret = 2;
+    optional int64 team_obj_id = 3;
+    repeated World2Object armys = 4;
+    optional int32 reason = 5;
+}
+
+message S2C_WorldTeam {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM];
+    optional int32 ret = 2;
+    optional WorldTeam team = 3;
+}
+
+message C2S_WorldTeamCreate {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_CREATE];
+    optional int32 ready_sec = 2;
+    optional int64 enemy_obj_id = 3;
+    optional int32 army_id = 4;
+    repeated MovePos path_points = 5;
+    optional int32 team_type = 6;
+    optional MovePos team_pos = 7;
+}
+
+message S2C_WorldTeamCreate {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_CREATE];
+    optional int32 ret = 2;
+    optional int64 team_obj_id = 3;
+    optional int32 army_id = 4;
+    optional MovePos team_pos = 5;
+}
+
+message C2S_WorldTeamJoin {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_JOIN];
+    optional int64 team_obj_id = 2;
+    optional int32 army_id = 3;
+}
+
+message S2C_WorldTeamJoin {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_JOIN];
+    optional int32 ret = 2;
+    optional WorldPos team_pos = 3;
+    optional int64 team_obj_id = 4;
+    optional int32 army_id = 5;
+}
+
+message C2S_WorldTeamExit {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_EXIT];
+    optional int32 army_id = 2;
+}
+
+message S2C_WorldTeamExit {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_EXIT];
+    optional int32 ret = 2;
+    optional int64 team_obj_id = 3;
+    optional int32 army_id = 4;
+}
+
+message C2S_WorldTeamKick {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_KICK];
+    optional int64 kick_role_id = 2;
+    optional int64 team_obj_id = 3;
+}
+
+message S2C_WorldTeamKick {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_KICK];
+    optional int32 ret = 2;
+    optional int64 team_obj_id = 3;
+}
+
+message C2S_WorldTeamBasicInfoList {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_BASIC_INFO_LIST];
+    optional int32 crop_id = 2;
+}
+
+message S2C_WorldTeamBasicInfoList {
+    message BasicInfo {
+        optional int64 team_obj_id = 1;
+        optional int64 leader_role_id = 2;
+        optional string leader_name = 3;
+        optional int32 icon_img_id = 6;
+        optional int32 icon_img_type = 7;
+        optional int32 level = 8;
+        optional MovePos leader_pos = 9;
+        optional MovePos team_pos = 10;
+        optional int32 wait_end_time_sec = 11;
+        optional int64 enemy_obj_id = 12;
+        optional int32 state = 13;
+        optional int32 ready_timelen_sec = 14;
+        optional int32 team_type = 15;
+    }
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_BASIC_INFO_LIST];
+    optional int32 ret = 2;
+    repeated BasicInfo basic_infos = 3;
+}
+
+message C2S_WorldTeamDetail {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_DETAIL];
+    optional int64 team_obj_id = 2;
+}
+
+message S2C_WorldTeamDetail {
+    message Member {
+        optional int64 role_id = 1;
+        optional string name = 2;
+        optional int32 force_value = 3;
+        optional int32 soldier_cur_num = 4;
+        optional int32 soldier_total_num = 5;
+        optional int32 icon_img_id = 6;
+        optional int32 icon_img_type = 7;
+        optional int32 level = 8;
+        optional int32 formation_id = 10;
+        optional MovePos pos = 11;
+    }
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_DETAIL];
+    optional int32 ret = 2;
+    repeated Member members = 3;
+    repeated int64 battle_orders = 4;
+    optional int64 leader_role_id = 5;
+    optional MovePos team_pos = 6;
+    optional int32 wait_end_time_sec = 7;
+    optional int64 enemy_obj_id = 8;
+    optional int32 state = 9;
+    optional int32 ready_timelen_sec = 10;
+    optional int32 team_type = 11;
+    optional int64 team_obj_id = 12;
+}
+
+message C2S_WorldTeamUpdateBattleOrder {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_UPDATE_BATTLE_ORDER];
+    optional int64 team_obj_id = 2;
+    repeated int64 battle_orders = 3;
+}
+
+message S2C_WorldTeamUpdateBattleOrder {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_UPDATE_BATTLE_ORDER];
+    optional int32 ret = 2;
+    optional int64 team_obj_id = 3;
+}
+
+message C2S_WorldTeamMergeArmy {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_MERGE_ARMY];
+    optional int32 army_id = 2;
+}
+
+message S2C_WorldTeamMergeArmy {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_MERGE_ARMY];
+    optional int32 ret = 2;
+}
+
+message C2S_WorldTeamManualStart {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_MANUAL_START];
+    optional int64 team_obj_id = 2;
+}
+
+message S2C_WorldTeamManualStart {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_MANUAL_START];
+    optional int32 ret = 2;
+    optional int64 team_obj_id = 3;
+}
+
+message C2S_WorldTeamManualMove {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_TEAM_MANUAL_MOVE];
+    optional int64 obj_id = 2;
+    optional MovePos cur_pos = 3;
+    optional MovePos dst_pos = 4;
+    repeated MovePos path_points = 5;
+    optional int64 target_obj_id = 6;
+    optional int32 to_do_sth = 7;
+}
+
+message S2C_WorldTeamManualMove {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_TEAM_MANUAL_MOVE];
+    optional int32 ret = 2;
+    optional int64 obj_id = 3;
+    optional MovePos pos = 4;
+}

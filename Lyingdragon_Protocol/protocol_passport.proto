@@ -1,0 +1,97 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_PassportInfo {
+        optional ProtocolType type = 1 [default = C_2_S_PASSPORT_LOAD_INFO];
+}
+
+message S2C_PassportInfo {
+        optional ProtocolType type = 1 [default = S_2_C_PASSPORT_LOAD_INFO];
+        repeated int32 grade_id = 3;
+        optional int32 week_num = 4;
+        optional int32 season_id = 5;
+        message DrawReward {
+                optional int32 grade = 1;
+                repeated int32 lvls = 2;
+        }
+        repeated DrawReward draws = 6;
+        repeated int32 week_draws = 7;
+        optional int32 season_time = 8;
+        optional int32 season_end_time = 9;
+        optional int32 daily_reset_time = 10;
+        optional int32 weekly_reset_time = 11;
+        repeated int32 last_season_grade_id = 12;
+        repeated DrawReward last_season_draws = 13;
+}
+
+message GradeItem {
+        optional int32 grade_id = 1;
+        repeated int32 lvls = 2;
+}
+
+message C2S_PassportDrawReward {
+        optional ProtocolType type = 1 [default = C_2_S_PASSPORT_DRAW_REWARD];
+        repeated GradeItem grades = 2;
+        optional bool is_last_season = 3;
+}
+
+message S2C_PassportDrawReward {
+        optional ProtocolType type = 1 [default = S_2_C_PASSPORT_DRAW_REWARD];
+        optional int32 ret = 2;
+        repeated GradeItem grades = 3;
+        repeated RewardType rwds = 4;
+        optional bool is_last_season = 5;
+}
+
+message C2S_PassportTaskReward {
+        optional ProtocolType type = 1 [default = C_2_S_PASSPORT_TASK_REWARD];
+        optional int32 week = 2;
+}
+
+message S2C_PassportTaskReward {
+        optional ProtocolType type = 1 [default = S_2_C_PASSPORT_TASK_REWARD];
+        optional int32 ret = 2;
+        optional int32 week = 3;
+}
+
+message C2S_PassportRankInfo {
+        optional ProtocolType type = 1 [default = C_2_S_PASSPORT_RANK_INFO];
+}
+
+message S2C_PassportRankInfo {
+        optional ProtocolType type = 1 [default = S_2_C_PASSPORT_RANK_INFO];
+        optional int32 season_id = 2;
+        optional int32 solo_rank = 3;
+        optional bool is_solo_draw = 4;
+        optional int32 guild_rank = 5;
+        optional bool is_guild_draw = 6;
+}
+
+message C2S_PassportRankDraw {
+        optional ProtocolType type = 1 [default = C_2_S_PASSPORT_RANK_DRAW];
+        optional int32 draw_type = 2;    // solo=1, guild=2
+}
+
+message S2C_PassportRankDraw {
+        optional ProtocolType type = 1 [default = S_2_C_PASSPORT_RANK_DRAW];
+        optional int32 season_id = 2;
+        optional int32 draw_type = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_PassportBuyExp {
+        optional ProtocolType type = 1 [default = C_2_S_PASSPORT_BUY_EXP];
+        optional int32 num = 2;
+}
+
+message S2C_PassportBuyExp {
+        optional ProtocolType type = 1 [default = S_2_C_PASSPORT_BUY_EXP];
+        enum Result {
+                OK = 0;
+                NOT_ENOUGH_RESOURCE = 1;
+                FULL = 2;
+        };
+        optional int32 ret = 2;
+        optional int32 num = 3;
+}

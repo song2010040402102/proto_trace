@@ -1,0 +1,121 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_WorldResOccupy {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_RES_OCCUPY];
+    optional int64 id = 2;
+    optional int32 army_id = 3;
+}
+
+message S2C_WorldResOccupy {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_RES_OCCUPY];
+    optional int32 ret = 2;
+    optional int64 id = 3;
+    optional int32 army_id = 4;
+    optional int64 report_id = 5;
+    optional int32 result = 6;
+}
+
+message C2S_WorldResGarrison {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_RES_GARRISON];
+    optional int64 id = 2;
+    optional int32 army_id = 3;
+    repeated MovePos path_points = 4;
+}
+
+message S2C_WorldResGarrison {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_RES_GARRISON];
+    optional int32 ret = 2;
+    optional int64 id = 3;
+    optional int32 army_id = 4;
+    optional int32 start_time = 5;
+    optional int32 end_time = 6;
+    optional int64 obj_id = 7;
+}
+
+message C2S_WorldResRetreat {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_RES_RETREAT];
+    optional int32 army_id = 2;
+}
+
+message S2C_WorldResRetreat {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_RES_RETREAT];
+    optional int32 ret = 2;
+    optional int32 begin_time = 3;
+    optional int32 end_time = 4;
+    optional int64 res_id = 5;
+    optional int32 army_id = 6;
+    optional int64 obj_id = 7;
+}
+
+message C2S_WorldResGiveup {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_RES_GIVEUP];
+    optional int64 id = 2;
+}
+
+message S2C_WorldResGiveup {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_RES_GIVEUP];
+    optional int32 ret = 2;
+    optional int64 id = 3;
+    optional int64 obj_id = 4;
+    optional int32 surplus_num = 5;
+}
+
+message S2C_WorldResDetailInfo {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_RES_DETAIL_INFO];
+    message PlayerInfo {
+        optional int64 id = 1;
+        optional string name = 2;
+        optional int32 army_id = 3;
+        optional int32 img_type = 4;
+        optional int32 img_id = 5;
+        optional int32 main_general = 6;
+        optional int32 force_value = 7;
+    }
+    optional int64 id = 2;
+    optional PlayerInfo owner = 3;
+    optional int32 begin_time = 4;
+    optional int32 end_time = 5;
+    optional int32 protect_time = 6;
+    optional int32 rob_protect_time = 7;
+    optional int32 crop_id = 8;
+    optional int32 pos_x = 9;
+    optional int32 pos_y = 10;
+    optional int32 temp_id = 11;
+    optional int32 city_id = 12;
+    optional int32 npc_id = 16;
+    optional int32 surplus_num = 17;
+    optional int32 last_collected_num = 18;
+    optional int32 is_speed_up = 19;
+    optional int32 formation_id = 20;
+    repeated FormationGenaralLoc npc_generals = 21;
+}
+
+message C2S_WorldResRob {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_RES_ROB];
+    optional int64 id = 2;
+    optional int32 my_army_id = 4;
+}
+
+message S2C_WorldResRob {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_RES_ROB];
+    optional int32 ret = 2;
+    optional int32 my_army_id = 3;
+    optional int32 army_battle_result = 4;
+    optional int64 army_battle_report_id = 5;
+    optional int32 npc_battle_result = 6;
+    optional int64 npc_battle_report_id = 7;
+    optional int64 id = 8;
+}
+
+message C2S_WorldResSpeedUp {
+    optional ProtocolType type = 1 [ default = C_2_S_WORLD_RES_SPEED_UP];
+    optional int64 id = 2;
+}
+
+message S2C_WorldResSpeedUp {
+    optional ProtocolType type = 1 [ default = S_2_C_WORLD_RES_SPEED_UP];
+    optional int32 ret = 2;
+    optional int64 id = 3;
+}

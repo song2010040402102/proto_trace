@@ -1,0 +1,638 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_NationBattleEnter {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_ENTER];
+}
+
+message S2C_NationBattleEnter {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_ENTER];
+        optional int32 cool_time = 2; // industry repair
+        optional int32 daily_stone_num = 3;
+        message OccupyCity {
+                optional int32 city_id = 1;
+                optional int32 state = 2; // 1 has draw
+        }
+        repeated OccupyCity cities = 4;
+}
+
+message C2S_NationBattleLoadWorldInfo {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_WORLD_INFO];
+        optional int32 city_id = 2;
+}
+
+message CityInfo {
+        optional int32 id = 1;
+        optional int32 crop_id = 2;
+        optional int32 state = 3;
+        optional int32 occupy_time = 4;
+        optional int32 declare_crop_id = 5;
+        optional int32 target_time = 6; //left sec
+        optional int32 def_num = 7;
+        optional int32 def_npc_num = 8;
+        optional int32 type = 9; //0 普通城 1 分城
+        optional int32 player_num = 10;
+        optional int32 total_time = 11;
+        optional int64 mayor_id = 12;
+        optional int32 is_door_open = 13;
+        message IntPair {
+            optional int32 key = 1;
+            optional int32 value = 2;
+        }
+        repeated IntPair dev_infos = 14;
+        repeated IntPair declare_crop_infos = 15;
+}
+
+message S2C_NationBattleLoadWorldInfo {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_WORLD_INFO];
+        repeated CityInfo cities = 2;
+        optional bool is_finish = 3;
+        optional int32 city_id = 4;
+}
+
+message C2S_NationBattleLoadCityState {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_CITY_STATE];
+        optional int32 city_id = 2;
+}
+
+message S2C_NationBattleLoadCityState {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_CITY_STATE];
+        message CityState {
+                optional int32 city_id = 1;
+                optional int32 state = 2;
+                optional int32 target_time = 3;
+                optional int32 total_time = 4;
+        }
+        repeated CityState states = 2;
+}
+
+message C2S_NationBattleCropMove {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_CROP_MOVE];
+        optional int32 city_id = 2;
+}
+
+message S2C_NationBattleCropMove {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_CROP_MOVE];
+        optional int32 ret = 2;
+        optional int32 city_id = 3;
+        message Pos {
+                optional float x = 1;
+                optional float y = 2;
+        }
+        repeated Pos paths = 4;
+        optional int32 move_time = 5;
+}
+
+message C2S_NationBattleRetreat {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_RETREAT];
+        optional int32 id = 2;
+}
+
+message S2C_NationBattleRetreat {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_RETREAT];
+        optional int32 ret = 2;
+        optional int32 army_id = 3;
+        optional int64 role_id = 4;
+        optional int32 crop_id = 5;
+}
+
+message C2S_NationBattleLoadArmy {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_ARMY];
+}
+
+message S2C_NationBattleLoadArmy {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_ARMY];
+        message General {
+                optional int32 id = 1;
+                optional int32 pos = 2;
+                optional int32 soldier_num = 3;
+        }
+        message Army {
+                optional int32 id = 1;
+                optional int32 state = 2;
+                optional int32 is_stone = 3;
+                optional int32 stone_value = 4; //is_stone=1 is hp, is_stone=0 is left product cd
+                optional int32 formation_id = 5;
+                optional int32 main_general_id = 6;
+                repeated General generals = 7;
+                optional int32 dead_cd = 8;
+                optional int32 area_move_cd = 9;
+                optional int32 queue_pos = 10;
+                optional int32 action_type = 11;
+                optional int32 industry_repair_time = 12;
+                optional int32 stone_cooling_time = 13;
+                optional bool at_home = 14;
+                optional int64 target_id = 15;
+                optional int64 param = 16;
+                optional int32 protect_time = 17;
+                optional int32 protect_start_time = 18;
+                optional int32 accelerate_speed_up= 19;
+                optional int32 accelerate_expire_time = 20;
+                optional int32 atk_industry_time = 21;
+        }
+        repeated Army armys = 2;
+        optional bool is_supply_soldier = 3;
+}
+
+message C2S_NationBattleUpdateFormation {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_UPDATE_FORMATION];
+        message General {
+                optional int32 id = 1;
+                optional int32 pos = 2;
+        }
+        optional int32 id = 2;
+        optional int32 formation_id = 3;
+        repeated General generals = 4;
+}
+
+message S2C_NationBattleUpdateFormation {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_UPDATE_FORMATION];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+        optional int32 main_general_id = 4;
+}
+
+message C2S_NationBattleAtkCity {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_ATK_CITY];
+        optional int32 city_id = 2;
+        optional int32 gather_city_id = 3;
+        message Pos {
+                optional float x = 1;
+                optional float y = 2;
+        }
+        repeated Pos paths = 4;
+        optional int32 gather_time = 5;
+        optional int32 declare_cost = 6;
+}
+
+message S2C_NationBattleAtkCity {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_ATK_CITY];
+        optional int32 ret = 2; //0 suc, 1 has declare, 2 in battle, 3 in protect, 4 has fallen
+        optional int32 city_id = 3;
+        optional int32 declare_crop_id = 4;
+        optional int32 target_time = 5;
+        optional int32 gather_city_id = 6;
+        message Pos {
+                optional float x = 1;
+                optional float y = 2;
+        }
+        repeated Pos paths = 7;
+        optional int64 declare_role_id = 8;
+        optional string declare_role_name = 9;
+        optional string city_name = 10;
+}
+
+message NationBattleObject {
+        message General {
+                optional int32 id = 1;
+                optional int32 pos = 2;
+                optional int32 soldier_id = 3;
+        }
+        optional int64 id = 1;
+        optional int32 type = 2;
+        optional int32 army_id = 3;
+        optional string name = 4;
+        optional int32 lvl = 5;
+        optional int32 country_id = 6;
+        optional int32 crop_id = 7;
+        optional int32 formation_id = 8;
+        optional int32 main_general_id = 9;
+        repeated General generals = 10;
+        optional int32 img_type = 11;
+        optional int32 img_id = 12;
+        optional int32 force_value = 13;
+        optional int32 state = 14;
+        optional int32 win_num = 15;
+        optional int32 queue_pos = 16;
+}
+
+message C2S_NationBattleLoadQueueInfo {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_QUEUE_INFO];
+        optional int32 city_id = 2;
+}
+
+message S2C_NationBattleLoadQueueInfo {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_QUEUE_INFO];
+        optional int32 city_id = 2;
+        repeated NationBattleObject atkers = 3;
+        repeated NationBattleObject defensers = 4;
+        optional bool finish = 5;
+        message Pos {
+                optional float x = 1;
+                optional float y = 2;
+        }
+        message CropTroop {
+                optional int32 crop_id = 1;
+                repeated Pos paths = 2;
+                optional Pos cur_pos = 3;
+        }
+        optional CropTroop troop = 6;
+        optional int32 notify = 7;//1 update gather
+        optional int32 gather_city_id = 8;
+}
+
+message C2S_NationBattleLoadChannelInfo {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_CHANNEL_INFO];
+        optional int32 city_id = 2;
+}
+
+message S2C_NationBattleLoadChannelInfo {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_CHANNEL_INFO];
+        message BattleObjectInfo {
+                optional bool is_atk = 2;
+                optional NationBattleObject obj = 3;
+        }
+        optional int32 city_id = 2;
+        repeated BattleObjectInfo players = 3;
+}
+
+message S2C_NationBattleFieldNotify {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_FIELD_NOTIFY];
+        message BattleObject {
+                optional int32 type = 1;
+                optional int64 id = 2;
+                optional int32 army_id = 3;
+                optional string name = 4;
+                optional int32 win_num = 5;
+                optional int32 crop_id = 6;
+                optional int32 main_general_id = 7;
+        }
+        message BattleReport {
+                optional BattleObject atk = 1;
+                optional BattleObject def = 2;
+                optional int32 channel_id = 3;
+                optional int32 result = 4;
+                optional int64 report_id = 5;
+        }
+        optional int32 city_id = 2;
+        repeated BattleReport reports = 3;
+        optional bool is_finish = 4;
+        optional bool is_last_hit = 5;
+}
+
+message S2C_NationBattleFieldReportInfo {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_FIELD_REPORT_INFO];
+        message Loc {
+            optional int32 loc = 1;
+            optional int32 general_id = 2;
+            optional int32 soldier_id = 3;
+        }
+        message BattleObject {
+                optional int32 type = 1;
+                optional int64 id = 2;
+                optional int32 army_id = 3;
+                optional string name = 4;
+                optional int32 win_num = 5;
+                optional int32 crop_id = 6;
+                optional int32 main_general_id = 7;
+                optional int32 form_id = 8;
+                repeated Loc locs = 9;
+                optional int32 img_id = 10;
+                optional int32 img_type = 11;
+        }
+        message BattleReport {
+                optional int64 atk_id = 1;
+                optional int64 def_id = 2;
+                optional int32 channel_id = 3;
+                optional int32 result = 4;
+                optional int64 report_id = 5;
+                optional int32 atk_army = 6;
+                optional int32 def_army = 7;
+        }
+        message Rank {
+            optional int64 role_id = 1;
+            optional string role_name = 2;
+            optional int32 rank = 3;
+            optional int32 score = 4;
+            optional int32 kill_num = 5;
+            optional int32 win_num = 6;
+            optional int32 die_num = 7;
+            optional string army_name = 8;
+            optional int32 general_id = 9;
+        }
+        optional int32 city_id = 2;
+        repeated BattleReport reports = 3;
+        optional bool is_finish = 4;
+        optional bool is_last_hit = 5;
+        optional int32 is_win = 6;
+        optional int32 crop_id = 7;
+        optional string atk_name = 8;
+        optional int32 atk_badge_id = 9;
+        optional int32 atk_badge_color = 10;
+        optional string def_name = 11;
+        optional int32 def_badge_id = 12;
+        optional int32 def_badge_color = 13;
+        repeated BattleObject all_atk = 14;
+        repeated BattleObject all_def = 15;
+        optional int32 atk_crop = 16;
+        optional int32 def_crop = 17;
+        repeated Rank atk_ranks = 18;
+        repeated Rank def_ranks = 19;
+}
+
+message S2C_NationBattleFightNotify {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_FIGHT_NOTIFY];
+        optional int32 city_id = 2;
+        optional int32 army_id = 3;
+        optional int32 opponent_type = 4;
+        optional int64 opponent_id = 5;
+        optional string opponent_name = 6;
+        optional int32 battle_ret = 7;
+        optional int64 report_id = 8;
+}
+
+message C2S_NationBattleLoadSoloList {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_SOLO_LIST];
+        optional int32 city_id = 2;
+}
+
+message S2C_NationBattleLoadSoloList {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_SOLO_LIST];
+        message SoloInfo {
+                optional int64 id = 1;
+                optional string name = 2;
+                optional int32 level = 3;
+                optional int32 img_type = 4;
+                optional int32 img_id = 5;
+                optional int32 general_id = 6;
+                optional int32 force_value = 7;
+                optional int32 crop_pos = 8;
+        }
+        optional int32 city_id = 2;
+        repeated SoloInfo infos = 3;
+        repeated int64 role_ids = 4;
+        optional bool is_atk = 5;
+}
+
+message C2S_NationBattleAttendSolo {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_ATTEND_SOLO];
+        optional bool is_attend = 2; //0 exit, 1 attend
+        optional int32 city_id = 3;
+        optional int32 general_id = 4;
+}
+
+message S2C_NationBattleAttendSolo {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_ATTEND_SOLO];
+        optional bool is_attend = 2;
+        optional int32 city_id = 3;
+        optional int32 general_id = 4;
+}
+
+message C2S_NationBattleUpdateSoloPos {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_UPDATE_SOLO_POS];
+        optional int32 city_id = 2;
+        repeated int64 role_ids = 3;
+}
+
+message S2C_NationBattleUpdateSoloPos {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_UPDATE_SOLO_POS];
+        optional int32 ret = 2;
+        optional int32 city_id = 3;
+        repeated int64 role_ids = 4;
+}
+
+message S2C_NationBattleSoloBattle {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_SOLO_BATTLE];
+        message Round {
+                optional int64 report_id = 1;
+                optional int32 result = 2;
+        }
+        optional int32 city_id = 2;
+        repeated Round rounds = 3;
+}
+
+message C2S_NationBattleLoadEncourage {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_ENCOURAGE];
+        optional int32 city_id = 2;
+}
+
+message S2C_NationBattleLoadEncourage {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_ENCOURAGE];
+        optional int32 city_id = 2;
+        optional int32 atk_lvl = 3;
+        optional int32 def_lvl = 4;
+        message Buff {
+                optional int32 id = 1; // 1-4
+                optional int32 num = 2;
+        }
+        repeated Buff buffs = 5;
+        optional int32 gest_times = 6;
+        optional int32 gold_times = 7;
+}
+
+message C2S_NationBattleDoEncourage {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_DO_ENCOURAGE];
+        optional bool use_gold = 2;
+        optional int32 city_id = 3;
+}
+
+message S2C_NationBattleDoEncourage {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_DO_ENCOURAGE];
+        optional bool suc = 2;
+        optional int32 is_atk = 3;
+        optional int32 level = 4;
+        optional int32 buff_id = 5;
+        optional bool use_gold = 6;
+}
+
+message C2S_NationBattleLoadReportCityList {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_REPORT_CITY_LIST];
+        optional int32 report_type = 2; //0 personal, 1 crop
+}
+
+message S2C_NationBattleLoadReportCityList {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_REPORT_CITY_LIST];
+        message Report {
+                optional int32 id = 1;
+                optional int32 city_id = 2;
+                optional int32 start_time = 3;
+                optional int32 end_time = 4;
+                optional int32 atk_crop_id = 5;
+                optional int32 def_crop_id = 6;
+                optional int32 win_crop_id = 7;
+                optional int32 battle_result = 8;
+                repeated int32 atk_crop_ids = 9;
+                repeated int32 def_crop_ids = 10;
+        }
+        optional int32 report_type = 2;
+        repeated Report reports = 3;
+}
+
+message C2S_NationBattleLoadReportList {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_REPORT_LIST];
+        optional int32 report_type = 2; //0 personal, 1 crop
+        optional int32 id = 3; // 0 all
+}
+
+message S2C_NationBattleLoadReportList {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_REPORT_LIST];
+        message General {
+                optional int32 id = 1;
+                optional int32 pos = 2;
+                optional int32 soldier_id = 3;
+        }
+        message ReportObject {
+                optional int64 id = 1;
+                optional int32 main_general_id = 2;
+                optional string name = 3;
+                optional int32 army_id = 4;
+                optional int32 formation_id = 5;
+                repeated General generals = 6;
+        }
+        message Report {
+                optional int32 city_id = 1;
+                optional ReportObject atk = 2;
+                optional ReportObject def = 3;
+                optional int32 result = 4;
+                optional int64 report_id = 5;
+                optional int32 battle_time = 6;
+        }
+        optional int32 report_type = 2;
+        optional int32 id = 3;
+        repeated Report reports = 5;
+        optional int32 finish = 6; // 1 send complete
+        repeated int64 solo_report_ids = 7;
+}
+
+message C2S_NationBattleLoadCropReport {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_CROP_REPORT];
+}
+
+message S2C_NationBattleLoadCropReport {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_CROP_REPORT];
+        message Report {
+                optional int32 city_id = 1;
+                optional int32 battle_id = 2;
+                optional int32 opponent_crop_id = 3;
+                optional int32 battle_result = 5;
+                optional int32 battle_time = 6;
+                optional bool is_atk = 7;
+        }
+        repeated Report reports = 5;
+}
+
+message C2S_NationBattleLoadWarState {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_WAR_STATE];
+}
+
+message S2C_NationBattleLoadWarState {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_WAR_STATE];
+        message State {
+                optional int32 city_id = 1;
+                optional int32 atk_crop_id = 2;
+                optional int32 atk_num = 3;
+                optional int32 def_crop_id = 4;
+                optional int32 def_num = 5;
+                repeated int32 atk_crop_ids = 6;
+                repeated int32 def_crop_ids = 7;
+        }
+        repeated State states = 2;
+}
+
+message C2S_NationBattleDrawOccupyReward {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_DRAW_OCCUPY_REWARD];
+        optional int32 city_id = 2;
+}
+
+message S2C_NationBattleDrawOccupyReward {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_DRAW_OCCUPY_REWARD];
+        optional int32 ret = 2;
+        optional int32 city_id = 3;
+}
+
+message C2S_NationBattleWatchBattle {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_WATCH_BATTLE];
+        optional int32 city_id = 2;
+        optional bool is_watch = 3;
+}
+
+message S2C_NationBattleWatchBattle {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_WATCH_BATTLE];
+        optional int32 city_id = 2;
+        optional bool is_watch = 3;
+}
+
+message S2C_NationBattleFinished {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_FINISHED];
+        optional int32 city_id = 2;
+        optional bool is_win = 3;
+        optional int32 last_crop_id = 4;
+        optional int32 crop_score = 5;
+        optional int32 role_id = 6;
+        optional int32 role_score = 7;
+        optional int32 crop_id = 8;
+        optional string atk_crop_name = 9;
+        optional string def_crop_name = 10;
+        optional int64 report_id = 11;
+}
+
+message C2S_NationBattleRelive {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_RELIVE];
+        optional int32 army_id = 2;
+}
+
+message S2C_NationBattleRelive {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_RELIVE];
+        optional int32 ret = 2; // 1 moving
+        optional int32 army_id = 3;
+}
+
+message S2C_NationBattleWorldReset {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_WORLD_RESET];
+}
+
+message C2S_NationBattleLoadAimInfo {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_AIM_INFO];
+}
+
+message S2C_NationBattleLoadAimInfo {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_AIM_INFO];
+        optional int32 aim_atk_city_id = 2;
+        optional int32 aim_def_city_id = 3;
+}
+
+message C2S_NationBattleDoAim {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_DO_AIM];
+        optional int32 aim_type = 2; //0 atk, 1 def
+        optional int32 city_id = 3;
+}
+
+message S2C_NationBattleDoAim {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_DO_AIM];
+        optional int32 ret = 2;
+        optional int32 aim_type = 3; //ditto
+        optional int32 city_id = 4;
+}
+
+message C2S_NationBattleLoadOtherArmyInfo {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_LOAD_OTHER_ARMY_INFO];
+        optional int64 role_id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_NationBattleLoadOtherArmyInfo {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_LOAD_OTHER_ARMY_INFO];
+        optional int64 role_id = 2;
+        optional int32 army_id = 3;
+        optional int32 crop_id = 4;
+        optional string name = 5;
+        optional int32 main_general_id = 6;
+        optional int32 force_value = 7;
+        optional int32 level = 8;
+        optional int32 official_lvl = 9;
+        optional int32 attack_value = 10;
+        optional int32 protect_time = 11;
+        optional int32 is_stone = 12;
+        optional int32 stone_value = 13;
+}
+
+message S2C_NationBattleUpdatePopulation {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_UPDATE_POPULATION];
+        message Item {
+                optional int32 city_id = 1;
+                optional int32 population = 2;
+        }
+        repeated Item cities = 2;
+        repeated Item exclusives = 3;
+}

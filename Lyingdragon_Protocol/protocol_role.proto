@@ -1,0 +1,551 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+
+message S2C_CharInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_INFO];
+        optional int64 acc_id = 2;
+        optional int32 country_id = 3;//国家ID
+        optional bool unlimit = 4;
+        optional int32 official_lvl = 5;
+        optional int32 old_official_lvl = 6;
+        optional int32 init_general_id = 8;//初始武将id
+        optional int32 crops_id = 10;//军团ID
+        optional int32 money = 13;//银币数量
+        optional int32 golden_coins = 14;//金币数量
+        optional int32 soldier_num = 16;//士兵数量
+        optional int32 buy_militory_times = 21;//购买军令次数
+        optional int32 vip_lvl = 24;//VIP等级
+        optional int32 extreme_vip_time = 25;//至尊vip到期时间
+        optional int32 fram_harvest_num = 32;//当日农田收获次数
+        optional int32 create_time = 39;
+        optional int32 athletics_integral = 49;
+        optional int32 world_city_id = 50;
+        optional int32 img_type = 51;
+        optional int32 img_id = 52;
+        optional int32 chat_setting = 53;
+        optional int32 militory_order_upper_limit = 54;
+        optional int32 rename_times = 55;
+        optional int32 last_logout_time = 56;
+        optional int64 last_read_mail_id = 57;
+        optional int32 crop_cd = 58;
+        optional int64 global_id = 59;
+        optional int64 phone_number = 60;
+        optional int32 friend_num = 61;
+}
+
+message S2C_UpdateBenefit {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_UPDATE_BENEFIT];
+        optional int32 money = 2;
+        optional int32 golden_coins = 3;
+        optional int32 geste = 4;
+        optional int32 prestige = 5;
+        optional int32 militory_order = 6;
+        optional int32 food = 7;
+        optional int32 soldier_num = 8;
+        optional int32 tower_order = 9;
+        optional int32 soul_num = 10;
+        optional int32 insignia_num = 11;
+        optional int32 silver_cross = 12;
+        optional int32 athletics_integral = 13;
+        optional int32 nobility_vip_num = 14;
+}
+
+message S2C_OrderUpperLimit {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_ORDER_UPPER_LIMIT];
+        optional int32 order_limit = 2;
+}
+
+message C2S_BuyMilitryOrders {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_BUY_MILITARY_ORDERS];
+}
+
+message S2C_BuyMilitryOrders {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_BUY_MILITARY_ORDERS];
+        optional int32 num = 2;
+        optional int32 buy_num = 3;
+        optional int32 ret = 4;
+}
+
+message S2C_RoleUpdateResource {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_UPDATE_RESOURCE];
+        repeated RewardType rwds = 2;
+}
+
+message S2C_RoleUpdateAttribute {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_UPDATE_ATTRIBUTE];
+        optional int32 power = 3;
+}
+
+message C2S_RoleRank {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_RANK];
+        optional int32 rank_type = 2;
+        optional int32 country_id = 3;
+        optional int32 num = 4;
+        optional int64 additional_id = 5;
+}
+
+message S2C_RoleRank {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_RANK];
+        message RoleRank {
+                optional int64 id = 1;
+                optional string name = 2;
+                optional int32 country_id = 3;
+                optional int32 rank = 4;
+                optional int32 value = 5;
+                optional int32 zone_id = 6;
+                optional int32 force_value = 7;
+                optional int32 level = 8;
+                optional int32 crop_id = 9;
+                optional int32 img_id = 10;
+                optional int32 img_type = 11;
+                optional int32 kill_num = 12;
+                optional string army_name = 13;
+                optional int32 win = 14;
+                optional int32 die_num = 15;
+                optional int32 power_id = 16;
+                optional int32 city_num = 17;
+                optional int32 general_id = 18;
+                optional int32 vassal_num = 19;
+        }
+        optional int32 rank_type = 2;
+        optional int32 country_id = 3;
+        optional int32 my_rank = 4;
+        optional int32 my_value = 5;
+        repeated RoleRank ranks = 6;
+        optional int32 crop_id = 7;
+        optional int32 ret = 8;
+}
+
+message C2S_RoleGuide {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_GUIDE];
+        optional int32 guide_type = 2; // 0=pve 1=tower 2=ancient
+        optional int32 country_id = 3;
+        optional int32 instance_id = 4;
+}
+
+message S2C_RoleGuide {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_GUIDE];
+        message Guide {
+            optional int64 role_id = 1;
+            optional string name = 2;
+            optional int32 level = 3;
+            optional int32 country_id = 4;
+            optional int64 report_id = 5;
+            optional int32 rate = 6;
+            optional int32 power = 7;
+        }
+        repeated Guide guides = 2;
+        repeated Guide rank_guides = 3;
+}
+
+message C2S_RoleLoadImg {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_LOAD_IMG];
+}
+
+message S2C_RoleLoadImg {
+        optional ProtocolType type  = 1 [default = S_2_C_ROLE_LOAD_IMG];
+        repeated int32 ids = 2;
+}
+
+message C2S_RoleBuyImg {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_BUY_IMG];
+        optional int32 img_id = 2;
+}
+
+message S2C_RoleBuyImg {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_BUY_IMG];
+        optional int32 img_id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_RoleSetImg {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_SET_IMG];
+        optional int32 img_type = 2;
+        optional int32 img_id = 3;
+}
+
+message S2C_RoleSetImg {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_SET_IMG];
+        optional int32 img_type = 2;
+        optional int32 img_id = 3;
+        optional int64 role_id = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_RoleChooseCountry {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_CHOOSE_COUNTRY];
+        optional int32 country_id = 2;
+}
+
+message S2C_RoleChooseCountry {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_CHOOSE_COUNTRY];
+        optional int32 country_id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_RoleState {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_STATE];
+}
+
+message S2C_RoleState {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_STATE];
+        repeated int32 states = 2;
+}
+
+message C2S_RoleUpdateAssistInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_UPDATE_ASSIST_INFO];
+        optional string assist_info = 2;
+}
+
+message C2S_RoleRetrieveInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_RETRIEVE_INFO];
+}
+
+message S2C_RoleRetrieveInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_RETRIEVE_INFO];
+        message RetrieveItem {
+                optional int32 id = 1;
+                optional int32 left_num = 2;
+                optional int32 retrieve_num = 3;
+                optional int32 can_use_num = 4;
+        }
+        optional int32 collection_money = 2;
+        repeated RetrieveItem items = 3;
+}
+
+message C2S_RoleRetrieveDo {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_RETRIEVE_DO];
+        optional int32 id = 2;
+        optional int32 retrieve_type = 3;
+}
+
+message S2C_RoleRetrieveDo {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_RETRIEVE_DO];
+        optional int32 id = 2;
+        optional int32 retrieve_type = 3;
+        optional int32 retrieve_num = 4;
+        optional int32 can_use_num = 5;
+        repeated RewardType rwds = 6;
+        optional int32 ret = 7;
+}
+
+message C2S_RoleBasicInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_BASIC_INFO];
+        optional int32 show_type = 2;
+        optional int64 role_id = 3;
+        optional int32 zone_id = 4;
+        optional string login_name = 5;
+}
+
+message S2C_RoleBasicInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_BASIC_INFO];
+        optional int32 main_level = 2;
+        optional int32 power = 3;
+        optional int32 crop_pos = 4;
+        optional string role_name = 5;
+        optional int32 img_type = 6;
+        optional int32 img_id = 7;
+        message General {
+                optional int32 temp_id = 1;
+                optional int32 level = 2;
+                optional int32 strategics_level = 3;
+        }
+        repeated General formations = 8;
+        optional int32 country_id = 9;
+        optional int32 country_pos = 10;
+        optional string crop_name = 11;
+        optional string server_name = 12;
+        optional int32 show_type = 13;
+        optional int32 city_id = 14;
+        optional int32 role_pos = 15;
+        optional int32 logout_time = 16;
+        optional int32 zone_id = 17;
+        optional bool is_online = 18;
+        optional int32 crop_cd = 19;
+        optional int32 crop_id = 20;
+        optional int32 arena_score = 21;
+        optional int64 role_id = 22;
+        optional int32 ret = 23;
+}
+
+message C2S_RoleSetChatStyle {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_SET_CHAT_STYLE];
+        optional int32 chat_style = 2;
+}
+
+message S2C_RoleSetChatStyle {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_SET_CHAT_STYLE];
+        optional int32 chat_style = 2;
+        optional int32 ret = 3;
+}
+
+message S2C_RoleDailyReset {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_DAILY_RESET];
+}
+
+message C2S_RoleChatSetting {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_CHAT_SETTING];
+        optional int32 setting = 2;
+}
+
+message S2C_RoleChatSetting {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_CHAT_SETTING];
+        optional int32 setting = 2;
+}
+
+message C2S_RoleRename {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_RENAME];
+        optional string new_name = 2;
+}
+
+message S2C_RoleRename {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_RENAME];
+        optional int32 ret = 2; // 0 suc, 1 repetition, 2 dirty word
+        optional int32 rename_times = 3;
+        optional string new_name = 4;
+}
+
+message C2S_RoleLoadOfficial {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_LOAD_OFFICIAL];
+}
+
+message S2C_RoleLoadOfficial {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_LOAD_OFFICIAL];
+        optional int32 official_lvl = 2;
+        optional int32 draw_num = 3;
+        repeated int32 recruit_ids = 4;
+}
+
+message C2S_RoleOfficialLevelUp {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_OFFICIAL_LEVEL_UP];
+}
+
+message S2C_RoleOfficialLevelUp {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_OFFICIAL_LEVEL_UP];
+        optional int32 official_lvl = 2;
+}
+
+message C2S_RoleOfficialDrawReward {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_OFFICIAL_DRAW_REWARD];
+}
+
+message S2C_RoleOfficialDrawReward {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_OFFICIAL_DRAW_REWARD];
+        repeated RewardType rwds = 2;
+}
+
+message C2S_RoleLoadChatStyle {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_LOAD_CHAT_STYLE];
+}
+
+message S2C_RoleLoadChatStyle {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_LOAD_CHAT_STYLE];
+        optional int32 chat_style = 2;
+        repeated int32 style_ids = 3;
+}
+
+message C2S_RoleUseGiftCard {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_USE_GIFT_CARD];
+        optional string card = 2;
+}
+
+message S2C_RoleUseGiftCard {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_USE_GIFT_CARD];
+        optional int32 ret = 2;
+        repeated RewardType rwds = 3;
+}
+
+message C2S_RoleCityInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_CITY_INFO];
+}
+
+message S2C_RoleCityInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_CITY_INFO];
+        repeated int32 ids = 2;
+}
+
+message C2S_RoleCityDraw {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_CITY_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_RoleCityDraw {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_CITY_DRAW];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+message C2S_RoleOfficialSalaryInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_OFFICIAL_SALARY_INFO];
+}
+
+message S2C_RoleOfficialSalaryInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_OFFICIAL_SALARY_INFO];
+        optional int32 times = 2;
+}
+
+message C2S_RoleDrawOfficialSalary {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_DRAW_OFFICIAL_SALARY];
+}
+
+message S2C_RoleDrawOfficialSalary {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_DRAW_OFFICIAL_SALARY];
+        optional int32 ret = 2;
+}
+
+message C2S_RoleOfficialRecruit {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_OFFICIAL_RECRUIT];
+        optional int32 id = 2;
+}
+
+message S2C_RoleOfficialRecruit {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_OFFICIAL_RECRUIT];
+        optional int32 id = 2;
+        optional int32 general_id = 3;
+        optional int32 ret = 4;
+}
+
+message GuideItem {
+        optional int32 id = 1;
+        optional int32 repeat_step = 2;
+        optional int32 save_step = 3;
+        optional int32 open_step = 4;
+        optional bool is_open = 5;
+        optional bool is_finish = 6;
+}
+
+message C2S_RoleLoadGameConfig {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_LOAD_GAME_CONFIG];
+}
+
+message S2C_RoleLoadGameConfig {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_LOAD_GAME_CONFIG];
+        optional string cfg_info = 2;
+        optional bool skip_guide = 3;
+        repeated GuideItem guide_items= 4;
+        optional string assist_info = 5;
+        optional bool all_function_open = 6;
+        optional int64 enter_sign = 7;
+}
+
+message C2S_RoleGameConfig {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_GAME_CONFIG];
+        optional string cfg_info = 2;
+}
+
+message S2C_RoleGameConfig {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_GAME_CONFIG];
+}
+
+message C2S_RoleUpdateGuide {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_UPDATE_GUIDE];
+        optional bool skip_guide = 2;
+        repeated GuideItem items = 3;
+        optional int32 order = 4;
+        optional bool all_function_open = 5;
+        optional int32 guide_time = 6;
+}
+
+message S2C_RoleUpdateGuide {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_UPDATE_GUIDE];
+        optional int32 ret = 2;
+}
+
+message C2S_RoleRemoveGuide {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_REMOVE_GUIDE];
+        optional int32 id = 2;
+}
+
+message S2C_RoleRemoveGuide {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_REMOVE_GUIDE];
+}
+
+message C2S_RoleTLogBehavior {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_TLOG_BEHAVIOR];
+        optional int32 get_name = 2;
+        optional int32 replay = 3;
+        optional int32 share = 4;
+        optional int32 npc_id = 5;
+        optional int32 guide_time = 6;
+}
+
+message S2C_RoleTLogBehavior {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_TLOG_BEHAVIOR];
+}
+
+message C2S_RoleFirstEnterSign {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_FIRST_ENTER_SIGN];
+        optional int32 idx = 2;
+}
+
+message S2C_RoleFirstEnterSign {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_FIRST_ENTER_SIGN];
+        optional int32 idx = 2;
+        optional int64 sign = 3;
+}
+
+message C2S_RoleQuestionInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_QUESTION_INFO];
+}
+
+message S2C_RoleQuestionInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_QUESTION_INFO];
+        repeated string ids = 2;
+}
+
+message C2S_RoleTLogStrategy {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_TLOG_STRATEGY];
+        optional int32 push_type = 2;
+        optional int32 behavior_type = 3;
+        optional int32 watch = 4;
+}
+
+message C2S_RoleBuff {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_BUFF];
+}
+
+message S2C_RoleBuff {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_BUFF];
+        message Buff {
+            optional int32 type = 1;
+            optional int32 value = 2;
+            optional int32 effect_type = 3;
+            optional int32 effect_value = 4;
+            optional int32 effect_lose_value = 5;
+        }
+        repeated Buff buffs = 2;
+}
+
+message S2C_RoleBuffRemove {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_BUFF_REMOVE];
+        repeated int32 buff_types = 2;
+}
+
+message S2C_RoleFirstLogin {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_FIRST_LOGIN];
+        optional int32 militoryorder_num = 2;
+        optional int32 season = 3;
+        optional int32 collect_times = 4;
+        repeated RewardType rwds = 5;
+}
+
+message C2S_RoleCreditUpdate {
+        optional ProtocolType type = 1 [default = C_2_S_ROLE_CREDIT_UPDATE];
+        optional int32 score = 2;
+        optional int32 black_tag = 3;
+        optional int32 ugc_tag = 4;
+}
+
+message S2C_RoleCreditUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_CREDIT_UPDATE];
+        optional int32 score = 2;
+        optional int32 black_tag = 3;
+        optional int32 ugc_tag = 4;
+}
+
+message S2C_RoleLevelUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_ROLE_LEVEL_UPDATE];
+        optional int64 role_id = 2;
+        optional int32 level = 3;
+}

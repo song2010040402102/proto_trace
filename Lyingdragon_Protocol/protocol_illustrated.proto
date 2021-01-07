@@ -1,0 +1,128 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message Comment {
+        optional int32 id = 1;
+        optional int32 time = 2;
+        optional int32 favor = 3;
+        optional string contex = 4;
+        optional int32 general_id = 5;
+        optional int32 zone_id = 6;
+        optional int64 author_id = 7;
+        optional string author_name = 8;
+        optional bool has_favored  = 9;
+};
+
+message C2S_IllustratedInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ILLUSTRATED_INFO];
+}
+
+message S2C_IllustratedInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ILLUSTRATED_INFO];
+        message GeneralUsage {
+            optional int32 general_id = 1;
+            optional double rate = 2;
+        }
+        repeated GeneralUsage usages = 2;
+}
+
+message C2S_IllustratedRecommendList {
+        optional ProtocolType type = 1 [default = C_2_S_ILLUSTRATED_RECOMMEND_LIST];
+        optional int32 level = 2;
+}
+
+message S2C_IllustratedRecommendList {
+        optional ProtocolType type = 1 [default = S_2_C_ILLUSTRATED_RECOMMEND_LIST];
+        message Group {
+            optional int32 damage_type = 1;
+            optional int32 general_id = 2;
+            optional double point = 3;
+            optional int32 has_pointed = 4;
+        }
+        optional int32 level = 2;
+        repeated Group groups  = 3;
+}
+
+message C2S_IllustratedRecommendInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ILLUSTRATED_RECOMMEND_INFO];
+        optional int32 general_id = 2;
+        optional int32 level = 3;
+}
+
+message S2C_IllustratedRecommendInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ILLUSTRATED_RECOMMEND_INFO];
+        optional int32 general_id = 2;
+        optional int32 level = 3;
+        optional double usage_rate = 4;
+        optional double point = 5;
+        optional int32 has_pointed = 6;
+        repeated int32 top_ids = 7;
+        repeated Comment comments = 8;
+        optional int32 ret = 9;
+}
+
+message C2S_IllustratedAddComent {
+        optional ProtocolType type = 1 [default = C_2_S_ILLUSTRATED_ADD_COMMENT];
+        optional int32 general_id = 2;
+        optional string contex = 3;
+}
+
+message S2C_IllustratedAddComent {
+        optional ProtocolType type = 1 [default = S_2_C_ILLUSTRATED_ADD_COMMENT];
+        optional Comment comment = 2;
+}
+
+message C2S_IllustratedDelComent {
+        optional ProtocolType type = 1 [default = C_2_S_ILLUSTRATED_DEL_COMMENT];
+        optional int32 id = 2;
+}
+
+message S2C_IllustratedDelComent {
+        optional ProtocolType type = 1 [default = S_2_C_ILLUSTRATED_DEL_COMMENT];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_IllustratedFavor {
+        optional ProtocolType type = 1 [default = C_2_S_ILLUSTRATED_FAVOR];
+        optional int32 id = 2;
+        optional int32 action = 3;//1=favor,2=unfavor
+}
+
+message S2C_IllustratedFavor {
+        optional ProtocolType type = 1 [default = S_2_C_ILLUSTRATED_FAVOR];
+        optional int32 id = 2;
+        optional int32 action = 3;
+        optional int32 favor = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_IllustratedAddPoint {
+        optional ProtocolType type = 1 [default = C_2_S_ILLUSTRATED_ADD_POINT];
+        optional int32 general_id = 2;
+        optional double point = 3;
+}
+
+message S2C_IllustratedAddPoint {
+        optional ProtocolType type = 1 [default = S_2_C_ILLUSTRATED_ADD_POINT];
+        optional int32 general_id = 2;
+        optional double point = 3;
+        optional int32 has_pointed = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_IllustratedChildList {
+        optional ProtocolType type = 1 [default = C_2_S_ILLUSTRATED_CHILD_LIST];
+        repeated int32 ids = 2;
+}
+
+message S2C_IllustratedChildList {
+        optional ProtocolType type = 1 [default = S_2_C_ILLUSTRATED_CHILD_LIST];
+        message Child {
+            optional int32 id = 1;
+            optional double point = 2;
+            optional int32 has_pointed = 3;
+        }
+        repeated Child childs = 2;
+}

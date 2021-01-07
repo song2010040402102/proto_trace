@@ -1,0 +1,49 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_TavernInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TAVERN_INFO];
+}
+
+message S2C_TavernInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TAVERN_INFO];
+        optional int32 card_num = 2;
+        message Item {
+                optional int32 type = 1;
+                optional bool is_unlock = 2;
+                repeated int32 pools = 3;
+                repeated RewardType item_pool = 4;
+        }
+        repeated Item items = 3;        // not used
+        optional int32 drink_num = 4;   // free count
+        message Activity {
+                optional int32 id = 1;
+                optional int32 start_time = 2;
+                optional int32 end_time = 3;
+        }
+        message Tag {
+            optional int32 id = 1;
+            optional int32 refresh_time = 2;
+        }
+        repeated Activity activities = 5;
+        optional int32 last_free_time = 6;
+        repeated Tag tags = 7;
+
+}
+
+message C2S_TavernDrink {
+        optional ProtocolType type = 1 [default = C_2_S_TAVERN_DRINK];
+        optional int32 tavern_type = 2;
+        optional bool is_ten = 3; // true is ten draw
+}
+
+message S2C_TavernDrink {
+        optional ProtocolType type = 1 [default = S_2_C_TAVERN_DRINK];
+        optional int32 tavern_type = 2;
+        optional bool is_ten = 3;
+        optional int32 card_num = 4;
+        repeated RewardType items = 5;
+        optional int32 last_free_time = 6;
+        optional int32 ret = 7;
+}

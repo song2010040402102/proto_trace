@@ -1,0 +1,262 @@
+import "protocol_base.proto";
+
+option optimize_for = SPEED;
+
+package Lyingdragon.Protocol;
+
+message SkillInfo {
+    optional int32 skill_id = 1;
+    optional int32 lvl = 2;
+}
+
+message GeneralBattleAction {
+        message Action {
+                message Attack {
+                        optional int32 pos = 1;
+                        optional int32 skill_id = 2;
+                        optional int32 extra = 3; //1 crit, 2 beat, 3 crit and beat
+                }
+                message Hurt {
+                        optional int32 pos = 1;
+                        optional int32 hurt = 2;
+                        optional bool is_crit = 3;
+                        optional int32 type = 4;//0=attack 2=buff
+                }
+                message Buff {
+                        optional int32 type = 1;
+                        optional int32 state = 2;
+                        repeated int32 poses = 3;
+                }
+                message Morale {
+                        optional int32 pos = 1;
+                        optional int32 morale = 2;
+                        optional int32 type = 3; //1=normal attack
+                }
+                message Relive {
+                        optional int32 pos = 1;
+                        optional int32 add_num = 2;
+                }
+                message BuffRound {
+                        optional int32 type = 1;
+                        optional int32 round = 2;
+                        repeated int32 poses = 3;
+                }
+                message ExtraSoldier {
+                        optional int32 pos = 1;
+                        optional int32 add_num = 2;
+                }
+                optional int32 side = 1; //1 attacker, 2 defenser
+                optional int32 action_type = 2;
+                //1 attacak, 2 hurt, 3 buff, 4 morale, 5 relive, 6 buff round, 7 extra soldier
+                optional Attack attack = 3;
+                repeated Hurt hurts = 4;
+                optional Buff buff = 5;
+                repeated Morale morales = 6;
+                optional Relive relive = 7;
+                optional BuffRound buff_round = 8;
+                repeated ExtraSoldier extra_soldiers = 9;
+        }
+        repeated Action actions = 1;
+}
+
+message SingleBattleReport {
+        message Attr {
+                optional int32 type = 1;
+                optional float value = 2;
+        }
+        message SystemAttr {
+                optional int32 type = 1;
+                repeated Attr attrs = 2;
+        }
+        message BattleCell {
+                optional int32 id = 1;
+                optional int32 pos = 2;
+                optional int32 level = 3;
+                optional string name = 4;
+                optional int32 battle_soldier_id = 5;
+                optional int32 skill_id = 6;
+                optional int32 skill_level = 7;
+                optional int64 max_soldier_num = 8;
+                optional int64 cur_soldier_num = 9;
+                repeated SkillInfo passive_skills = 10;
+                repeated Attr total_attrs = 11;
+                optional int32 damage = 12;
+                optional int64 lost_soldier = 13;
+                optional int32 cure_hp = 14;
+                repeated int32 kill_units = 15;
+        }
+        message BattleObject {
+                optional int64 id = 1;
+                optional int64 global_id = 12;
+                optional int32 object_type = 2;
+                optional string name = 3;
+                optional int32 img_type = 4;
+                optional int32 img_id = 5;
+                optional int32 level = 6;
+                optional int32 general_num = 7;
+                repeated BattleCell cells = 8;
+                repeated SystemAttr sys_attrs = 9;
+                optional float atk_add = 10;
+                optional float def_add = 11;
+        }
+        message Round {
+                optional int32 round = 1;
+                repeated GeneralBattleAction actions = 2;
+                repeated GeneralBattleAction before_actions = 3;
+                repeated GeneralBattleAction after_actions = 4;
+        }
+        optional int32 battle_type = 1;
+        optional int32 instance_id = 2;
+        optional BattleObject attacker = 3;
+        optional BattleObject defenser = 4;
+        repeated Round rounds = 5;
+        optional int32 battle_result = 6;
+        repeated RewardType rewards = 7;
+        optional int32 lose_rate = 8;
+        optional int32 def_result = 9;
+        optional int32 def_lose_rate = 10;
+        optional int32 source = 11;
+        repeated int64 extra_datas = 12;
+}
+
+message TeamBattleReport {
+        message Loc {
+            optional int32 loc = 1;
+            optional int32 general_id = 2;
+            optional int32 soldier_id = 3;
+        }
+        message BattleObject {
+                optional int64 id = 1;
+                optional int32 zone_id = 2;
+                optional int32 army_id = 3;
+                optional string name = 4;
+                optional int32 win_num = 5;
+                repeated RewardType rewards = 6;
+                optional int32 form_id = 7;
+                repeated Loc locs = 8;
+        }
+        message BattleNPC {
+                optional int64 id = 1;
+                optional string name = 2;
+                optional int32 win_num = 3;
+                optional int32 form_id = 4;
+                repeated Loc locs = 5;
+        }
+        message BattleReport {
+                optional int64 atk_id = 1;
+                optional int32 atk_army_id = 7;
+                optional int64 def_id = 2;
+                optional int32 def_army_id = 8;
+                optional int32 report_zone_id = 3;
+                optional int64 report_id = 4;
+                optional int32 battle_result = 5;
+                optional int32 channel = 9;
+        }
+        optional int32 type = 7;//0=team 1=fortress
+        optional int32 instance_id = 1;
+        optional int32 battle_result = 2; //1 win, 0 lose
+        repeated BattleObject attackers = 3;
+        repeated BattleNPC npcs = 4;
+        repeated BattleObject defensers = 8;
+        repeated BattleReport reports = 5;
+        optional int64 leader_id = 6;
+        repeated string extra_datas = 9;
+}
+
+message IndustryTeamReport {
+        message Loc {
+                optional int32 loc = 1;
+                optional int32 general_id = 2;
+                optional int32 soldier_id = 3;
+        }
+        message BattleObject {
+                optional int64 role_id = 1;
+                optional string name = 2;
+                optional int32 win_num = 3;
+                optional int32 form_id = 4;
+                repeated Loc locs = 5;
+        }
+        message BattleNPC {
+                optional int32 id = 1;
+                optional string name = 2;
+                optional int32 win_num = 3;
+                optional int32 form_id = 4;
+                repeated Loc locs = 5;
+        }
+        message BattleReport {
+                optional int64 atk_id = 1;
+                optional int64 def_id = 2;
+                optional int32 def_type = 3; //0 army, 1 npc
+                optional int64 report_id = 4;
+                optional int32 battle_result = 5;
+                optional int32 round = 6;
+        }
+        optional int32 id = 1; //industry id
+        optional int64 leader_id = 2;
+        optional int32 battle_result = 3; //0 win, 1 lose
+        repeated BattleObject attackers = 4;
+        repeated BattleObject defs = 5;
+        repeated BattleNPC npcs = 6;
+        repeated BattleReport reports = 7;
+        optional string def_name = 8;
+}
+
+message FortressBattleReport {
+    message Loc {
+        optional int32 loc = 1;
+        optional int32 general_id = 2;
+        optional int32 soldier_id = 3;
+    }
+    message BattleObject {
+        optional int32 type = 1;
+        optional int64 id = 2;
+        optional int32 army_id = 3;
+        optional string name = 4;
+        optional int32 win_num = 5;
+        optional int32 crop_id = 6;
+        optional int32 main_general_id = 7;
+        optional int32 form_id = 8;
+        repeated Loc locs = 9;
+        optional int32 img_id = 10;
+        optional int32 img_type = 11;
+        optional int32 pos = 12;
+    }
+    message BattleReport {
+        optional int64 atk_id = 1;
+        optional int64 def_id = 2;
+        optional int32 channel_id = 3;
+        optional int32 result = 4;
+        optional int64 report_id = 5;
+    }
+    optional int32 atk_crop = 1;
+    optional int32 def_crop = 2;
+    optional int32 result = 3;
+    optional int32 city_id = 4;
+    repeated BattleObject atks = 5;
+    repeated BattleObject defs = 6;
+    repeated BattleReport reports = 7;
+}
+
+message BriefSingleBattleReport {
+    message GeneralInfo {
+        optional int32 id = 1;
+	optional int32 pos = 2;
+	optional int32 soldier_num = 3;
+	optional int32 max_soldier_num = 4;
+    }
+    message BattleObject {
+	optional int32 pos = 1;
+	optional int32 soldier_num = 2;
+    }
+    message BattleSide {
+        optional int32 side = 1;
+	repeated BattleObject objects = 2;
+    }
+    message Round {
+        optional int32 round = 1;
+	repeated BattleSide sides = 2;
+    }
+    repeated GeneralInfo attacker_infos = 1;
+    repeated GeneralInfo defenser_infos = 2;
+    repeated Round rounds = 3;
+}

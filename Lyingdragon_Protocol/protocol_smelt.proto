@@ -1,0 +1,45 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_LoadSmeltInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SMELT_LOAD_INFO];
+}
+
+message S2C_LoadSmeltInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SMELT_LOAD_INFO];
+        optional int32 times = 2;
+        optional int32 price = 3;
+        optional int32 exp = 4;
+        optional int32 level = 5;
+        optional int32 iron_time = 6;
+        repeated int32 items = 7;
+       
+}
+
+message C2S_DoSmelt {
+        optional ProtocolType type = 1 [default = C_2_S_SMELT_DO_SMELT];
+}
+
+message S2C_DoSmelt {
+        optional ProtocolType type = 1 [default = S_2_C_SMELT_DO_SMELT];
+        optional bool result = 2;
+        optional int32 times = 3;
+        optional int32 exp = 4;
+        optional int32 level = 5;
+        repeated int32 items = 6;
+        optional int32 iron_time = 7;
+        optional int32 smelt_id = 8;
+        optional bool has_iron = 9;
+}
+
+message C2S_SellSmelt {
+        optional ProtocolType type = 1 [default = C_2_S_SMELT_SELL_SMELT];
+        optional int32  ingot_type = 2;
+}
+
+message S2C_SellSmelt {
+        optional ProtocolType type = 1 [default = S_2_C_SMELT_SELL_SMELT];
+        optional int32  ingot_type = 2;
+        optional int32  money = 3;
+}

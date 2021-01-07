@@ -1,0 +1,153 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_AncientFieldEnter {
+    optional ProtocolType type = 1 [default = C_2_S_ANCIENT_FIELD_ENTER];
+}
+
+message S2C_AncientFieldEnter {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_ENTER];
+    repeated int32 draw_ids = 2;
+    optional int32 draw_team_id = 3;
+    optional int64 team_id = 4;
+    optional int64 my_id = 5;
+    repeated int32 special_ids = 6;
+}
+
+message C2S_AncientFieldStartMatch {
+    optional ProtocolType type = 1 [default = C_2_S_ANCIENT_FIELD_START_MATCH];
+}
+
+message S2C_AncientFieldStartMatch {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_START_MATCH];
+    optional int32 ret = 2; //0 success, 1 already in team
+    optional int64 team_id = 3;
+}
+
+message C2S_AncientFieldCancelMatch {
+    optional ProtocolType type = 1 [default = C_2_S_ANCIENT_FIELD_CANCEL_MATCH];
+}
+
+message S2C_AncientFieldCancelMatch {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_CANCEL_MATCH];
+    optional int32 ret = 2;
+}
+
+message S2C_AncientFieldPlayerLeave {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_PLAYER_LEAVE];
+    optional int64 id = 2;
+}
+
+message C2S_AncientFieldUpdateFormation {
+    optional ProtocolType type = 1 [default = C_2_S_ANCIENT_FIELD_UPDATE_FORMATION];
+    message General {
+        optional int32 pos = 1;
+        optional int32 general_id = 2;
+    }
+    optional int32 formation_id = 2;
+    repeated General generals = 3;
+}
+
+message S2C_AncientFieldUpdateFormation {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_UPDATE_FORMATION];
+    optional int32 ret = 2;
+}
+
+message AncientFieldTarget {
+    message General {
+        optional int32 pos = 1;
+        optional int32 general_id = 2;
+    }
+    optional int32 id = 1;
+    optional int32 type = 2;
+    optional string server_id = 3;
+    optional int64 real_id = 4;
+    optional int32 img_type = 5;
+    optional int32 img_id = 6;
+    optional int32 state = 7; //-1 fail, 0 init, 1 pass
+    optional string name = 8;
+    optional int32 level = 9;
+    optional int32 force_value = 10;
+    optional int32 formation_id = 11;
+    repeated General generals = 12;
+}
+
+message AncientFieldPlayer {
+    message General {
+        optional int32 pos = 1;
+        optional int32 general_id = 2;
+    }
+    optional int64 id = 1;
+    optional string server_id = 2;
+    optional int64 role_id = 3;
+    optional int32 country_id = 4;
+    optional string name = 5;
+    optional int32 level = 6;
+    optional int32 force_value = 7;
+    optional int32 formation_id = 8;
+    repeated General generals = 9;
+    repeated AncientFieldTarget targets = 10;
+}
+
+message C2S_AncientFieldLoadTeamInfo {
+    optional ProtocolType type = 1 [default = C_2_S_ANCIENT_FIELD_LOAD_TEAM_INFO];
+}
+
+message S2C_AncientFieldLoadTeamInfo {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_LOAD_TEAM_INFO];
+    optional int64 id = 2;
+    optional int32 left_match_time = 3;
+    optional int32 left_battle_time = 4;
+    optional int32 max_instance_id = 5;
+    repeated int32 killed_instance_ids = 6;
+    repeated AncientFieldPlayer players = 7;
+}
+
+message S2C_AncientFieldNewPlayerJoin {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_NEW_PLAYER_JOIN];
+    optional AncientFieldPlayer player = 2;
+}
+
+message C2S_AncientFieldDoBattle {
+    optional ProtocolType type = 1 [default = C_2_S_ANCIENT_FIELD_DO_BATTLE];
+    optional int32 instance_id = 2;
+    optional int32 is_practise = 3;
+}
+
+message S2C_AncientFieldDoBattle {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_DO_BATTLE];
+    optional int32 instance_id = 2;
+    optional int32 battle_ret = 3;
+    optional string report_server_id = 4;
+    optional int64 report_id = 5;
+    optional int32 is_practise = 7;
+}
+
+message S2C_AncientFieldFinishNotify {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_FINISH_NOTIFY];
+    optional int32 ret = 2;
+}
+
+message S2C_AncientFieldBattleNotify {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FILED_BATTLE_NOTIFY];
+    message Reward {
+        optional int32 id = 1;
+        optional int32 type = 2; //0 personal, 1 team
+    }
+    optional int64 id = 2;
+    optional int32 instance_id = 3;
+    optional int32 use_ancient_soldier = 4;
+    optional int32 state = 5;
+    optional int32 special_id = 6;
+    repeated Reward rwds = 7;
+}
+
+message S2C_AncientFieldStartBattleNotify {
+    optional ProtocolType type = 1 [default = S_2_C_ANCIENT_FIELD_START_BATTLE_NOTIFY];
+    message Player {
+        optional int64 id = 1;
+        repeated AncientFieldTarget targets = 2;
+    }
+    repeated Player players = 2;
+}

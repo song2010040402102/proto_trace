@@ -1,0 +1,77 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message GirlInfo {
+        optional int32 id = 1;
+        optional int32 type = 2; //0=路人 1=知己 2=妻子
+        optional int32 dear = 3;
+        optional int32 happy  = 4;
+}
+
+message C2S_GirlInfo {
+        optional ProtocolType type = 1 [default = C_2_S_GIRL_INFO];
+}
+
+message S2C_GirlInfo {
+        optional ProtocolType type = 1 [default = S_2_C_GIRL_INFO];
+        optional int32 place_id = 2;
+        optional int32 search_times = 3;
+        optional int32 cd_time = 4;
+        optional bool add = 5;
+        optional int32 talk_times = 6;
+        repeated int32 npc_ids = 7;
+        repeated GirlInfo girls = 8;
+}
+
+message C2S_GirlSearch {
+        optional ProtocolType type = 1 [default = C_2_S_GIRL_SEARCH];
+        optional bool use_gold = 2;
+}
+
+message S2C_GirlSearch {
+        optional ProtocolType type = 1 [default = S_2_C_GIRL_SEARCH];
+        optional bool use_gold = 2;
+        repeated int32 npc_ids = 3;
+        optional int32 place_id = 4;
+        optional bool add = 5;
+        optional int32 cd_time = 6;                                                                                                                                                       
+}
+
+message C2S_GirlTalk {
+        optional ProtocolType type = 1 [default = C_2_S_GIRL_TALK];
+        optional int32 id = 2;
+        optional int32  gift_id = 3;
+        optional int32 gift_num = 4;
+}
+
+message S2C_GirlTalk {
+        optional ProtocolType type = 1 [default = S_2_C_GIRL_TALK];
+        optional int32 id = 2;
+        optional int32 event_id = 3; // < 1000 npc事件, 1000=提亲 1001=怀孕
+        optional GirlInfo girl = 4;
+        optional bool gift = 5;
+}
+
+message C2S_GirlMarry {
+        optional ProtocolType type = 1 [default = C_2_S_GIRL_MARRY];
+        optional int32 id = 2;
+}
+
+message S2C_GirlMarry {
+        optional ProtocolType type = 1 [default = S_2_C_GIRL_MARRY];
+        optional int32 id = 2;
+        optional bool ret = 3;
+        optional int64 report_id = 4;
+}
+
+message C2S_GirlDivorce {
+        optional ProtocolType type = 1 [default = C_2_S_GIRL_DIVORCE];
+        optional int32 id = 2;
+        optional int32 pay = 3; //1=普通 2=赔偿
+}
+
+message S2C_GirlDivorce {
+        optional ProtocolType type = 1 [default = S_2_C_GIRL_DIVORCE];
+        optional GirlInfo girl = 2;
+}

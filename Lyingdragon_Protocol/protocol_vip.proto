@@ -1,0 +1,68 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message VIPInfo {
+        optional int32 id = 1;
+        optional int32 exp = 2;
+        optional int32 sign_days = 3;
+        optional bool sign = 4;
+        repeated int32 first_recharges = 6;
+        repeated int32 gift_ids = 7;
+        optional int32 daily_gift_id = 8;
+}
+
+message C2S_VIPInfo {
+        optional ProtocolType type = 1 [default = C_2_S_VIP_INFO];
+}
+
+message S2C_VIPInfo {
+        optional ProtocolType type = 1 [default = S_2_C_VIP_INFO];
+        optional VIPInfo info = 2;
+}
+
+message C2S_VIPSign {
+        optional ProtocolType type = 1 [default = C_2_S_VIP_SIGN];
+}
+
+message S2C_VIPSign {
+        optional ProtocolType type = 1 [default = S_2_C_VIP_SIGN];
+        optional int32 sign_days = 2;
+        optional int32 id = 3;
+        optional int32 exp = 4;
+}
+
+message C2S_VIPBuyExp {
+        optional ProtocolType type = 1 [default = C_2_S_VIP_BUY_EXP];
+        optional int32 id = 2;
+}
+
+message S2C_VIPBuyExp {
+        optional ProtocolType type = 1 [default = S_2_C_VIP_BUY_EXP];
+        optional int32 id = 2;
+        optional int32 exp = 3;
+}
+
+message C2S_VIPBuyGift {
+        optional ProtocolType type = 1 [default = C_2_S_VIP_BUY_GIFT];
+        optional int32 id = 2;
+        optional int32 gift_type = 3;//1=daily 2=once
+}
+
+message S2C_VIPBuyGift {
+        optional ProtocolType type = 1 [default = S_2_C_VIP_BUY_GIFT];
+        optional int32 id = 2;
+        optional int32 gift_type = 3;
+}
+
+message S2C_VIPReward {
+        optional ProtocolType type = 1 [default = S_2_C_VIP_REWARD];
+        optional int32 id = 2;
+}
+
+message S2C_VIPRecharge {
+        optional ProtocolType type = 1 [default = S_2_C_VIP_RECHARGE];
+        optional int32 id = 2;
+        optional int32 vip_id = 3;
+        optional int32 exp = 4;
+}

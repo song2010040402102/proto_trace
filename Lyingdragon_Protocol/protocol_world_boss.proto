@@ -1,0 +1,175 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_WorldBossInfo {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_INFO];
+}
+
+message S2C_WorldBossInfo {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_INFO];
+        enum State {
+            NORMAL = 0;
+            DEAD = 1;
+            OVER_TIME = 2;
+            CLAIMED = 3;
+        }
+        message BossItem {
+                optional int64 id = 1;
+                optional int32 troop_id = 2;
+                optional WorldPos pos = 3;
+                optional int32 template_id = 4;
+                optional int32 crop_id = 5;
+                optional int32 level = 6;
+                optional int32 refresh_time = 7;
+                optional int32 state = 8;       // 0:normal, 1:dead, 2:overtime
+                optional int64 hp = 9;
+                repeated int64 attack_players = 10;
+                repeated int64 pursue_players = 11;
+        }
+        repeated BossItem items = 2;
+        optional int32 refresh = 3;
+        repeated int32 init_boss_ids = 4;
+        optional int32 summon_count = 5;
+}
+
+message C2S_WorldBossTeamInfo {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_TEAM_INFO];
+}
+
+message WorldBossTeamPlayer {
+        optional int64 role_id = 1;
+        optional int32 army_id = 2;
+        optional string name = 3;
+        optional int32 img_type = 4;
+        optional int32 img_id = 5;
+        optional int64 army_world_id = 6;
+}
+message WorldBossTeam {
+        optional int64 boss_id = 1;
+        optional int64 leader_id = 2;
+        optional int32 gather_cd = 3; //sec
+        repeated WorldBossTeamPlayer players = 4;
+        optional int32 total_time = 5;
+        optional int64 team_id = 6;
+}
+
+message S2C_WorldBossTeamInfo {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_TEAM_INFO];
+        repeated WorldBossTeam teams = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_WorldBossCreate {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_CREATE];
+        optional int64 boss_id = 2;
+        optional int32 army_id = 3;
+        optional int32 cd = 4;//min
+        optional int32 belong_city_id = 5;
+}
+
+message S2C_WorldBossCreate {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_CREATE];
+        optional int32 ret = 2;
+        optional WorldBossTeam team = 3;
+}
+
+message C2S_WorldBossJoin {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_JOIN];
+        optional int64 boss_id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_WorldBossJoin {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_JOIN];
+        optional int32 ret = 2; //1 no in cd, 2 num limit, 3 has join
+        optional int64 boss_id = 3;
+        optional WorldBossTeamPlayer player = 4;
+}
+
+message C2S_WorldBossKickOut {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_KICK_OUT];
+        optional int64 boss_id = 2;
+        optional int64 role_id = 3;
+}
+
+message S2C_WorldBossKickOut {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_KICK_OUT];
+        optional int32 ret = 2; //1 not in cd, 2 no in team
+        optional int64 boss_id = 3;
+        optional int64 role_id = 4;
+}
+
+message C2S_WorldBossQuit {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_QUIT];
+        optional int64 boss_id = 2;
+}
+
+message S2C_WorldBossQuit {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_QUIT];
+        optional int32 ret = 2;
+        optional int64 role_id = 3;
+        optional int64 boss_id = 4;
+}
+
+message C2S_WorldBossBattle {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_BATTLE];
+        optional int64 boss_id = 2;
+        optional int32 belong_city_id = 3;
+}
+
+message S2C_WorldBossBattle {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_BATTLE];
+        optional int32 ret = 2; // 1 dead
+        optional int64 boss_id = 3;
+        optional int32 battle_ret = 4;
+        optional int64 report_id = 5;
+        optional int32 crop_id = 6;
+}
+
+message S2C_WorldBossDead {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_DEAD];
+        optional int64 boss_id = 2;
+        optional int32 crop_id = 3;
+}
+
+message C2S_WorldBossSummon {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_SUMMON];
+        optional int32 boss_template_id = 2;
+        optional int32 boss_level = 3;
+}
+
+message S2C_WorldBossSummon {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_SUMMON];
+        optional int32 boss_template_id = 2;
+        optional int32 boss_level = 3;
+        optional int64 boss_id = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_WorldBossPursueAttack {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_PURSUE_ATTACK];
+        optional int64 boss_id = 2;
+        optional int64 army_id = 3;
+}
+
+message S2C_WorldBossPursueAttack {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_PURSUE_ATTACK];
+        optional int64 boss_id = 2;
+        optional int32 battle_ret = 3;
+        optional int64 report_id = 4;
+        optional int32 crop_id = 5;
+        optional int32 ret = 6;
+}
+
+message C2S_WorldBossClaimRank {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_BOSS_CLAIM_RANK];
+        optional int64 boss_id = 2;
+}
+
+message S2C_WorldBossClaimRank {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_BOSS_CLAIM_RANK];
+        optional int64 boss_id = 2;
+        repeated RewardType rwds = 3;
+        optional int32 ret = 4;
+}

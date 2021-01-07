@@ -1,0 +1,580 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message GeneralSchoolChild {
+        optional string name = 1;
+        optional int32 pos = 2;
+        optional int32 sex = 3;
+        optional int32 character_id = 4;
+        optional int32 hobby_id = 5;
+        optional int32 teacher_id = 6;
+        optional double leader = 7;
+        optional double attack = 8;
+        optional double mentality = 9;
+        optional double leader_increase = 10;
+        optional double attack_increase = 11;
+        optional double mentality_increase = 12;
+        optional int32 train_num = 13;
+        optional int32 stage = 14;
+        optional int32 general_id = 15;
+        optional int32 occupation_id = 16;
+        optional int32 skill_id = 17;
+        optional int32 old_occupation_id = 18;
+        optional int32 old_skill_id = 19;
+        optional int32 birth_time = 20;
+        optional int32 awake_soldier_num = 21;
+        optional int32 rebuild_type = 22;
+}
+
+message GeneralInfo {
+        optional int32 id = 1;
+        optional double leader = 2;
+        optional double attack = 3;
+        optional double mental = 4;
+        optional int32 current_soldiers = 5;
+        optional int32 max_soldiers = 6;
+        optional int32 advance_level = 7;
+        repeated int32 soldier_ids = 8;
+        optional int32 current_exp = 11;
+        optional int32 strategics_level = 12;
+        optional int32 battle_soldier_id = 14;
+        optional int32 skill_level = 15;
+        optional int32 limit_soldier_num = 16;
+        optional int32 skill_id = 18;
+        optional string name = 19;
+        optional int32 leader_atk = 21;
+        optional int32 leader_atk_def = 22;
+        optional int32 policy_atk = 23;
+        optional int32 policy_atk_def = 24;
+        optional int32 attack_atk = 25;
+        optional int32 attack_atk_def = 26;
+        optional int32 crit_rate = 27;
+        optional int32 beat_back_rate = 28;
+        optional int32 dec_injury_rate = 29;
+        optional int32 reward_lvl = 32;
+        optional int32 reward_exp = 33;
+        optional int32 lvl = 35;
+        optional int32 quality = 36;
+        optional int32 power = 37;
+        optional int32 add_injury_rate = 38;
+        optional int32 anti_crit_rate = 39;
+        optional int32 soldier_num_rate = 40;
+        optional int64 horse_id = 41;
+        optional int32 ignore_damage = 42;
+}
+
+message C2S_AllGeneralInfo {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_ALL_INFO];
+}
+
+message S2C_AllGeneralInfo {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_ALL_INFO];
+        optional int32 is_rebuild_soldier_free = 2;
+        optional int32 rebuild_soldier_nums = 3;
+        optional int32 main_general_id = 4;
+        message PieceInfo {
+                optional int32 id = 1;
+                optional int32 num = 2;
+        }
+        repeated PieceInfo pieces = 5;
+        repeated GeneralInfo generals = 6;
+}
+
+message C2S_GeneralInfo {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_INFO];
+        optional int32 general_id = 2;
+}
+
+message S2C_GeneralInfo {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_INFO];
+        optional int32 res = 2;
+        optional GeneralInfo data = 3;
+}
+
+message C2S_GeneralUnlockSoldier {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_UNLOCK_SOLDIER];
+        optional int32 general_id = 2;
+        optional int32 soldier_id = 3;
+}
+
+message S2C_GeneralUnlockSoldier {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_UNLOCK_SOLDIER];
+        optional int32 general_id = 2;
+        optional int32 soldier_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_GeneralAdvanceSoldier {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_ADVANCE_SOLDIER];
+        optional int32 general_id = 2;
+}
+
+message S2C_GeneralAdvanceSoldier{
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_ADVANCE_SOLDIER];
+        optional int32 general_id = 2;
+        optional int32 advance_level = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_StrategicsLevelUp {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_STRATEGICS_LEVEL_UP];
+        optional int32 general_id = 2;
+}
+
+message S2C_StrategicsLevelUp {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_STRATEGICS_LEVEL_UP];
+        optional int32 general_id = 2;
+        optional int32 strategics_level = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_GeneralCompose {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_COMPOSE];
+        repeated int32 general_ids = 2;
+}
+
+message S2C_GeneralCompose {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_COMPOSE];
+        repeated int32 general_ids = 2;
+}
+
+message C2S_SetGeneralBattleSoldier {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SET_BATTLE_SOLDIER];
+        optional int32 general_id = 2;
+        optional int32 soldier_id = 3;
+}
+
+message S2C_UpdateGeneralInfo {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_UPDATE_INFO];
+        message UpdateGeneralInfo {
+                optional int32 general_id = 1;
+                optional int32 exp = 2;
+                optional int32 lvl = 3;
+                optional double leader = 4;
+                optional double attack = 5;
+                optional double mentality = 6;
+                optional int32 cur_soldier_num = 7;
+                optional int32 max_soldier_num = 8;
+                optional int32 battle_soldier = 9;
+                optional int32 power = 10;
+                optional int32 leader_atk = 11;
+                optional int32 leader_atk_def = 12;
+                optional int32 policy_atk = 13;
+                optional int32 policy_atk_def = 14;
+                optional int32 attack_atk = 15;
+                optional int32 attack_atk_def = 16;
+        }
+        repeated UpdateGeneralInfo data_info = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_SetMainGeneral {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SET_MAIN];
+        optional int32 general_id = 2;
+}
+
+message S2C_SetMainGeneral {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SET_MAIN];
+        optional int32 res = 2;
+        optional int32 general_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_GeneralReward {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_REWARD];
+        message Item {
+                optional int32 id = 1;
+                optional int32 num = 2;
+        }
+        optional int32 general_id = 2;
+        repeated Item items = 3;
+}
+
+message S2C_GeneralReward {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_REWARD];
+        optional int32 general_id = 2;
+        optional int32 add_lvl = 3;
+        optional int32 exp = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_GeneralSchoolChildRandName {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_CHILD_RAND_NAME];
+        optional int32 pos = 2;
+}
+
+message S2C_GeneralSchoolChildRandName {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_CHILD_RAND_NAME];
+        optional int32 pos = 2;
+        optional string name = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_GeneralSchoolChildInfo {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_CHILD_INFO];
+        optional int32 pos = 2;
+}
+
+message S2C_GeneralSchoolChildInfo {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_CHILD_INFO];
+        repeated GeneralSchoolChild child = 2;
+}
+
+message C2S_GeneralSchoolChildOldInfo {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_CHILD_OLD_INFO];
+        optional int32 pos = 2;
+
+}
+message S2C_GeneralSchoolChildOldInfo  {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_CHILD_OLD_INFO];
+        optional int32 pos = 2;
+        optional int32 leader = 3;
+        optional int32 attack = 4;
+        optional int32 mentality = 5;
+        optional int32 leader_increase = 6;
+        optional int32 attack_increase = 7;
+        optional int32 mentality_increase = 8;
+        optional int32 ret = 9;
+}
+
+message C2S_GeneralSchoolChildCreate {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_CHILD_CREATE];
+        optional int32 pos = 2;
+        optional string name = 3;
+}
+
+message S2C_GeneralSchoolChildCreate {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_CHILD_CREATE];
+        optional int32 ret = 2;
+        optional int32 pos = 3;
+        optional string name = 4;
+}
+
+message C2S_GeneralSchoolChildTeacher {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_CHILD_TEACHER];
+        optional int32 pos = 2;
+        optional int32 teacher_id = 3;
+}
+
+message S2C_GeneralSchoolChildTeacher {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_CHILD_TEACHER];
+        optional int32 pos = 2;
+        optional int32 ret = 3;
+        optional int32 teacher_id = 4;
+}
+
+message C2S_GeneralSchoolProjectInfo {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_PROJECT_INFO];
+        optional int32 pos = 2;
+}
+
+message S2C_GeneralSchoolProjectInfo {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_PROJECT_INFO];
+        optional int32 teacher_id = 2;
+        optional int32 teach_num = 3;
+        optional int32 train_num = 4;
+        optional int32 pos = 5;
+        optional int32 use_god_bless = 6;
+        optional int32 refresh_num = 7;
+        repeated int32 project = 8;
+        optional int32 ret = 9;
+}
+
+message C2S_GeneralSchoolProjectRefresh {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_PROJECT_REFRESH];
+        optional int32 pos = 2;
+}
+
+message S2C_GeneralSchoolProjectRefresh {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_PROJECT_REFRESH];
+        optional int32 ret = 2;
+}
+
+message C2S_GeneralSchoolProjectTrain {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_PROJECT_TRAIN];
+        optional int32 pos = 2;
+        optional int32 project_pos = 3;
+}
+message S2C_GeneralSchoolProjectTrain {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_PROJECT_TRAIN];
+        optional int32 ret = 2;
+        optional int32 project_pos = 3;
+        optional int32 stage = 4;
+        optional int32 pos = 5;
+}
+
+message C2S_GeneralSchoolChildHead {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_CHILD_HEAD];
+        optional int32 pos = 2;
+        optional int32 ident = 3;
+}
+message S2C_GeneralSchoolChildHead {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_CHILD_HEAD];
+        optional int32 pos = 2;
+        optional int32 stage = 3;
+        optional int32 ident = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_GeneralSchoolSkillTrain{
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_SKILL_TRAIN];
+        optional int32 pos = 2;
+        optional int32 ident = 3;
+}
+
+message S2C_GeneralSchoolSkillTrain {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_SKILL_TRAIN];
+        optional int32 pos = 2;
+        optional int32 ident = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_GeneralSchoolMakeGeneral {
+        optional ProtocolType type  = 1 [default = C_2_S_GENERAL_SCHOOL_DO_MAKE];
+        optional int32 pos = 2;
+        optional int32 choose = 3;
+}
+
+message S2C_GeneralSchoolMakeGeneral {
+        optional ProtocolType type  = 1 [default = S_2_C_GENERAL_SCHOOL_DO_MAKE];
+        optional int32 pos = 2;
+        optional int32 choose = 3;
+        optional int32 stage = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_GeneralSchoolUseGodBless {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_USE_GOD_BLESS];
+        optional int32 pos = 2;
+        optional int32 is_use = 3;
+}
+
+message S2C_GeneralSchoolUseGodBless {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_USE_GOD_BLESS];
+        optional int32 ret = 2;
+}
+
+message C2S_GeneralSchoolChildRebuild {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_CHILD_REBUILD];
+        optional int32 pos = 2;
+        optional int32 rebuild_type = 3;
+}
+
+message S2C_GeneralSchoolChildRebuild {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_REBUILD];
+        optional int32 pos = 2;
+        optional int32 rebuild_type = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_GeneralSchoolChildRename {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_CHILD_RENAME];
+        optional int32 pos = 2;
+        optional string name = 3;
+}
+
+message S2C_GeneralSchoolChildRename {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_CHILD_RENAME];
+        optional int32 ret = 2;
+        optional int32 pos = 3;
+        optional string name = 4;
+}
+
+message C2S_GeneralSchoolAwakeInfo {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_AWAKE_INFO];
+        optional int32 pos = 2;
+        optional int32 refresh = 3;
+}
+
+message S2C_GeneralSchoolAwakeInfo {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_AWAKE_INFO];
+        optional int32 pos = 2;
+        optional int32 awake_value = 3;
+        optional int32 refresh_num = 4;
+        optional int32 train_num = 5;
+        optional int32 buy_num = 6;
+        optional int32 event_id = 7;
+        optional int32 skill_id = 8;
+        repeated int32 hit_index = 9;
+        repeated int32 project = 10;
+        repeated int32 had_skill = 11;
+        optional int32 ret = 12;
+}
+
+message C2S_GeneralSchoolAwakeTrain {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_AWAKE_TRAIN];
+        optional int32 pos = 2;
+        optional int32 index = 3;
+}
+
+message S2C_GeneralSchoolAwakeTrain {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_AWAKE_TRAIN];
+        optional int32 pos = 2;
+        optional int32 index = 3;
+        optional int32 event_id = 4;
+        optional int32 spec_evt = 5;
+        optional int32 is_return = 6;
+        optional int32 ret = 7;
+}
+
+message C2S_GeneralSchoolAwakeSkillChoose {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_AWAKE_SKILL_CHOOSE];
+        optional int32 pos = 2;
+        optional int32 skill_id = 3;
+}
+
+message S2C_GeneralSchoolAwakeSkillChoose {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_AWAKE_SKILL_CHOOSE];
+        optional int32 ret = 2;
+}
+
+message C2S_GeneralSchoolFieldInfo {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SCHOOL_FIELD_INFO];
+}
+
+message TrainItem {
+        optional int32 pos = 1;
+        optional int32 end_time = 2;
+        optional int32 effect_id = 3;
+        optional int32 event_id = 4;
+        optional int32 ephor_id = 5;
+        optional int32 refresh_event_times = 6;
+        repeated int32 task_ids = 7;
+        repeated int32 general_ids = 8;
+}
+
+message S2C_GeneralSchoolFieldInfo {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SCHOOL_FIELD_INFO];
+        optional int32 gold_times = 2;
+        repeated TrainItem items = 3;
+}
+
+message C2S_GeneralAddTrain {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_ADD_TRAIN];
+        optional int32 ephor_id = 2;
+        optional int32 effect_id = 3;
+        repeated int32 general_ids = 4;
+}
+
+message S2C_GeneralAddTrain {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_ADD_TRAIN];
+        optional int32 ret = 2;
+        optional int32 ephor_id = 3;
+        optional int32 effect_id = 4;
+        optional int32 end_time = 5;
+        repeated int32 general_ids = 6;
+}
+
+message C2S_GeneralOverTrain {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_OVER_TRAIN];
+        optional int32 pos = 2;
+}
+
+message S2C_GeneralOverTrain {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_OVER_TRAIN];
+        optional int32 ret = 2;
+        optional int32 pos = 3;
+        repeated RewardType rewards = 4;
+        repeated RewardType extra_rewards = 5;
+        optional TrainItem item = 6;
+}
+
+message GeneralSuddenItem {
+        optional int32 id = 1;
+        optional int32 num = 2;
+}
+
+message C2S_GeneralSuddenFlight {
+        optional ProtocolType type = 1 [default = C_2_S_GENERAL_SUDDEN_FLIGHT];
+        optional int32 general_id = 2;
+        repeated GeneralSuddenItem items = 3;
+}
+
+message S2C_GeneralSuddenFlight {
+        optional ProtocolType type = 1 [default = S_2_C_GENERAL_SUDDEN_FLIGHT];
+        optional int32 general_id = 2;
+        optional int32 lvl = 3;
+        optional int32 exp = 4;
+        optional int32 max_soldier_num = 5;
+        repeated GeneralSuddenItem use_items = 6;
+        optional int32 ret = 7;
+}
+
+message GeneralGroupInfo {
+    optional int32 id = 1;
+    optional int32 like = 2;
+    optional int32 dislike = 3;
+    optional int32 player_state = 4;    // 0 for default, 1 for like, 2 for dislike
+}
+
+message C2S_GeneralGroupInfo {
+    optional ProtocolType type = 1 [default = C_2_S_GENERAL_GROUP_INFO];
+    optional int32 general_id = 2;
+}
+
+message S2C_GeneralGroupInfo {
+    optional ProtocolType type = 1 [default = S_2_C_GENERAL_GROUP_INFO];
+    repeated GeneralGroupInfo infos = 2;
+}
+
+message C2S_GeneralGroupUpdate {
+    optional ProtocolType type = 1 [default = C_2_S_GENERAL_GROUP_UPDATE];
+    optional int32 id = 2;
+    optional int32 action = 3;  // 1 for like, 2 for cancel like, 3 for dislike, 4 for cancel dislike
+}
+
+message S2C_GeneralGroupUpdate {
+    optional ProtocolType type = 1 [default = S_2_C_GENERAL_GROUP_UPDATE];
+    optional GeneralGroupInfo info = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_GeneralTrainEvent {
+    optional ProtocolType type = 1 [default = C_2_S_GENERAL_TRAIN_EVENT];
+    optional int32 ephor_id = 2;
+}
+
+message S2C_GeneralTrainEvent {
+    optional ProtocolType type = 1 [default = S_2_C_GENERAL_TRAIN_EVENT];
+    optional int32 ephor_id = 2;
+    optional int32 event_id = 3;
+    optional int32 refresh_times = 4;
+    optional int32 gold_refresh_times = 5;
+    repeated int32 task_ids = 6;
+    optional int32 ret = 7;
+}
+
+message C2S_GeneralSwornRewardInfo {
+    optional ProtocolType type = 1 [default = C_2_S_GENERAL_SWORN_REWARD_INFO];
+}
+
+message S2C_GeneralSwornRewardInfo {
+    optional ProtocolType type = 1 [default = S_2_C_GENERAL_SWORN_REWARD_INFO];
+    message RewardInfo {
+        optional int32 type = 1;
+        optional int32 num = 2;
+    }
+    message SwornReward {
+        optional int32 id = 1;
+        repeated RewardInfo infos = 2;
+    }
+    repeated SwornReward sworn_rewards = 2;
+}
+
+message C2S_GeneralSwornReward {
+    optional ProtocolType type = 1 [default = C_2_S_GENERAL_SWORN_REWARD];
+    optional int32 id = 2;
+    optional int32 rtype = 3;
+    optional int32 num = 4;
+}
+
+message S2C_GeneralSwornReward {
+    optional ProtocolType type = 1 [default = S_2_C_GENERAL_SWORN_REWARD];
+    optional int32 ret = 2; //1=no such reward 2=repeated reward  3=can not reward yet
+    optional int32 id = 3;
+    optional int32 rtype = 4;
+    optional int32 num = 5;
+    repeated RewardType rwds = 6;
+}
+

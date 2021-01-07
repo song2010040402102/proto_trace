@@ -1,0 +1,23 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_DramaList {
+        optional ProtocolType type = 1 [default = C_2_S_DRAMA_LIST];
+}
+
+message S2C_DramaList {
+        optional ProtocolType type = 1 [default = S_2_C_DRAMA_LIST];
+        repeated int32 draw_ids = 2;
+}
+
+message C2S_DramaDraw {
+        optional ProtocolType type = 1 [default = C_2_S_DRAMA_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_DramaDraw {
+        optional ProtocolType type = 1 [default = S_2_C_DRAMA_DRAW];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}

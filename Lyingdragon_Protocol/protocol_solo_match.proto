@@ -1,0 +1,106 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message SoloMatchRoleInfo {
+        optional int64 role_id = 1;
+        optional string name = 2;
+        optional int32 lvl = 3;
+        optional int32 country_id = 4;
+        optional int32 bets_num = 5;
+        optional int32 img_id = 6;
+        optional int32 img_type = 7;
+}
+
+message SoloMatch {
+    optional int64 report_id = 1;
+    optional int64 winer_id = 2;
+    repeated SoloMatchRoleInfo athletes = 3;
+}
+
+message S2C_SoloMatchBegin {
+        optional ProtocolType type = 1 [default = S_2_C_SOLO_MATCH_BEGIN];
+}
+
+message C2S_SoloMatchInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SOLO_MATCH_INFO];
+}
+
+message S2C_SoloMatchInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SOLO_MATCH_INFO];
+        optional int32 status = 2; //0=未开始 1=报名中 2=进行中
+        optional int32 best_rank = 3;
+        optional int32 num = 4;
+        optional int32 round = 5;
+        optional int64 bet_id = 6;
+        optional int32 cd_time = 7;
+        optional bool join = 8;
+        optional int32 join_cd = 9;
+        optional SoloMatchRoleInfo record_holder = 10;
+        optional int32 win_record = 11;
+        repeated SoloMatchRoleInfo athletes = 12;
+        optional int32 solo_general = 13;
+}
+
+message C2S_SoloMatchJoin {
+        optional ProtocolType type = 1 [default = C_2_S_SOLO_MATCH_JOIN];
+}
+
+message S2C_SoloMatchJoin {
+        optional ProtocolType type = 1 [default = S_2_C_SOLO_MATCH_JOIN];
+        optional bool join = 2;
+        optional int64 report_id = 3;
+        repeated SoloMatch match = 4;
+}
+
+message C2S_SoloMatchRoundInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SOLO_MATCH_ROUND_INFO];
+        optional int32 round = 2;
+}
+
+message S2C_SoloMatchRoundInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SOLO_MATCH_ROUND_INFO];
+        optional int32 round = 2;
+        repeated SoloMatch matchs = 3;
+        optional int32 cd_time = 4;
+}
+
+message C2S_SoloMatchBet {
+        optional ProtocolType type = 1 [default = C_2_S_SOLO_MATCH_BET];
+        optional int64 role_id = 2;
+}
+
+message S2C_SoloMatchBet {
+        optional ProtocolType type = 1 [default = S_2_C_SOLO_MATCH_BET];
+        optional int64 role_id = 2;
+        optional int32 num = 3;
+}
+
+message C2S_SoloMatchDraw {
+        optional ProtocolType type = 1 [default = C_2_S_SOLO_MATCH_DRAW];
+}
+
+message S2C_SoloMatchDraw {
+        optional ProtocolType type = 1 [default = S_2_C_SOLO_MATCH_DRAW];
+        optional int64 role_id = 2;
+        optional int32 num = 3;
+}
+
+message C2S_SoloMatchJoinMatch {
+        optional ProtocolType type = 1 [default = C_2_S_SOLO_MATCH_JOIN_MATCH];
+}
+
+message S2C_SoloMatchJoinMatch {
+        optional ProtocolType type = 1 [default = S_2_C_SOLO_MATCH_JOIN_MATCH];
+        repeated SoloMatch matchs = 2;
+}
+
+message C2S_SoloMatchSetGeneral {
+        optional ProtocolType type = 1 [default = C_2_S_SOLO_MATCH_SET_GENERAL];
+        optional int32 general_id = 2;
+}
+
+message S2C_SoloMatchSetGeneral {
+        optional ProtocolType type = 1 [default = S_2_C_SOLO_MATCH_SET_GENERAL];
+        optional int32 general_id = 2;
+}

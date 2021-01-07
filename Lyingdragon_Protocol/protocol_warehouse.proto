@@ -1,0 +1,55 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_AccelerateWarehouseCell {
+        optional ProtocolType type = 1 [default = C_2_S_WAREHOUSE_ACCELERATE_CELL];
+}
+
+message S2C_AccelerateWarehouseCell {
+        optional ProtocolType type = 1 [default = S_2_C_WAREHOUSE_ACCELERATE_CELL];
+        optional int32 cost = 2;
+}
+
+message C2S_UnbindWarehouseCell {
+        optional ProtocolType type = 1 [default = C_2_S_WAREHOUSE_UNBIND_CELL];
+}
+message S2C_UnbindWarehouseCell {
+        optional ProtocolType type = 1 [default = S_2_C_WAREHOUSE_UNBIND_CELL];
+        optional int32 next_id = 2;
+}
+
+message S2C_LoadResourceWarehouse {
+        optional ProtocolType type = 1 [default = S_2_C_WAREHOUSE_LOAD_RESOURCE];
+        optional string res = 2;
+}
+
+message C2S_GetWalletReward {
+        optional ProtocolType type = 1 [default = C_2_S_WAREHOUSE_GET_WALLET_REWARD];
+        optional int32 index = 2;
+}
+
+message S2C_GetWalletReward {
+        optional ProtocolType type = 1 [default = S_2_C_WAREHOUSE_GET_WALLET_REWARD];
+        optional int32 index = 2;
+        optional int32 cost_type = 3;
+        optional int32 value = 4;
+        optional int32 id = 5;
+}
+
+message S2C_LoadWarehouseCellInfo {
+        optional ProtocolType type = 1 [default = S_2_C_WAREHOUSE_LOAD_CELL_INFO];
+        optional int32 id = 2;
+        optional int32 online_second = 3;
+        optional int32 cost = 4;
+}
+
+message S2C_LoadWalletInfo {
+        optional ProtocolType type = 1 [default = S_2_C_WAREHOUSE_LOAD_WALLET_INFO];
+        message WalletInfo {
+            optional int32 show_time = 1;
+            optional int32 reward_status =2;
+        }
+        optional int32 daily_online_time = 2;
+        repeated WalletInfo wallets = 3;
+}

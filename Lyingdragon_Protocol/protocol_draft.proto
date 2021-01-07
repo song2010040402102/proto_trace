@@ -1,0 +1,58 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_Draft {
+        optional ProtocolType type = 1 [default = C_2_S_DRAFT_DO_DRAFT];
+        optional int32 draft_type = 2; //1=义兵
+        optional int32 soldiers_nums = 3;
+}
+
+message S2C_DraftFreeSoldierRes {
+        optional ProtocolType type = 1 [default = S_2_C_DRAFT_FREE_SOLDIER];
+        optional int32 free_soldier_num = 2;
+        optional int32 soldier_num = 3;
+        optional int32 cool_time = 4;
+        optional int32 ret = 5;
+}
+
+message S2C_DraftRes {
+        optional ProtocolType type = 1 [default = S_2_C_DRAFT_RES];
+        enum Tip {
+            NO_TIP = 0;
+            SUPPLY_FULL = 1;//兵力补满提示
+            NO_SUPPLY_FULL = 2; //兵力不满提示
+        }
+        optional int32 soldier_num = 2;
+        optional int32 food_num = 3;
+        optional int32 tip = 4;
+        optional int32 ret = 5;
+}
+
+message  C2S_DraftInfo {
+        optional ProtocolType type = 1 [default = C_2_S_DRAFT_INFO];
+}
+
+message S2C_DraftInfo {
+        optional ProtocolType type = 1 [default = S_2_C_DRAFT_INFO];
+        optional int32 free_soldier_num = 2;
+        optional int32 cool_time = 3;
+}
+
+message C2S_DraftSupplySoldier {
+        optional ProtocolType type = 1 [default = C_2_S_DRAFT_SUPPLY_SOLDIER];
+}
+
+message S2C_DraftSupplySoldier {
+        optional ProtocolType type = 1 [default = S_2_C_DRAFT_SUPPLY_SOLDIER];
+        message GeneralSoldier {
+            optional int32 id = 1;
+            optional int32 soldier_num = 2;
+        }
+        optional int32 sup_type = 2;//0=自动 1=主动
+        optional int32 cur_soldier_num = 3;
+        optional int32 cost_soldier_num = 4;
+        optional int32 lack_soldier_num = 5;
+        repeated GeneralSoldier general_soldiers = 6;
+        optional int32 ret = 7;
+}

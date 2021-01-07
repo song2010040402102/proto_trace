@@ -1,0 +1,298 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_TaskChapterInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_CHAPTER_INFO];
+}
+
+message Task {
+    optional int32 id = 1;
+    optional int32 value = 2;
+    optional int32 status = 3;
+    optional int32 start_time = 4;
+    optional int32 end_time = 5;
+    optional int32 is_new = 6;
+}
+
+message S2C_TaskChapterInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_CHAPTER_INFO];
+        optional int32 id = 2;
+        optional int32 drawed = 3;
+        repeated Task tasks = 4;
+}
+
+message C2S_TaskInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_INFO];
+        optional int32 task_type = 2;
+}
+
+message S2C_TaskInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_INFO];
+        repeated Task tasks = 2;
+        optional bool is_auto = 3;//是否是服务端主动推送
+        optional int32 task_type = 4;
+}
+
+message C2S_TaskDraw {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_TaskDraw {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_DRAW];
+        optional int32 ret = 2;
+        optional int32 id = 3;
+        optional int32 activity = 4;
+}
+
+message C2S_TaskCropDraw {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_CROP_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_TaskCropDraw {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_CROP_DRAW];
+        optional int32 ret = 2;
+        optional int32 id = 3;
+}
+
+message C2S_TaskDailyInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_DAILY_INFO];
+}
+
+message S2C_TaskDailyInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_DAILY_INFO];
+        repeated Task tasks = 2;
+        repeated Task vip_tasks = 3;
+}
+
+message C2S_TaskActivity {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_ACTIVITY];
+}
+
+message S2C_TaskActivity {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_ACTIVITY];
+        optional int32 activity = 2;
+        repeated int32 drawed_activity = 3;
+        optional int32 yesterday_role_level = 4;
+}
+
+message C2S_TaskActivityDraw {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_ACTIVITY_DRAW];
+        optional int32 activity = 2;
+}
+
+message S2C_TaskActivityDraw {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_ACTIVITY_DRAW];
+        optional int32 activity = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_TaskChapterDraw {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_CHAPTER_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_TaskChapterDraw {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_CHAPTER_DRAW];
+        optional int32 id = 2;
+}
+
+message C2S_TaskFinish {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_FINISH];
+        optional int32 id = 2;
+        optional int32 status = 3;
+}
+
+message S2C_TaskFinish {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_FINISH];
+        optional int32 id = 2;
+        optional int32 status = 3;
+        optional int32 ret = 4;
+}
+
+message OfficialTaskNPC {
+        message GeneralInfo {
+            optional int32 id = 1;
+            optional int32 pos = 2;
+            optional int32 soldier_id = 3;
+        }
+        optional int32 id = 1;
+        optional string name = 2;
+        optional int32 lvl = 3;
+        optional int32 location = 4;
+        optional int32 form_id = 6;
+        repeated GeneralInfo gis = 7;
+}
+
+message OfficialTask {
+        optional int32 id = 1;
+        optional int32 type_id = 2;
+        optional int32 country_id = 3;
+        optional int32 city_id = 4;
+        optional int32 atk_value = 5;
+        optional int32 success = 6;
+        optional int32 finish_num = 7;
+        optional int32 status = 8;
+        optional int32 num = 9;
+        optional OfficialTaskNPC npc = 10;
+}
+
+message C2S_TaskOfficialInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_OFFICIAL_INFO];
+}
+
+message S2C_TaskOfficialInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_OFFICIAL_INFO];
+        repeated OfficialTask tasks = 2;
+        optional int32 finish_num = 3;
+        optional int32 refresh_num = 4;
+}
+
+message S2C_TaskOfficialUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_OFFICIAL_UPDATE];
+        repeated Task items = 2;
+}
+
+message C2S_TaskOfficialStart {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_OFFICIAL_START];
+        optional int32 id = 2;
+}
+
+message S2C_TaskOfficialStart {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_OFFICIAL_START];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_TaskOfficialRefresh {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_OFFICIAL_REFRESH];
+}
+
+message S2C_TaskOfficialRefresh {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_OFFICIAL_REFRESH];
+        repeated OfficialTask tasks = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_TaskOfficialDraw {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_OFFICIAL_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_TaskOfficialDraw {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_OFFICIAL_DRAW];
+        optional int32 id = 2;
+        repeated RewardType rwds = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_SeasonTaskInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SEASON_TASK_INFO];
+}
+
+message C2S_SeasonTaskDraw {
+        optional ProtocolType type = 1 [default = C_2_S_SEASON_TASK_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_SeasonTaskDraw {
+        optional ProtocolType type = 1 [default = S_2_C_SEASON_TASK_DRAW];
+        optional int32 ret = 2;
+        optional int32 id = 3;
+}
+
+message C2S_TaskOfficialBattle {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_OFFICIAL_BATTLE];
+        optional int32 task_id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_TaskOfficialBattle {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_OFFICIAL_BATTLE];
+        optional int32 task_id = 2;
+        optional int32 army_id = 3;
+        optional int32 result = 4;
+        optional int64 report_id = 5;
+        optional int32 ret = 6;
+}
+
+message C2S_TaskOfficialAbandon {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_OFFICIAL_ABANDON];
+        optional int32 id = 2;
+}
+
+message S2C_TaskOfficialAbandon {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_OFFICIAL_ABANDON];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_TaskCropOfficialInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_CROP_OFFICIAL_INFO];
+}
+
+message CropOficeTask {
+        optional int32 id = 1;
+        optional int32 value = 2;
+        optional int32 status = 3;//1=可领奖励 2=已完成 3=等待发布
+}
+
+message S2C_TaskCropOfficialInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_CROP_OFFICIAL_INFO];
+        repeated CropOficeTask tasks = 2;
+        repeated int32 init_task_ids = 3;
+        optional int32 publish_num = 4;
+        optional int32 refresh_num = 5;
+        optional int32 ret = 6;
+}
+
+message C2S_TaskCropOfficialPublish {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_CROP_OFFICIAL_PUBLISH];
+        optional int32 id = 2;
+}
+
+message S2C_TaskCropOfficialPublish {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_CROP_OFFICIAL_PUBLISH];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_TaskCropOfficialRefresh {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_CROP_OFFICIAL_REFRESH];
+}
+
+message S2C_TaskCropOfficialRefresh {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_CROP_OFFICIAL_REFRESH];
+        repeated CropOficeTask tasks = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_TaskCropOfficialDraw {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_CROP_OFFICIAL_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_TaskCropOfficialDraw {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_CROP_OFFICIAL_DRAW];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_TaskUpdateNew {
+        optional ProtocolType type = 1 [default = C_2_S_TASK_UPDATE_NEW];
+        optional int32 id = 2;
+        enum TaskType {
+            NormalTask = 1;
+            CropTask = 2;
+        }
+        optional int32 task_type = 3;
+}
+
+message S2C_TaskUpdateNew {
+        optional ProtocolType type = 1 [default = S_2_C_TASK_UPDATE_NEW];
+        optional int32 id = 2;
+        optional int32 task_type = 3;
+        optional int32 ret = 4;
+}

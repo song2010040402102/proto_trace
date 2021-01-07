@@ -1,0 +1,35 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_RewardLoadInfo {
+        optional ProtocolType type = 1 [default = C_2_S_REWARD_INFO];
+}
+
+message S2C_RewardLoadInfo {
+        optional ProtocolType type = 1 [default = S_2_C_REWARD_INFO];
+        optional int32 online_time = 2;
+        repeated int32 online_ids = 3;
+        repeated int32 level_ids = 4;
+}
+
+message C2S_RewardLevel {
+        optional ProtocolType type = 1 [default = C_2_S_REWARD_LEVEL];
+        optional int32 id = 2;
+}
+
+message S2C_RewardLevel {
+        optional ProtocolType type = 1 [default = S_2_C_REWARD_LEVEL];
+        optional int32 ret = 2; //0 suc
+        optional int32 id = 3;
+}
+
+message C2S_RewardOnline {
+        optional ProtocolType type = 1 [default = C_2_S_REWARD_ONLINE];
+        repeated int32 ids = 2;
+}
+
+message S2C_RewardOnline {
+        optional ProtocolType type = 1 [default = S_2_C_REWARD_ONLINE];
+        repeated int32 ids = 2;
+}

@@ -1,0 +1,32 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message S2C_WorldCrop {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_CROP];
+    optional int64 id = 2;
+    optional int32 level = 3;
+    optional int32 pos_x = 4;
+    optional int32 pos_y = 5;
+}
+
+message CropAtkBrief {
+    message Round {
+        optional int64 atk_id = 1;
+        optional int64 def_id = 2;
+        optional int64 atk_cost = 3; //攻击方掉血量
+        optional int64 def_cost = 4; //防守方掉血量
+    }
+    optional int64 atk_soldier = 1;
+    optional int64 def_soldier = 2;
+    repeated Round rounds = 3;
+}
+
+message S2C_WorldCropAtk {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_CROP_ATK];
+    optional int64 atk_id = 2;
+    optional int64 crop_id = 3;
+    optional int32 result = 4;
+    optional int64 report_id = 5;
+    optional CropAtkBrief atk_brief = 6;
+}

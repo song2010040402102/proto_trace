@@ -1,0 +1,204 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_InstanceList {
+    optional ProtocolType type = 1 [default = C_2_S_INSTANCE_LIST];
+}
+
+message S2C_InstanceList {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_LIST];
+    message NPC {
+        optional int32 id = 1;
+        optional int32 rate = 2;
+    }
+    message AtkNum {
+        optional int32 id = 1;
+        optional int32 num = 2;
+    }
+    message WinNum {
+        optional int32 id = 1;
+        optional int32 num = 2;
+    }
+    message Instance {
+        optional int32 id = 1;
+        optional int32 draw_scores = 2;
+        repeated NPC npcs = 3;
+        repeated AtkNum nums = 4;
+        repeated WinNum win_nums = 5;
+        optional int32 drawed = 6;
+        repeated int32 draw_ach_ids = 7;
+        repeated AtkNum force_nums = 8;
+        repeated int32 draw_box_ids = 9;
+        optional int32 reward_num = 10;
+    }
+    repeated Instance instances = 2;
+    optional int32 next_refresh_time = 3;
+}
+
+message C2S_InstanceBattle {
+    optional ProtocolType type = 1 [default = C_2_S_INSTANCE_BATTLE];
+    optional int32 id = 2;
+    optional int32 general_id = 3;
+    optional int32 is_solo = 4; //0 normal, 1 solo
+    optional bool is_force = 5;
+    optional int32 army_id = 6;
+    optional int32 belong_city_id = 7;
+}
+
+message S2C_InstanceBattle {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_BATTLE];
+    optional int32 id = 2;
+    optional int32 rate = 3;
+    optional int32 is_solo = 4;
+    optional int32 instance_id = 5;
+    optional int32 total_score = 6;
+    optional int64 report_id = 7;
+    repeated RewardType rewards = 8;
+    optional int32 ret = 9;//0=succeed 1=atk num not enough
+    optional bool server_first = 10;
+    optional bool country_first = 11;
+    repeated int64 report_ids = 12;
+}
+
+message C2S_InstanceDrawScore {
+    optional ProtocolType type = 1 [default = C_2_S_INSTANCE_DRAW_SCORE];
+    optional int32 id = 2;
+    optional int32 score_idx = 3;
+}
+
+message S2C_InstanceDrawScore {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_DRAW_SCORE];
+    optional int32 id = 2;
+    optional int32 score_idx = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_InstanceSweep {
+    optional ProtocolType type = 1 [ default = C_2_S_INSTANCE_SWEEP];
+    optional int32 id = 2;
+    optional int32 times = 3;
+}
+
+message S2C_InstanceSweep {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_SWEEP];
+    message Reward {
+        repeated RewardType rewards = 1;
+    }
+    optional int32 id = 2;
+    optional int32 instance_id = 3;
+    repeated RewardType rewards = 4;
+    repeated Reward rwds = 5;
+    optional int32 ret = 6;
+}
+
+message C2S_InstanceLoadGuide {
+    optional ProtocolType type = 1 [default = C_2_S_INSTANCE_LOAD_GUIDE];
+    optional int32 id = 2;
+    optional int32 country_id = 3;
+}
+
+message S2C_InstanceLoadGuide {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_LOAD_GUIDE];
+    message Item {
+        optional int64 id = 1;
+        optional string name = 2;
+        optional int32 level = 3;
+        optional int64 report_id = 5;
+    }
+    optional int32 id = 2;
+    optional int32 country_id = 3;
+    repeated Item items = 4;
+}
+
+message S2C_InstanceAchieveReward {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_ACHIEVE_REWARD];
+    message Achieve{
+        optional int32 idx = 1;
+        repeated RewardType rwds = 2;
+    }
+    repeated  Achieve achs = 2;
+    optional int32 chapter_id = 3;
+}
+
+message C2S_InstanceAtkNum {
+    optional ProtocolType type = 1 [default = C_2_S_INSTANCE_ATK_NUM];
+    optional int32 id = 2;
+}
+
+message S2C_InstanceAtkNum {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_ATK_NUM];
+    optional int32 id = 2;
+    optional int32 num = 3;
+    optional int32 force_num = 4;
+    optional int32 ret = 5;
+}
+
+message C2S_InstanceSimpleAchieveReward {
+    optional ProtocolType type = 1 [default = C_2_S_INSTANCE_SIMPLE_ACHIEVE_REWARD];
+    optional int32 id = 2;
+    optional int32 instance_id = 3;
+}
+
+message S2C_InstanceSimpleAchieveReward {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_SIMPLE_ACHIEVE_REWARD];
+    optional int32 id = 2;
+    optional int32 instance_id = 3;
+    repeated RewardType rwds = 4;
+    optional int32 ret = 5;
+}
+
+message S2C_InstanceHideReward {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_HIDE_REWARD];
+    repeated RewardType rwds = 2;
+}
+
+message C2S_InstanceDraw {
+    optional ProtocolType type = 1 [default = C_2_S_INSTANCE_DRAW];
+    optional int32 id = 2;
+}
+
+message S2C_InstanceDraw {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_DRAW];
+    optional int32 id = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_InstanceDrawBox {
+    optional ProtocolType type = 1 [default = C_2_S_INSTANCE_DRAW_BOX];
+    optional int32 id = 2;
+}
+
+message S2C_InstanceDrawBox {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_DRAW_BOX];
+    optional int32 id = 2;
+    optional int32 instance_id = 3;
+    repeated RewardType rwds = 4;
+    optional int32 ret = 5;
+}
+
+message C2S_InstanceSuperGuide {
+    optional ProtocolType type = 1 [default = C_2_S_INSTANCE_SUPER_GUIDE];
+    optional int32 id = 2;
+    optional int32 army_id = 3;
+}
+
+message S2C_InstanceSuperGuide {
+    optional ProtocolType type = 1 [default = S_2_C_INSTANCE_SUPER_GUIDE];
+    message GeneralData {
+        optional int32 id = 1;
+        optional int32 pos = 2;
+        optional int32 soldier_id = 3;
+    }
+    optional int32 id = 2;
+    optional int32 form_id = 3;
+    optional double form_use_rate = 4;
+    repeated int32 general_ids = 5;
+    optional int64 report_id = 6;
+    repeated GeneralData generals = 7;
+    repeated double develops = 8;
+    optional string atk_name = 9;
+    optional int32 atk_power = 10;
+    optional int32 rate = 11;
+    optional int32 ret = 12;
+}

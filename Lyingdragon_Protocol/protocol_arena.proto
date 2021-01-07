@@ -1,0 +1,187 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_ArenaLoadInfo {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_LOAD_INFO];
+}
+
+message S2C_ArenaLoadInfo {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_LOAD_INFO];
+    message General {
+        optional int32 id = 1;
+        optional int32 pos = 2;
+    }
+    optional int32 score = 2;
+    optional int32 win_num = 3;
+    optional int32 atk_form = 4;
+    repeated FormationGenaralLoc atk_generals = 5;
+    optional int32 def_form = 6;
+    repeated FormationGenaralLoc def_generals = 7;
+    repeated int32 draw_ids = 8;
+    optional bool has_battle_list = 9;
+}
+
+message C2S_ArenaUpdateBattleInfo {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_UPDATE_BATTLE_INFO];
+    message General {
+        optional int32 id = 1;
+        optional int32 pos = 2;
+    }
+    optional int32 form_type = 2;//0=atk 1=def
+    optional int32 form_id = 3;
+    repeated General generals = 4;
+}
+
+message S2C_ArenaUpdateBattleInfo {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_UPDATE_BATTLE_INFO];
+    optional int32 ret = 2;
+    optional int32 power = 3;
+}
+
+message C2S_ArenaLoadBattleList {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_LOAD_BATTLE_LIST];
+}
+
+message ArenaRankItem {
+    optional RoleInfo ri = 1;
+    optional int32 order = 2;
+    optional int32 score = 3;
+    optional int32 form_id = 4;
+    repeated FormationGenaralLoc locs = 5;
+}
+
+message S2C_ArenaLoadBattleList {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_LOAD_BATTLE_LIST];
+    repeated ArenaRankItem items = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_ArenaLoadOtherBattleInfo {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_LOAD_OTHER_BATTLE_INFO];
+    optional int32 index = 3;
+}
+
+message S2C_ArenaLoadOtherBattleInfo {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_LOAD_OTHER_BATTLE_INFO];
+    message General {
+        optional int32 id = 1;
+        optional int32 pos = 2;
+    }
+    optional int32 index = 2;
+    optional int32 form_id = 3;
+    optional int32 solo_id = 4;
+}
+
+message C2S_ArenaLoadRank {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_LOAD_RANK];
+}
+
+message S2C_ArenaLoadRank {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_LOAD_RANK];
+    optional int32 ret = 2;
+    repeated ArenaRankItem items = 3;
+    optional ArenaRankItem my_item = 4;
+}
+
+message C2S_ArenaBattle {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_BATTLE];
+    optional int32 order = 2;
+}
+
+message S2C_AreanaBattle {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_BATTLE];
+    optional int32 ret = 2;
+    optional int32 battle_ret = 3;
+    optional int64 report_id = 4;
+    optional int32 new_score = 5;
+}
+
+message C2S_ArenaLoadLog {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_LOAD_LOG];
+}
+
+message S2C_ArenaLoadLog {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_LOAD_LOG];
+    message Log {
+        optional int32 type = 1;
+        optional RoleInfo opponent = 2;
+        optional int32 time = 3;
+        optional int32 battle_result = 4;
+        optional int64 report_id = 5;
+        optional int32 score_diff = 6;
+    }
+    repeated Log logs = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_ArenaDrawReward {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_DRAW_REWARD];
+    optional int32 id = 2;
+}
+
+message S2C_ArenaDrawReward {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_DRAW_REWARD];
+    optional int32 id = 2;
+    repeated RewardType rwds = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_ArenaExchange {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_EXCHANGE];
+    optional int32 id = 2;
+}
+
+message S2C_ArenaExchange {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_EXCHANGE];
+    optional int32 id = 2;
+    optional int32 exchange_num = 3;
+}
+
+message C2S_ArenaLoadTopLog {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_LOAD_TOP_LOG];
+}
+
+message S2C_ArenaLoadTopLog {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_LOAD_TOP_LOG];
+    message Log {
+        optional int32 atk_id = 1;
+        optional string atk_name = 2;
+        optional int64 def_id = 3;
+        optional string def_name = 4;
+        optional int32 time = 7;
+        optional int32 battle_result = 8;
+        optional int64 report_id = 9;
+        optional int32 solo_result = 10;
+        optional int64 solo_report_id = 11;
+        optional int32 rank = 12;
+    }
+    repeated Log logs = 2;
+}
+
+message C2S_ArenaBattleBuy {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_BATTLE_BUY];
+}
+
+message S2C_ArenaBattleBuy {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_BATTLE_BUY];
+    optional int32 ret = 2;
+    optional int32 buy_num = 3;
+}
+
+message C2S_ArenaAbadonBattleList {
+    optional ProtocolType type = 1 [default = C_2_S_ARENA_ABADON_BATTLE_LIST];
+}
+
+message S2C_ArenaAbadonBattleList {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_ABADON_BATTLE_LIST];
+    optional int32 new_score = 2;
+    optional int32 ret = 3;
+}
+
+message S2C_ArenaClassReward {
+    optional ProtocolType type = 1 [default = S_2_C_ARENA_CLASS_REWARD];
+    optional int32 class_id = 2;
+    optional int32 is_first = 3;
+    repeated RewardType rwds = 4;
+}

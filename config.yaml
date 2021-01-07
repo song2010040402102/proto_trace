@@ -1,0 +1,8 @@
+agent:
+  src: 10.0.53.88:9118
+  dst: 10.0.53.88:9119
+
+http: 0.0.0.0:9120
+
+protocol: ./Lyingdragon_Protocol
+web: ./web

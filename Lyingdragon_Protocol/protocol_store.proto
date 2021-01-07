@@ -1,0 +1,148 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_AddWareHouseNum {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_ADD_WAREHOUSE_NUM];
+}
+
+message S2C_AddWareHouseNum_Result {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_ADD_WAREHOUSE_NUM];
+        optional bool ret = 2;
+}
+
+message C2S_SaleEquipmentFromWareHouse {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_SALE_EQUIPMENT_FROM_WAREHOUSE];
+        optional int32 id = 2;
+}
+
+message S2C_SaleEquipmentFromWareHouse_Result {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_SALE_EQUIPMENT_FROM_WAREHOUSE];
+        optional bool ret = 2;
+        optional int32 id = 3;
+}
+
+message C2S_BuyEquipment {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_BUY_EQUIPMENT];
+        optional int32 id = 2;
+}
+
+message S2C_BuyEquipment {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_BUY_EQUIPMENT];
+        optional bool ret = 2;
+        optional int32 op = 3; //0=购买;1=兑换
+        optional int32 eq_id = 4;
+        optional int32 eq_type = 5;
+        optional double crit_rate = 6;
+        optional double beat_back_rate = 7;
+        optional double dec_injure_rate = 8;
+}
+
+message S2C_LoadEquipmentNum {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_LOAD_LIMIT_EQUIPMENT_NUM];
+        message LimitInfo{
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated LimitInfo infos = 3;
+}
+
+message C2S_AppointItem {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_APPOINT_ITEM];
+        optional int32 cost_type = 2;
+        optional bool is_auto = 3;
+}
+
+message S2C_AppointItem_Result {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_APPOINT_ITEM];
+        message Item {
+            optional int32 cost_type = 1;
+            optional int32 item_id = 2;
+            optional int32 value = 3;
+        }
+        optional int32 buy_num = 2;
+        optional int32 cd_time = 3;
+        repeated Item items = 4;
+}
+
+message C2S_DrawEquipment {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_DRAW_EQUIPMENT];
+        optional int32 id = 2;
+}
+
+message S2C_DrawEquipment {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_DRAW_EQUIPMENT];
+        optional bool ret = 2;
+        optional int32 id = 3;
+}
+
+message C2S_ExchangeJadeInfo {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_EXCHANGE_JADE_INFO];
+}
+
+message S2C_ExchangeJadeInfo {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_EXCHANGE_JADE_INFO];
+        optional int32 exchange_scale = 2;
+        optional int32 gold_cost = 3;
+}
+
+message C2S_UseChest {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_USE_CHEST];
+        optional int32 eq_id = 2;
+}
+
+message S2C_AttStoneInfo {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_ATT_STONE_INFO];
+        message AttStone {
+            optional int32 ident = 1;
+            optional int32 count = 2;
+        }
+        repeated AttStone att_stones = 2;
+}
+
+message C2S_AutoReincarnation {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_AUTO_REINCARNATION];
+        optional int32 general_id = 2;
+        optional int32 auto_reincarnation = 3;
+}
+
+message S2C_AutoReincarnation {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_AUTO_REINCARNATION];
+        optional int32 general_id = 2;
+        optional int32 auto_reincarnation = 3;
+}
+
+message C2S_ExchangeJadeOrange {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_EXCHANGE_JADE_ORANGE];
+        optional int32 exchange_num = 2;
+}
+
+message S2C_ExchangeJadeOrange {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_EXCHANGE_JADE_ORANGE];
+        optional int32 exchange_num = 2;
+}
+
+message S2C_LoadRewardGeneralResourceInfo {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_LOAD_REWARD_RESOURCE_INFO];
+        optional int32 bun_num = 2;
+        optional int32 meat_num = 3;
+        optional int32 wine_num = 4;
+        optional int32 reward_order = 5;
+        optional int32 pearl = 6;
+        optional int32 jade = 7;
+        optional int32 censer = 8;
+        optional int32 amber = 9;
+        optional int32 sapphire = 10;
+        optional int32 langya_jade = 11;
+}
+
+message C2S_StoreExchange {
+        optional ProtocolType type = 1 [default = C_2_S_STORE_EXCHANGE];
+        optional int32 id = 2;
+        optional int32 num = 3;
+}
+
+message S2C_StoreExchange {
+        optional ProtocolType type = 1 [default = S_2_C_STORE_EXCHANGE];
+        optional int32 ret = 2; //0:success 
+}

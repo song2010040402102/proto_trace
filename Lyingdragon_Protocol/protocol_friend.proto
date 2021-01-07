@@ -1,0 +1,223 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message FriendRole {
+        optional int64 role_id = 1;
+        optional string role_name = 2;
+        optional int32 country_id = 3;
+        optional int32 force = 4;
+        optional string crop_name = 5;
+        optional int32 state = 6;// 0 offline, 1 online
+        optional int32 last_logout_time = 7;
+        optional int32 img_type = 8;
+        optional int32 img_id = 9;
+        optional int32 zone_id = 10;
+        optional int32 lvl = 11;
+}
+
+message C2S_FriendList {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_LIST];
+}
+
+message GiftInfo {
+        optional int64 role_id = 1;
+        optional int32 gift_id = 2;
+        optional int32 zone_id = 3;
+}
+
+message SendGiftInfo {
+        optional int64 role_id = 1;
+        optional int32 zone_id = 2;
+}
+
+message S2C_FriendList {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_LIST];
+        repeated FriendRole friends = 2;
+        repeated FriendRole applies = 3;
+        repeated SendGiftInfo send_to_infos = 4;
+        repeated GiftInfo receive_gifts = 5;
+        optional int32 game_receive_count = 6;
+        optional int32 qq_receive_count = 7;
+        optional int32 ret = 8;
+}
+
+message C2S_FriendRecommend {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_RECOMMEND];
+}
+
+message S2C_FriendRecommend {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_RECOMMEND];
+        repeated FriendRole recommends = 2;
+}
+
+message C2S_FriendSearch {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_SEARCH];
+        optional string keyword = 2;
+}
+
+message S2C_FriendSearch {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_SEARCH];
+        repeated FriendRole roles = 2; // all required
+        optional int32 ret = 3; //1 dirty word
+}
+
+message C2S_FriendDelete {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_DELETE];
+        optional int64 role_id = 2;
+        optional int32 zone_id = 3;
+        optional bool is_black = 4;
+}
+
+message S2C_FriendDelete {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_DELETE];
+        optional int32 ret = 2; // 0 suc, 1 not friend
+        optional int64 role_id = 3;
+        optional int64 from_id = 4;
+        optional bool is_black = 5;
+        optional int32 zone_id = 6;
+}
+
+message C2S_FriendApply {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_APPLY];
+        optional int64 role_id = 2;
+        optional int32 zone_id = 3;
+}
+
+message S2C_FriendApply {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_APPLY];
+        optional int32 ret = 2; // 0 suc, 1 has apply, 2 in black
+        optional FriendRole from_info = 3;
+}
+
+message C2S_FriendApplyResponse {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_APPLY_RESPONSE];
+        optional int32 op = 2; // 1 approve, 2 reject
+        optional int64 role_id = 3;
+        optional int32 zone_id = 4;
+}
+
+message S2C_FriendApplyResponse {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_APPLY_RESPONSE];
+        optional int32 ret = 2; // 0 suc, 1 num limit
+        optional int32 op = 3; // 1 approve, 2 reject
+        optional FriendRole from_info = 4;
+}
+
+message C2S_FriendBlackList {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_BLACK_LIST];
+}
+
+message S2C_FriendBlackList {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_BLACK_LIST];
+        repeated FriendRole blacks = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_FriendChatRecord {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_CHAT_RECORD];
+}
+
+message S2C_FriendChatRecord {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_CHAT_RECORD];
+        repeated FriendRole roles = 2;
+        repeated int32 record_time = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_FriendSetBlack {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_SET_BLACK];
+        optional int32 op = 2; //1 add, 0 remove
+        optional int64 role_id = 3;
+        optional int32 zone_id = 4;
+}
+
+message S2C_FriendSetBlack  {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_SET_BLACK];
+        optional int32 ret = 2; // 1 not open, 2 not player
+        optional int32 op = 3;
+        optional int64 role_id = 4;
+        optional int32 zone_id = 5;
+}
+
+message C2S_FriendChatReset {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_CHAT_RESET];
+        optional int32 zone_id = 2;
+        optional int64 role_id = 3;
+}
+
+message S2C_FriendChatReset {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_CHAT_RESET];
+        optional int32 ret = 2;
+}
+
+message C2S_FriendSendGift {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_SEND_GIFT];
+        optional int64 role_id = 2;
+        optional int32 zone_id = 3;
+        optional int32 gift_id = 4;
+}
+
+message S2C_FriendSendGift {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_SEND_GIFT];
+        optional int64 role_id = 2;
+        optional int32 zone_id = 3;
+        optional int32 gift_id = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_FriendReceiveGift {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_RECEIVE_GIFT];
+        optional int64 role_id = 2;
+        optional int32 zone_id = 3;
+        optional int32 gift_id = 4;
+}
+
+message S2C_FriendReceiveGift {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_RECEIVE_GIFT];
+        optional int64 role_id = 2;
+        optional int32 zone_id = 3;
+        optional int32 gift_id = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_FriendSendGiftAll {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_SEND_GIFT_ALL];
+        optional int32 gift_id = 2;
+}
+
+message S2C_FriendSendGiftAll {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_SEND_GIFT_ALL];
+        optional int32 gift_id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_FriendReceiveGiftAll {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_RECEIVE_GIFT_ALL];
+        optional int32 gift_id = 2;
+}
+
+message S2C_FriendReceiveGiftAll {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_RECEIVE_GIFT_ALL];
+        optional int32 gift_id = 2;
+        optional int32 receive_count = 3;
+}
+
+message C2S_FriendSendGiftAllQQ {
+        optional ProtocolType type = 1 [default = C_2_S_FRIEND_SEND_GIFT_ALL_QQ];
+        optional int32 gift_id = 2;
+        repeated SendGiftInfo send_to_infos = 3;
+}
+
+message S2C_FriendSendGiftAllQQ {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_SEND_GIFT_ALL_QQ];
+        optional int32 gift_id = 2;
+        repeated SendGiftInfo send_to_infos = 3;
+        optional int32 ret = 4;
+}
+
+message S2C_FriendSendGiftNotify {
+        optional ProtocolType type = 1 [default = S_2_C_FRIEND_SEND_GIFT_NOTIFY];
+        optional int32 gift_id = 2;
+        optional SendGiftInfo sender = 3;
+}

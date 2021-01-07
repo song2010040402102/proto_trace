@@ -1,0 +1,70 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_PatrolInfo {
+        optional ProtocolType type = 1 [default = C_2_S_PATROL_INFO];
+}
+
+message S2C_PatrolInfo {
+        optional ProtocolType type = 1 [default = S_2_C_PATROL_INFO];
+        optional int32 use_token = 2;
+        optional int32 token_num = 3;
+        message MachineItem {
+                optional int32 idx = 1;
+                optional int32 refresh_num = 2;
+                optional int32 value = 3;
+        }
+        repeated MachineItem machines = 4;
+        message CardItem {
+                optional int32 id = 1;
+                optional int32 num = 2;
+        }
+        repeated CardItem items = 5;
+        optional int32 free_token_num = 6;
+}
+
+message C2S_PatrolRefresh {
+        optional ProtocolType type = 1 [default = C_2_S_PATROL_REFRESH];
+        optional int32 idx = 2;
+}
+
+message S2C_PatrolRefresh {
+        optional ProtocolType type = 1 [default = S_2_C_PATROL_REFRESH];
+        optional int32 idx = 2;
+        optional int32 id = 3;
+        optional int32 refresh_num = 4;
+}
+
+message C2S_PatrolUseCard {
+        optional ProtocolType type = 1 [default = C_2_S_PATROL_USE_CARD];
+        optional int32 id = 2;
+}
+
+message S2C_PatrolUseCard {
+        optional ProtocolType type = 1 [default = S_2_C_PATROL_USE_CARD];
+        optional int32 id = 2;
+        optional int32 num = 3;
+}
+
+message C2S_PatrolSearch {
+        optional ProtocolType type = 1 [default = C_2_S_PATROL_SEARCH];
+}
+
+message S2C_PatrolSearch {
+        optional ProtocolType type = 1 [default = S_2_C_PATROL_SEARCH];
+        optional int32 ret = 2;
+        optional int32 id = 3;
+        optional int32 token_num = 4;
+        optional int32 use_token = 5;
+        repeated int32 values = 6;
+        optional int32 free_token_num = 7;
+}
+
+message C2S_PatrolBuy {
+        optional ProtocolType type = 1 [default = C_2_S_PATROL_BUY];
+}
+
+message S2C_PatrolBuy {
+        optional ProtocolType type = 1 [default = S_2_C_PATROL_BUY];
+}

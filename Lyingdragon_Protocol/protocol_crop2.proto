@@ -1,0 +1,441 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_CropGiftInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LOAD_GIFT];
+}
+
+message CropGiftItem {
+        optional int64 id = 1;
+        optional int32 temp_id = 2;
+        optional int32 gold = 3;
+        optional int32 create_time = 4;
+        optional int64 from_id = 5;
+}
+
+message S2C_CropGiftInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LOAD_GIFT];
+        optional int32 exp = 2;
+        optional int32 point = 3;
+        repeated CropGiftItem items = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_CropDrawGift {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_DRAW_GIFT];
+        optional int64 id = 2;
+}
+
+message S2C_CropDrawGift {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_DRAW_GIFT];
+        optional int32 ret = 2;
+        optional int64 id = 3;
+}
+
+message C2S_CropDrawPoint {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_DRAW_POINT];
+}
+
+message S2C_CropDrawPoint {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_DRAW_POINT];
+        optional int32 ret = 2; //0 suc
+}
+
+// client test
+message C2S_CropBuyGift {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BUY_GIFT];
+        optional int32 temp_id = 2;
+}
+
+message S2C_CropBuyGift {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BUY_GIFT];
+        optional CropGiftItem item = 2;
+        optional int32 ret = 3;
+}
+
+message CropShopItem {
+        optional int32 id = 1;
+        optional int32 num = 2;
+}
+
+message C2S_CropShopLoad {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_SHOP_LOAD];
+}
+
+message S2C_CropShopLoad {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_SHOP_LOAD];
+        repeated CropShopItem buy_infos = 2;    // not used
+        repeated CropShopItem crop_buy_infos = 3;
+        optional int32 ret = 4;
+}
+
+message S2C_CropShopResetNotify {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_SHOP_RESET_NOTIFY];
+}
+
+message C2S_CropShopBuy {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_SHOP_BUY];
+        optional int32 id = 2;
+        optional int32 num = 3;         // not used
+        optional int64 role_id = 4;     // not used
+}
+
+message S2C_CropShopBuy {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_SHOP_BUY];
+        optional int32 id = 2;
+        optional int32 num = 3;
+        optional int32 ret = 4;
+        optional int32 total_buy_num = 5;
+        optional int64 role_id = 6;
+        repeated RewardType rwds = 7;
+}
+
+message C2S_CropShopBuyStock {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_SHOP_BUY_STOCK];
+        optional int32 id = 2;
+}
+
+message S2C_CropShopBuyStock {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_SHOP_BUY_STOCK];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+
+message S2C_CropShopBuyNotify {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_SHOP_BUY_NOTIFY];
+        optional CropShopItem crop_buy_info = 2;
+}
+
+message C2S_CropBabyLoad {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BABY_LOAD];
+}
+
+message GiftRecord {
+        optional int32 timestamp = 1;
+        optional int32 gift_id = 2;
+        optional int32 add_charm = 3;
+        optional string sender_name = 4;
+        optional string sender_message = 5;
+        optional int32 gift_num = 6;
+}
+
+message S2C_CropBabyLoad {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BABY_LOAD];
+        message GiftNum {
+                optional int32 gift_id = 1;
+                optional int32 num = 2;
+        }
+        message SenderContribution {
+                optional int64 role_id = 1;
+                optional int32 baby_contribution = 2;
+        }
+        optional int32 day_charm = 2;
+        optional int32 week_charm = 3;
+        optional string baby_name = 4;
+        optional int32 baby_img_type = 5;
+        optional int32 baby_img_id = 6;
+        optional int32 week_rank = 7;
+        optional int32 day_rank = 8;
+        optional string baby_message = 9;
+        repeated GiftRecord gift_records = 10;
+        repeated SenderContribution sender_contributions = 11;
+        repeated GiftNum gift_nums = 12;
+}
+
+message C2S_CropBabySendGift {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BABY_SEND_GIFT];
+        optional int32 gift_id = 2;
+        optional string sender_message = 3;
+        optional int32 gift_num = 4;
+}
+
+message S2C_CropBabySendGift {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BABY_SEND_GIFT];
+        optional int32 gift_id = 2;
+        optional int32 gift_num = 3;
+        optional int32 ret = 4;
+        optional int32 left_num = 5;
+        optional string sender_message = 6;
+}
+
+message S2C_CropBabyNotifyGift {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BABY_NOTIFY_GIFT];
+        optional int32 day_charm = 2;
+        optional int32 week_charm = 3;
+        optional int64 sender_id = 4;
+        optional int32 baby_contribution = 5;
+        optional int32 day_rank = 6;
+        optional int32 week_rank = 7;
+        repeated GiftRecord gift_record = 8;
+}
+
+message C2S_CropBabyGiftBuy {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BABY_GIFT_BUY];
+        optional int32 gift_id = 2;
+        optional int32 num = 3;
+}
+
+message S2C_CropBabyGiftBuy {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BABY_GIFT_BUY];
+        optional int32 gift_id = 2;
+        optional int32 num = 3;
+}
+
+message C2S_CropBabyUpdateMessage {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BABY_UPDATE_MESSAGE];
+        optional string baby_message = 2;
+}
+
+message S2C_CropBabyNotifyMessge {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BABY_NOTIFY_MESSAGE];
+        optional string baby_message = 2;
+}
+
+message C2S_CropBabyRankLoad {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BABY_RANK_LOAD];
+        optional int32 is_day_rank = 2;
+        optional int32 num = 3;
+}
+
+message S2C_CropBabyRankLoad {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BABY_RANK_LOAD];
+        message BabyRank {
+                optional int32 charm = 1;
+                optional int32 rank = 2;
+                optional int32 crop_id = 3;
+                optional string baby_name = 4;
+                optional int32 badge_id = 5;
+        }
+        repeated BabyRank ranks = 2;
+}
+
+message C2S_CropLoadRelationInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LOAD_RELATION_INFO];
+        optional int32 crop_id = 2; //0 default self crop
+}
+
+message S2C_CropLoadRelationInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LOAD_RELATION_INFO];
+        optional int32 ret = 2;
+        optional int32 crop_id = 3;
+        message RelationItem {
+                repeated int32 crop_ids = 1;
+        }
+        repeated RelationItem items = 4;
+        message RelationCD {
+                optional int32 crop_id = 1;
+                optional int32 time_left = 2;
+        }
+        repeated RelationCD cds = 5;
+}
+
+message C2S_CropRelationApply {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_RELATION_APPLY];
+        optional int32 to_crop_id = 2;
+	optional int32 action = 3; //0 apply, 1 over
+}
+
+message S2C_CropRelationApply {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_RELATION_APPLY];
+        optional int32 ret = 2;
+        optional int32 from_crop_id = 3;
+        optional int32 to_crop_id = 4;
+	optional int32 action = 5;
+}
+
+message C2S_CropRelationResponse {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_RELATION_RESPONSE];
+        optional int32 to_crop_id = 2;
+        optional int32 is_agree = 3;
+}
+
+message S2C_CropRelationResponse {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_RELATION_RESPONSE];
+        optional int32 ret = 5;
+        optional int32 from_crop_id = 2;
+        optional int32 to_crop_id = 4;
+}
+
+message S2C_CropNationBattleState {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_NATION_BATTLE_STATE];
+        optional int32 state = 2; //1 start, 0 finish
+        optional int32 city_id = 3;
+        optional int32 atk_crop_id = 4;
+        optional int32 def_crop_id = 5;
+        optional int32 battle_ret = 6;
+}
+
+message C2S_CropInviteReject {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_INVITE_REJECT];
+        optional int64 invite_id = 2;
+        optional int32 crop_id = 3;
+}
+
+message S2C_CropInviteReject {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_INVITE_REJECT];
+        optional string name = 2;
+}
+
+message S2C_CropLimitTime {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LIMIT_TIME];
+        optional int32 cd = 2;
+}
+
+message C2S_CropCityReward {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_CITY_REWARD];
+        optional int32 op = 2;// 0 query, 1 draw
+}
+
+message S2C_CropCityReward {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_CITY_REWARD];
+        message Reward {
+                optional int32 city_id = 1;
+                optional int32 food_num = 2;
+                optional int32 silver_num = 3;
+        }
+        repeated Reward rewards = 2;
+}
+
+message C2S_CropManorLoadInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_MANOR_LOAD_INFO];
+}
+
+message S2C_CropManorLoadInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_MANOR_LOAD_INFO];
+        message ArmyInfo {
+                optional int64 role_id = 1;
+                optional int32 army_id = 2;
+        }
+        message ManorItem {
+                optional int32 id = 1;
+                optional int32 status = 2; // 0 create, 1 output, 2 del
+                optional int32 build_point = 3;
+                optional int32 total_output = 4;
+                repeated ArmyInfo infos = 5;
+        }
+        repeated ManorItem items = 2;
+        optional int32 update_time = 3;
+}
+
+message C2S_CropManorCreate {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_MANOR_CREATE];
+        optional int32 id = 2;
+}
+
+message S2C_CropManorCreate {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_MANOR_CREATE];
+        optional int64 role_id = 2;
+        optional int32 id = 3;
+}
+
+message C2S_CropManorAction {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_MANOR_ACTION];
+        optional int32 id = 2;
+        optional int32 army_id = 3; //0 retreat
+}
+
+message S2C_CropManorAction {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_MANOR_ACTION];
+        optional int64 role_id = 2;
+        optional int32 army_id = 3;
+        optional int32 id = 4;
+}
+
+message S2C_CropManorUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_MANOR_UPDATE];
+        message ManorItem {
+                optional int32 id = 1;
+                optional int32 state = 2;
+                optional int32 build_point = 3;
+                optional int32 total_output = 4;
+        }
+        repeated ManorItem items = 2;
+}
+
+message MapMarkItem {
+        optional int64 id = 1;
+        optional int32 target_type = 2;
+        optional int32 mark_type = 3;
+        optional string msg = 4;
+        optional int64 marker_id = 5;
+        optional string marker_name = 6;
+        optional int32 pos_x = 7;
+        optional int32 pos_y = 8;
+}
+
+message C2S_CropMapMarkInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LIST_MAP_MARK];
+}
+
+message S2C_CropMapMarkInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LIST_MAP_MARK];
+        repeated MapMarkItem items = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_CropMapMarkAdd {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_ADD_MAP_MARK];
+        optional MapMarkItem item = 2;
+}
+
+message S2C_CropMapMarkAdd {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_ADD_MAP_MARK];
+        optional int32 ret = 2;
+}
+
+message C2S_CropMapMarkDel {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_DEL_MAP_MARK];
+        optional int64 id = 2;
+        optional int32 target_type = 3;
+}
+
+message S2C_CropMapMarkDel {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_DEL_MAP_MARK];
+        optional int32 ret = 2;
+        optional int64 id = 3;
+        optional int64 role_id = 4;
+        optional bool is_active = 5;
+}
+
+message C2S_CropAppointMayor {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_APPOINT_MAYOR];
+        optional int64 role_id = 2;
+        optional int32 city_id = 3;
+}
+
+message S2C_CropAppointMayor {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_APPOINT_MAYOR];
+        optional int64 role_id = 2;
+        optional int32 city_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_CropStartStateTech {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_START_STATE_TECH];
+        optional int32 id = 2;
+}
+
+message S2C_CropStartStateTech {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_START_STATE_TECH];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_CropBuildingIndustryInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BUILDING_INDUSTRY_INFO];
+}
+
+message S2C_CropBuildingIndustryInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BUILDING_INDUSTRY_INFO];
+        message IndustryItem {
+                optional int64 id = 1;
+                optional int32 industry_id = 2;
+                optional int32 pos_x = 3;
+                optional int32 pos_y = 4;
+                optional int32 build_point = 5;
+                optional int32 player_num = 6;
+        }
+        optional int32 ret = 2;
+        repeated IndustryItem items = 3;
+}

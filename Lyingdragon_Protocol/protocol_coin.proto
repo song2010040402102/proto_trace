@@ -1,0 +1,37 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_QueryCoin {
+        optional ProtocolType type = 1 [default = C_2_S_QUERY_COIN];
+        optional bool is_pay = 2;
+}
+
+message S2C_QueryCoin {
+        optional ProtocolType type = 1 [default = S_2_C_QUERY_COIN];
+        optional int32 ret = 2;
+        optional int32 coin = 3;
+        optional int32 total_coin = 4;
+}
+
+message C2S_ConsumeCoin {
+        optional ProtocolType type = 1 [default = C_2_S_CONSUME_COIN];
+        optional int32 coin = 2;
+}
+
+message S2C_ConsumeCoin {
+        optional ProtocolType type = 1 [default = S_2_C_CONSUME_COIN];
+        optional int32 ret = 2;
+        optional int32 coin = 3;
+}
+
+message C2S_PresentCoin {
+        optional ProtocolType type = 1 [default = C_2_S_PRESENT_COIN];
+        optional int32 coin = 2;
+}
+
+message S2C_PresentCoin {
+        optional ProtocolType type = 1 [default = S_2_C_PRESENT_COIN];
+        optional int32 ret = 2;
+        optional int32 coin = 3;
+}

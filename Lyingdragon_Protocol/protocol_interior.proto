@@ -1,0 +1,64 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message InteriorInfo {
+}
+
+message C2S_InteriorInfo {
+        optional ProtocolType type = 1 [default = C_2_S_INTERIOR_INFO];
+}
+
+message S2C_InteriorInfo {
+        optional ProtocolType type = 1 [default = S_2_C_INTERIOR_INFO];
+        message Item {
+                optional int32 pos = 1;
+                optional int32 general_id  = 2;
+                optional int32 param1 = 3;
+                optional int32 param2 = 4;
+        }
+        message Interior {
+                optional int32 id = 1;
+                optional int32 adjutant_num = 2;
+                repeated Item items = 3;
+        }
+        repeated Interior interiors = 2;
+}
+
+message C2S_InteriorAppoint {
+        optional ProtocolType type = 1 [default = C_2_S_INTERIOR_APPIONT];
+        optional int32 id = 2;
+        optional int32 pos = 3;
+        optional int32 general_id = 4;
+}
+
+message S2C_InteriorAppoint {
+        optional ProtocolType type = 1 [default = S_2_C_INTERIOR_APPIONT];
+        optional int32 ret = 2; // 1 error
+        optional int32 id = 3;
+        optional int32 pos = 4;
+        optional int32 general_id = 5;
+}
+
+message C2S_InteriorDismiss {
+        optional ProtocolType type = 1 [default = C_2_S_INTERIOR_DISMISS];
+        optional int32 general_id = 2;
+}
+
+message S2C_InteriorDismiss {
+        optional ProtocolType type = 1 [default = S_2_C_INTERIOR_DISMISS];
+        optional int32 ret = 2;
+        optional int32 general_id = 3;
+}
+
+message C2S_InteriorUnlockAdjutant {
+        optional ProtocolType type = 1 [default = C_2_S_INTERIOR_UNLOCK_ADJUTANT];
+        optional int32 id = 2;
+}
+
+message S2C_InteriorUnlockAdjutant {
+        optional ProtocolType type = 1 [default = S_2_C_INTERIOR_UNLOCK_ADJUTANT];
+        optional int32 ret = 2;
+        optional int32 id = 3;
+        optional int32 adjutant_num = 4;
+}

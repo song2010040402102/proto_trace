@@ -1,0 +1,32 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_RomanceModeInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ROMANCE_MODE_INFO];
+}
+
+message S2C_RomanceModeInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ROMANCE_MODE_INFO];
+        repeated int32 pass_ids = 2;
+}
+
+message C2S_RomanceModeBattle {
+        optional ProtocolType type = 1 [default = C_2_S_ROMANCE_MODE_BATTLE];
+        message General {
+            optional int32 id = 1;
+            optional int32 pos = 2;
+            optional int32 soldier = 3;
+        }
+        optional int32 id = 2;
+        optional int32 form_id = 3;
+        repeated General generals = 4;
+}
+
+message S2C_RomanceModeBattle {
+        optional ProtocolType type = 1 [default = S_2_C_ROMANCE_MODE_BATTLE];
+        optional int32 id  = 2;
+        optional int32 rate = 3;
+        optional int64 report_id = 4;
+        optional int32 ret = 5;
+}

@@ -1,0 +1,43 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message PVEEvent {
+         optional int32 id = 1;
+         optional int32 status = 2; //1=进行中 2=完成
+         repeated int32 obj_ids = 3;
+         optional int32 cd_time = 4;
+}
+
+message C2S_PVEEventInfo {
+        optional ProtocolType type = 1 [default = C_2_S_PVE_EVENT_INFO];
+}
+
+message S2C_PVEEventInfo {
+        optional ProtocolType type = 1 [default = S_2_C_PVE_EVENT_INFO];
+        repeated PVEEvent events = 2;
+}
+
+message C2S_PVEEventClickObject {
+        optional ProtocolType type = 1 [default = C_2_S_PVE_EVENT_CLICK_OBJECT];
+        optional int32 event_id = 2;
+        optional int32 obj_id = 3;
+}
+
+message S2C_PVEEventClickObject {
+        optional ProtocolType type = 1 [default = S_2_C_PVE_EVENT_CLICK_OBJECT];
+        optional int32 obj_id = 2;
+        optional PVEEvent event = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_PVEEventDraw {
+        optional ProtocolType type = 1 [default = C_2_S_PVE_EVENT_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_PVEEventDraw {
+        optional ProtocolType type = 1 [default = S_2_C_PVE_EVENT_DRAW];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}

@@ -1,0 +1,211 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message ChampionPlayerInfo {
+    message General {
+        optional int32 id = 1;
+        optional int32 pos = 2;
+    }
+    optional int64 id = 1;
+    optional string server_id = 2;
+    optional int64 role_id = 3;
+    optional int32 level = 4;
+    optional string name = 5;
+    optional int32 country_id = 6;
+    optional int32 img_type = 7;
+    optional int32 img_id = 8;
+    optional int32 win_num = 9;
+    optional int32 draw_num = 10;
+    optional int32 lose_num = 11;
+    optional int32 atk_lvl = 12;
+    optional int32 def_lvl = 13;
+    optional int32 formation_id = 14;
+    repeated General generals = 15;
+}
+
+message C2S_ChampionLoad {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_LOAD];
+    optional bool is_local = 2;
+}
+
+message S2C_ChampionLoad {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_LOAD];
+    optional bool is_local = 2;
+    optional int32 start_time = 3;
+    optional int32 cur_phase = 4;
+    optional int32 left_time = 5;
+    optional int32 best_record = 6;
+    optional int32 is_over = 7;
+    optional int32 attend_num = 8;
+    optional int32 is_attend = 9;
+    optional int64 encourage_id = 10;
+    optional int32 encourage_drawed = 11;
+    optional ChampionPlayerInfo info = 12;
+}
+
+message C2S_ChampionAttend {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_ATTEND];
+}
+
+message S2C_ChampionAttend {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_ATTEND];
+    optional int32 ret = 2;
+}
+
+message C2S_ChampionUpdateFormation {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_UPDATE_FORMATION];
+    message General {
+        optional int32 id = 1;
+        optional int32 pos = 2;
+    }
+    optional int32 formation_id = 2;
+    repeated General generals = 3;
+}
+
+message S2C_ChampionUpdateFormation {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_UPDATE_FORMATION];
+    optional int32 ret = 2;
+}
+
+message C2S_ChampionLoadBattleReport {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_LOAD_BATTLE_REPORT];
+    optional bool is_local = 2;
+}
+
+message S2C_ChampionLoadBattleReport {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_LOAD_BATTLE_REPORT];
+    message Report {
+        optional int64 opponent_id = 1;
+        optional string opponent_name = 2;
+        optional int32 img_id = 3;
+        optional int32 img_type = 4;
+        optional int64 report_id = 5;
+        optional string server_id = 6;
+        optional int32 battle_pos = 7; //1 or 2
+        optional int32 result = 8;
+        optional int32 phase = 9;
+    }
+    repeated Report reports = 2;
+}
+
+message C2S_ChampionLoadMatch {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_LOAD_MATCH];
+    optional bool is_local = 2;
+    optional int32 phase = 3; //0 for all
+}
+
+message S2C_ChampionLoadMatch {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_LOAD_MATCH];
+    message Player {
+        optional int64 id = 1;
+        optional string name = 2;
+        optional int32 img_type = 3;
+        optional int32 img_id = 4;
+        optional int32 encourage_num = 5;
+    }
+    message Match {
+        optional Player player1 = 1;
+        optional Player player2 = 2;
+        optional int32 win_side = 3;//0 unkonw, 1 player1, 2 player2
+    }
+    message Phase {
+        optional int32 phase = 1;
+        repeated Match matches = 2;
+    }
+    repeated Phase phases = 2;
+}
+
+message C2S_ChampionLoadMyOpponent {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_LOAD_MY_OPPONENT];
+    optional bool is_local = 2;
+}
+
+message S2C_ChampionLoadOpponent {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_LOAD_MY_OPPONENT];
+    optional bool is_local = 2;
+    optional int32 ret = 3; //0 ok, 1 no opponent, 2 no match info
+    optional int32 battle_pos = 4; //1 or 2
+    optional ChampionPlayerInfo info = 5;
+}
+
+message C2S_ChampionEncourage {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_ENCOURAGE];
+    optional int64 id = 2;
+    optional bool is_local = 3;
+}
+
+message S2C_ChampionEncourage {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_ENCOURAGE];
+    optional int32 ret = 2; //0 success, 1 repeated
+    optional bool is_local = 3;
+}
+
+message C2S_ChampionDrawEncourage {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_DRAW_ENCOURAGE];
+    optional bool is_local = 2;
+}
+
+message S2C_ChampionDrawEncourage {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_DRAW_ENCOURAGE];
+    optional bool is_local = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_ChampionInspire {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_INSPIRE];
+    optional bool is_local = 2;
+}
+
+message S2C_ChampionInspire {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_INSPIRE];
+    optional int32 ret = 2;
+    optional bool is_local = 3;
+    optional int32 inspire_type = 4; //0 atk, 1 def
+    optional int32 value = 5;
+}
+
+message C2S_ChampionLoadReward {
+    optional ProtocolType type = 1 [default = C_2_S_CHAMPION_LOAD_REWARD];
+    optional bool is_local = 2;
+}
+
+message S2C_ChampionLoadReward {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_LOAD_REWARD];
+    message Reward {
+        optional int32 order = 1;
+        repeated RewardType rwds = 2;
+    }
+    optional bool is_local = 2;
+    repeated Reward rwds = 3;
+}
+
+message S2C_ChampionStateNotify {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_STATE_NOTIFY];
+    optional bool is_local = 2;
+    optional int32 phase = 3;
+    optional int32 left_time = 4;
+}
+
+message S2C_ChampionRoundNotify {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_ROUND_NOTIFY];
+    optional bool is_local = 2;
+    optional int32 phase = 3;
+    optional int32 round = 4;
+    optional bool is_prepare = 5;
+}
+
+message S2C_ChampionFinish {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_FINISH];
+    optional bool is_local = 2;
+}
+
+message S2C_ChampionBattleNotify {
+    optional ProtocolType type = 1 [default = S_2_C_CHAMPION_BATTLE_NOTIFY];
+    optional bool is_local = 2;
+    optional int64 report_id = 3;
+    optional string server_id = 4;
+    optional int32 phase = 5;
+    optional int32 round = 6;
+    optional int32 result = 7;
+}

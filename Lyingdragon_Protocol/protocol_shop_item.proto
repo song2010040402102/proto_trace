@@ -1,0 +1,236 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_ShopItemInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_ITEM_INFO];
+}
+
+message S2C_ShopItemInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_ITEM_INFO];
+        message Item {
+            optional int32 id = 1;
+            optional int32 num = 2;
+            optional bool is_sale  = 3;
+        }
+        optional bool is_fresh = 2;
+        repeated Item items = 3;
+        optional bool is_show_bubble = 4;
+}
+
+message C2S_ShopItemRefresh {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_ITEM_REFRESH];
+}
+
+message S2C_ShopItemRefresh {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_ITEM_REFRESH];
+        optional int32 times = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_ShopItemBuy {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_ITEM_BUY];
+        optional int32 id = 2;
+        optional int32 num = 3;
+}
+
+message S2C_ShopItemBuy {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_ITEM_BUY];
+        optional int32 id = 2;
+        optional int32 num = 3;
+        repeated RewardType rts = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_ShopItemBubbleUpdate {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_ITEM_BUBBLE_UPDATE];
+}
+
+message S2C_ShopItemBubbleUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_ITEM_BUBBLE_UPDATE];
+}
+
+message C2S_ShopGiftBuy {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_GIFT_BUY];
+        optional int32 id = 2;
+        optional int32 helper_id = 3;
+}
+
+message S2C_ShopGiftBuy {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_GIFT_BUY];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+        optional int32 helper_id = 4;
+}
+
+message C2S_ShopClaimMonthCard {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_CLAIM_MONTH_CARD];
+        optional int32 id = 2;
+}
+
+message S2C_ShopClaimMonthCard {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_CLAIM_MONTH_CARD];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_ShopClaimGrowth {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_CLAIM_GROWTH];
+        optional int32 id = 2;
+}
+
+message S2C_ShopClaimGrowth {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_CLAIM_GROWTH];
+        optional int32 id = 2;
+        optional int32 ret = 3; //0:ok,1:not buy,2:invalid id,3:lvl limit,4:claimed,5:not condition
+}
+
+message C2S_ShopGiftPushInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_GIFT_PUSH_INFO];
+}
+
+message S2C_ShopGiftPushInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_GIFT_PUSH_INFO];
+        message PushInfo {
+            optional int32 id = 1;
+            optional int32 expire_time = 2;
+            optional int32 helper_id = 3;
+        }
+        repeated PushInfo infos = 2;
+}
+
+message SingleSelectInfo {
+        optional int32 slot = 1;
+        optional int32 index = 2;
+}
+
+message SelectInfo {
+        optional int32 id = 1;
+        repeated SingleSelectInfo select_infos = 2;
+}
+
+message C2S_ShopCustomGiftBuy {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_CUSTOM_GIFT_BUY];
+        optional SelectInfo select_info = 2;
+}
+
+message S2C_ShopCustomGiftBuy {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_CUSTOM_GIFT_BUY];
+        optional SelectInfo select_info = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_ShopActivityGiftInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_ACTIVITY_GIFT_INFO];
+}
+
+message S2C_ShopActivityGiftInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_ACTIVITY_GIFT_INFO];
+        message ActivityInfo {
+            optional int32 id = 1;
+            optional string name = 2;
+            optional string tag_name = 3;
+            optional string gift_name = 4;
+            optional string slogan = 5;
+            optional string image = 6;
+            repeated RewardType rwds = 7;
+            optional int32 price = 8;
+            optional int32 token = 9;
+            optional int32 start_time = 10;
+            optional int32 end_time = 11;
+        }
+        repeated ActivityInfo infos = 2;
+}
+
+message C2S_ShopGiftInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_GIFT_INFO];
+}
+
+message S2C_ShopGiftInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_GIFT_INFO];
+        message BuyInfo {
+            optional int32 id = 1;
+            optional int32 buy_count = 2;
+        }
+        repeated BuyInfo buy_infos = 2;
+        message MonthCardInfo {
+            optional int32 id = 1;
+            optional int32 expire_time = 2;
+            optional int32 can_claim = 3;
+        }
+        repeated MonthCardInfo month_card_infos = 3;
+        repeated int32 claim_growth_infos = 4;
+        repeated int32 conditional_open_gifts = 5;
+
+        repeated SelectInfo custom_select_infos = 6;
+        repeated int32 double_gold_ids = 7;
+        message GiftTimeInfo {
+            optional int32 type = 1;
+            optional int32 start_time = 2;
+            optional int32 end_time = 3;
+        }
+        repeated GiftTimeInfo gift_time_infos = 8;
+}
+
+message C2S_ShopConditionalOpen {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_CONDITIONAL_OPEN];
+        repeated int32 ids = 2;
+}
+
+message S2C_ShopConditionalOpen {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_CONDITIONAL_OPEN];
+        repeated int32 ids = 2;
+}
+
+message C2S_ShopInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_INFO];
+        optional int32 shop_type = 2;
+}
+
+message S2C_ShopInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_INFO];
+        optional int32 shop_type = 2;
+        message Item {
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated Item items = 3;
+        optional int32 remain_refresh_count = 4;
+        optional bool is_full_update = 5;
+}
+
+message C2S_ShopRefresh {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_REFRESH];
+        optional int32 shop_type = 2;
+}
+
+message S2C_ShopRefresh {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_REFRESH];
+        optional int32 shop_type = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_ShopBuy {
+        optional ProtocolType type = 1 [default = C_2_S_SHOP_BUY];
+        optional int32 shop_type = 2;
+        optional int32 id = 3;
+        optional int32 num = 4;
+}
+
+message S2C_ShopBuy {
+        optional ProtocolType type = 1 [default = S_2_C_SHOP_BUY];
+        optional int32 shop_type = 2;
+        optional int32 id = 3;
+        optional int32 num = 4;
+        repeated RewardType rwds = 5;
+        enum Result {
+            OK = 0;
+            NOT_FIND = 1;
+            LVL_LIMIT = 2;
+            SOLD_OUT = 3;
+            NO_COST = 4;
+            NO_CROP = 5;
+            NO_AUTH = 6;
+        }
+        optional int32 ret = 6;
+}

@@ -1,0 +1,183 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message CitizenInfo {
+        optional int64 role_id = 1;
+        optional string name = 2;
+        optional int32 level = 3;
+        optional int32 country_id = 4;
+        optional int32 crop_id = 5;
+        optional int32 power = 6;
+        optional int32 atk_value = 7;
+        optional int32 protect_time = 8;
+        optional int32 join_time = 9;
+        optional int32 tax = 10;
+        optional int32 city_id = 11;
+        optional int32 img_type = 12;
+        optional int32 img_id = 13;
+        optional int32 conque_time = 14;
+        optional int32 total_tax = 15;
+        optional int32 dev_type = 16;
+}
+
+message C2S_CitizenList {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_LIST];
+        optional int32 city_id = 2;
+}
+
+message S2C_CitizenList {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_LIST];
+        message Info {
+            optional int64 role_id = 1;
+            optional string name = 2;
+            optional int32 atk_value = 3;
+            optional int32 join_time = 4;
+            optional int32 protect_time = 5;
+            optional int32 lvl = 6;
+            optional int32 conque_time = 7;
+            optional int32 country_id = 8;
+        }
+        optional int32 city_id = 2;
+        repeated Info infos = 3;
+}
+
+message C2S_CitizenInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_INFO];
+        optional int64 role_id = 2;
+}
+
+message S2C_CitizenInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_INFO];
+        optional CitizenInfo self = 2;
+        optional CitizenInfo lord = 3;
+        repeated CitizenInfo vassals = 4;
+}
+
+message C2S_CitizenMoveCity {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_MOVE_CITY];
+        optional int32 city_id = 2;
+}
+
+message S2C_CitizenMoveCity {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_MOVE_CITY];
+        optional int32 city_id = 2;
+}
+
+message C2S_CitizenAttack {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_ATTACK];
+        optional int64 target_id = 2;
+        optional int32 target_city = 3;
+        optional int32 army_id = 4;
+}
+
+message S2C_CitizenAttack {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_ATTACK];
+}
+
+message S2C_CitizenAttackResult {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_ATTACK_RESULT];
+        optional int32 attack_type = 2;//0=rob 1=conque
+        optional int64 attacker = 3;
+        optional string atk_name = 4;
+        optional int32 army_id = 5;
+        optional int64 target = 6;
+        optional string target_name = 7;
+        optional int32 target_city = 8;
+        optional int64 defenser = 9;
+        optional int32 result = 10;
+        optional int64 report_id = 11;
+        repeated RewardType rwds = 12;
+        optional int32 city_id = 13;
+}
+
+message C2S_CitizenAbandonVassal {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_ABANDON_VASSAL];
+        optional int64 vassal_id = 2;
+}
+
+message S2C_CitizenAbandonVassal {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_ABANDON_VASSAL];
+        optional int64 vassal_id = 2;
+}
+
+message C2S_CitizenRevolt {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_REVOLT];
+        optional int32 army_id = 2;
+}
+
+message S2C_CitizenRevolt {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_REVOLT];
+        optional int32 result = 2;
+        optional int64 report_id = 3;
+}
+
+message C2S_CitizenDrawTax {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_DRAW_TAX];
+        optional int64 vassal_id = 2;
+}
+
+message S2C_CitizenDrawTax {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_DRAW_TAX];
+        optional int64 vassal_id = 2;
+        optional int32 num = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_CitizenNum {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_NUM];
+}
+
+message S2C_CitizenNum {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_NUM];
+        message Info {
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated Info infos = 2;
+}
+
+message S2C_CitizenOccupied {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_OCCUPIED];
+        message MoveInfo {
+            optional int32 city_id = 1;
+            repeated int64 player_ids = 2;
+        }
+        optional int32 city_id = 2;
+        repeated MoveInfo infos = 3;
+}
+
+message C2S_CitizenGetRobCity {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_GET_ROB_CITY];
+        optional int32 country_id = 2;
+}
+
+message S2C_CitizenGetRobCity {
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_GET_ROB_CITY];
+        optional int32 country_id = 2;
+        optional int32 city_id = 3;
+}
+
+message C2S_CitizenDevelopCity {
+        optional ProtocolType type = 1 [default = C_2_S_CITIZEN_DEVELOP_CITY];
+        optional int32 city_id = 2;
+        optional int32 dev_type = 3;
+        optional int32 cost_type = 4;
+}
+
+message S2C_CitizenDevelopCity {
+        enum DevRet {
+            DR_OK = 0;
+            DR_HAS_DEVED = 1;
+            DR_NOT_YOUR_CITY = 2;
+            DR_NO_CITY = 3;
+            DR_CANNOT_DEV = 4;
+            DR_NO_COST = 5;
+        };
+        optional ProtocolType type = 1 [default = S_2_C_CITIZEN_DEVELOP_CITY];
+        optional int32 city_id = 2;
+        optional int32 dev_type = 3;
+        optional int32 cost_type = 4;
+        optional int32 dev_value = 5;
+        optional int32 ret = 6;
+}

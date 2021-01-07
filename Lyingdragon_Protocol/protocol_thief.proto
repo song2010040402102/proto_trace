@@ -1,0 +1,53 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_ThiefInfo {
+        optional ProtocolType type = 1 [default = C_2_S_THIEF_INFO];
+}
+
+message ThiefInfo {
+        optional int64 id = 1;
+        optional int32 template_id = 2;
+        optional int32 pos_x = 3;
+        optional int32 pos_y = 4;
+        optional int32 thief_num = 5;
+        optional bool dead = 6;
+        optional bool is_leader = 7;
+        optional int32 formation_id = 8;
+        message UnitInfo {
+                optional int32 pos = 1;
+                optional int32 general_id = 2;
+                optional int32 level = 3;
+                optional int32 soldier_id = 4;
+                optional int32 soldier_num = 5;
+        }
+        repeated UnitInfo units = 9;
+}
+
+message S2C_ThiefInfo {
+        optional ProtocolType type = 1 [default = S_2_C_THIEF_INFO];
+        repeated ThiefInfo items = 2;
+        optional int32 remain_time = 3;
+}
+
+message C2S_ThiefBattle {
+        optional ProtocolType type = 1 [default = C_2_S_THIEF_BATTLE];
+        optional int64 id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_ThiefBattle {
+        optional ProtocolType type = 1 [default = S_2_C_THIEF_BATTLE];
+        optional int32 ret = 2;
+        optional int64 id = 3;
+        optional int64 report_id = 4;
+        optional int32 result = 5;
+        optional int32 army_id = 6;
+}
+
+message S2C_ThiefDeadNotify {
+        optional ProtocolType type = 1 [default = S_2_C_THIEF_DEAD_NTF];
+        optional int64 id = 2;
+        optional int64 attacker_id = 3;
+}

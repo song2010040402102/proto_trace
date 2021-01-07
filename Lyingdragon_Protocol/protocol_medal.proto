@@ -1,0 +1,99 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_MedalInfo {
+        optional ProtocolType type = 1 [default = C_2_S_MEDAL_INFO];
+}
+
+message S2C_MedalInfo {
+        optional ProtocolType type = 1 [default = S_2_C_MEADL_INFO];
+        message MedalInfo {
+            optional int32 medal_id = 1;
+            optional int32 pos = 2;
+            optional int32 count = 3;
+        }
+        message NewMedalInfo {
+            optional int32 medal_id = 1;
+            optional int32 level = 2;
+            optional int32 pos = 3;
+        }
+        optional int32 num = 2;
+        repeated MedalInfo medal_info = 3;
+        repeated NewMedalInfo new_medal_info = 4;
+}
+
+message C2S_HandleMedal {
+        optional ProtocolType type = 1 [default = C_2_S_MEDAL_HANDLE];
+        optional int32 medal_id= 2;
+        optional int32 pos = 3;
+}
+
+message S2C_HandleMedal {
+        optional ProtocolType type = 1 [default = S_2_C_MEDAL_HANDLE];
+        optional int32 medal_id = 2;
+        optional int32 pos = 3;
+}
+
+message C2S_GetMedal {
+        optional ProtocolType type = 1 [default = C_2_S_MEDAL_GET];
+}
+
+message S2C_GetMedal {
+        optional ProtocolType type = 1 [default = S_2_C_MEDAL_GET];
+        optional int32 medal_id = 2;
+}
+
+message C2S_MedalCombine {
+        optional ProtocolType type = 1 [default = C_2_S_MEDAL_COMBINE];
+        optional int32 medal_id1 = 2;
+        optional int32 medal_id2 = 3;
+        optional int32 medal_id = 4;
+}
+
+message S2C_MedalCombine {
+        optional ProtocolType type = 1 [default = S_2_C_MEDAL_COMBINE];
+        optional int32 del_medal_id1 = 2;
+        optional int32 del_medal_id2 = 3;
+        optional int32 new_medal_id = 4;
+}
+
+message C2S_MedalIntensify {
+        optional ProtocolType type = 1 [default = C_2_S_MEDAL_INTENSIFY];
+        optional int32 medal_id = 2;
+        optional int32 with_golden = 3;
+}
+
+message S2C_MedalIntensify {
+        optional ProtocolType type = 1 [default = S_2_C_MEDAL_INTENSIFY];
+        optional int32 medal_id = 2;
+        optional int32 level = 3;
+}
+
+message C2S_BuyMedal {
+        optional ProtocolType type = 1 [default = C_2_S_MEDAL_BUY];
+        optional int32 medal_id = 2;
+}
+
+message S2C_BuyMedal {
+        optional ProtocolType  type = 1 [default = S_2_C_MEDAL_BUY];
+        optional int32 medal_id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_BuyMedalPos {
+        optional ProtocolType type = 1 [default = C_2_S_MEDAL_BUY_POS];
+}
+
+message S2C_BuyMedalPos {
+        optional ProtocolType type = 1 [default = S_2_C_MEDAL_BUY_POS];
+        optional int32 max_num = 2;
+}
+
+message C2S_ShowMedal {
+        optional ProtocolType type = 1 [default = C_2_S_MEDAL_SHOW];
+        optional int32 item_type = 2;
+        optional int32 item_id = 3;
+}
+
+

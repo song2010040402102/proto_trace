@@ -1,0 +1,71 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_CropBossInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BOSS_INFO];
+}
+
+message S2C_CropBossInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BOSS_INFO];
+        optional int32 draw_times = 2;
+        message BossItem {
+                optional int32 id = 1;
+                optional int32 sub_id = 2;
+                optional int32 end_time = 3;
+                optional int32 damage = 4;
+                optional int32 status = 5; //1 can draw, 2 has atk
+        }
+        repeated BossItem items = 3;
+}
+
+message C2S_CropBossDrawReward {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BOSS_DRAW_REWARD];
+        optional int32 id = 2;
+}
+
+message S2C_CropBossDrawReward {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BOSS_DRAW_REWARD];
+        optional int32 id = 2;
+        optional int32 draw_times = 3;
+        optional int32 sub_id = 4;
+        optional int32 end_time = 5;
+        optional int32 damage = 6;
+}
+
+message C2S_CropBossBattle {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BOSS_BATTLE];
+        optional int32 id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_CropBossBattle {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BOSS_BATTLE];
+        optional int32 ret = 2; // 1 not in battle time
+        optional int32 id = 3;
+        optional int32 damage = 4;
+        optional int64 report_id = 5;
+}
+
+message C2S_CropBossSummon {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BOSS_SUMMON];
+        optional int32 id = 2;
+}
+
+message S2C_CropBossSummon {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BOSS_SUMMON];
+        message BossItem {
+                optional int32 id = 1;
+                optional int32 sub_id = 2;
+                optional int64 role_id = 3;
+                optional bool use_item = 4;
+                optional int32 end_time = 5;
+        }
+        repeated BossItem items = 2;
+}
+
+message S2C_CropBossKill {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BOSS_KILL];
+        optional int32 id = 2;
+        optional int32 last_role_id = 3;
+}

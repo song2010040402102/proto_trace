@@ -1,0 +1,178 @@
+import "protocol_base.proto";
+import "battle_report.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_WorldAbandonVassal {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_ABANDON_VASSAL];
+        optional int64 vassal_id = 2;
+}
+
+message S2C_WorldAbandonVassal {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_ABANDON_VASSAL];
+        optional int64 vassal_id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_WorldRevolt {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_REVOLT];
+        optional int32 army_id = 2;
+}
+
+message S2C_WorldRevolt {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_REVOLT];
+        optional int32 result = 2;
+        optional int64 report_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_WorldGetRobCity {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_GET_ROB_CITY];
+        optional int32 task_id = 2;
+}
+
+message S2C_WorldGetRobCity {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_GET_ROB_CITY];
+        optional int32 ret = 2;
+        optional int64 city_id = 3;
+        optional int64 player_id = 4;
+        optional WorldPos pos = 5;
+}
+message C2S_WorldDrawTax {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_DRAW_TAX];
+        optional int64 vassal_id = 2;
+}
+
+message S2C_WorldDrawTax {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_DRAW_TAX];
+        optional int64 vassal_id = 2;
+        optional int32 num = 3;
+        optional int32 ret = 4;
+}
+
+message WorldBattleInfo {
+    optional int32 id = 1;
+    optional int32 type = 2;
+    optional int32 result = 3;
+    optional int64 attacker_id = 4;
+    optional string accacker_name = 5;
+    optional string lost_str = 6;//lost detail,split by ';'
+    optional int64 report_id = 7;
+    optional bool is_read = 8;
+    optional int32 create_time = 9;
+    optional int32 img_type = 10;
+    optional int32 img_id = 11;
+    optional int32 country_id = 12;
+    optional string lord_name = 13;
+}
+
+message S2C_WorldBattleInfo{
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_BATTLE_INFO];
+    optional WorldBattleInfo info = 2;
+}
+
+message C2S_WorldArriveHome {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_ARRIVE_HOME];
+    optional int32 army_id = 2;
+}
+
+message S2C_WorldArriveHome {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_ARRIVE_HOME];
+    optional int32 ret = 2;
+    optional int32 army_id = 3;
+    optional int32 state = 4;
+    optional int64 obj_id = 5;
+}
+
+message S2C_WorldPowerCreateBroad {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_POWER_CREATE_BROAD];
+    optional int32 crop_id = 2;
+    optional int32 power_id = 3;
+}
+
+message C2S_WorldBuildingReward {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_BUILDING_REWARD];
+}
+
+message S2C_WorldBuildingReward {
+    message BuildReward {
+        optional int64 id = 1;
+        repeated int32 reward = 2;
+    }
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_BUILDING_REWARD];
+    repeated BuildReward reward_farm = 13;
+    repeated BuildReward reward_bank = 14;
+}
+
+message S2C_WorldRemoveObject {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_REMOVE_OBJECT];
+    message Object {
+        optional int64 obj_id = 1;
+        optional int32 obj_type = 2;
+    }
+    repeated Object objs = 2;
+}
+
+message C2S_WorldWarFogLoad {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_WAR_FOG_LOAD];
+}
+
+message S2C_WorldWarFogLoad {
+    message Block {
+        optional int32 id = 1;
+	optional bytes data = 2;
+    }
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_WAR_FOG_LOAD];
+    repeated int32 open_blocks = 2;
+    repeated Block blocks = 3;
+}
+
+message C2S_WorldWarFogUpdate {
+    message Block {
+        optional int32 id = 1;
+	optional bytes data = 2;
+    }
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_WAR_FOG_UPDATE];
+    repeated int32 open_blocks = 2;
+    repeated Block blocks = 3;
+}
+
+message S2C_WorldWarFogUpdate {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_WAR_FOG_UPDATE];
+    optional int32 ret = 2;
+}
+
+message C2S_WorldSearchObject {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_SEARCH_OBJECT];
+    optional int32 config_id = 2;
+    optional WorldPos pos = 3;
+    optional int32 cond_level = 4;
+}
+
+message S2C_WorldSearchObject {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_SEARCH_OBJECT];
+    optional int32 ret = 2;
+    optional int64 obj_id = 3;
+    optional WorldPos obj_pos = 4;
+    optional int32 config_id = 5;
+}
+
+message C2S_WorldRobIndustry {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_ROB_INDUSTRY];
+    optional int32 army_id = 2;
+    optional int32 city_id = 3;
+    optional int64 target_id = 4;
+    optional int32 crop_id = 5;
+}
+
+message S2C_WorldRobIndustry {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_ROB_INDUSTRY];
+    optional int32 ret = 2;
+    optional int32 army_id = 3;
+    optional int32 city_id = 4;
+    optional int64 target_id = 5;
+    optional int64 report_id = 6;
+    optional int32 result = 7;
+    optional BriefSingleBattleReport brief_report = 8;
+    repeated RewardType rwds = 9;
+}

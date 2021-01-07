@@ -1,0 +1,61 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message ActionLimitItem {
+        enum LimitType {
+            AT_CONVERSATION_SILENCE         = 1001;
+            AT_PUBLIC_SILENCE               = 1002;
+            AT_ADD_FRIEND                   = 1010;
+            AT_MODIFY_NAME                  = 1020;
+            AT_LEVEL_RANK                   = 1030;
+            AT_POWER_RANK                   = 1031;
+            AT_CHAT                         = 1040;
+            AT_CHAT_CONVERSATION            = 1041;
+            AT_CHAT_NOT_FRIEND              = 1042;
+            AT_PLAY_PVE                     = 1050;
+            AT_DAILY_PLAY                   = 1051;
+            AT_MANY_PEOPLE_PLAY             = 1052;
+            AT_PLAY_PVP                     = 1053;
+            AT_PLAY_GVG                     = 1054;
+			AT_JOIN_CROP                    = 1060;
+            AT_ALL_NAME_CHANGE              = 2001;
+            AT_CROP_NAME_TEXT               = 3001;
+            AT_CROP_CONTENT_TEXT            = 3002;
+            AT_CROP_ADD_GROUP               = 3003;
+            AT_CROP_ONE_CLICK_GRUOPING      = 3004;
+        }
+        optional int32 id = 1;
+        optional int32 begin_time = 2;
+        optional int32 end_time = 3;
+        optional string reason = 4;
+}
+
+message S2C_ActionLimitLoad {
+        optional ProtocolType type = 1 [default = S_2_C_ACTION_LIMIT_LOAD];
+        repeated ActionLimitItem items = 2;
+}
+
+message S2C_ActionLimitNew {
+        optional ProtocolType type = 1 [default = S_2_C_ACTION_LIMIT_NEW];
+        repeated ActionLimitItem items = 2;
+}
+
+message S2C_ActionLimitUnban {
+        optional ProtocolType type = 1 [default = S_2_C_ACTION_LIMIT_UNBAN];
+        repeated int32 ids = 2;
+}
+
+message S2C_ActionLimitNotice {
+        enum NoticeType {
+            AT_SEND_PAOPAO_MSG = 1;
+            AT_CLEAR_SPEAK = 2;
+            AT_CLEAR_HERO_COMMENT = 3;
+			AT_GET_REWARD = 4;
+        }
+        optional ProtocolType type = 1 [default = S_2_C_ACTION_LIMIT_NOTICE];
+        optional int32 id = 2;
+        optional int64 role_id = 3;
+        optional int32 param = 4;
+        optional string str = 5;
+}

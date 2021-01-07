@@ -1,0 +1,105 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message Officer {
+        optional int32 officer_id = 1;
+        optional int64 role_id = 2;
+        optional string name = 3;
+        optional string crop = 4;
+        optional bool salary = 5;
+        optional int32 logout_time = 6;
+        optional int32 rank_value = 7;
+        optional int32 img_type = 8;
+        optional int32 img_id = 9;
+        optional int32 impeach_num = 10;
+}
+
+
+message C2S_CountryAppoint {
+        optional ProtocolType type = 1 [default = C_2_S_COUNTRY_APPOINT];
+        optional int32 appoint_type = 2; //1=辞职 2=任命 3=弹劾
+        optional int64 role_id = 3;
+        optional int32 officer_id = 4;
+}
+
+message S2C_CountryAppoint {
+        optional ProtocolType type = 1 [default = S_2_C_COUNTRY_APPOINT];
+        optional int32 appoint_type = 2;
+        optional int64 role_id = 3;
+        optional Officer new_officer = 4;
+        optional int32 num = 5;
+}
+
+message C2S_CountryManage {
+        optional ProtocolType type = 1 [default = C_2_S_COUNTRY_MANAGE];
+        optional int32 manage_type = 2; //11=公告
+        optional int32 param = 3;
+        optional string param_string = 4;
+}
+
+message S2C_CountryManage {
+        optional ProtocolType type = 1 [default = S_2_C_COUNTRY_MANAGE];
+        optional int32 manage_type = 2;
+        optional int32 param = 3;
+        optional string param_string = 4;
+        optional int32 times = 5;
+        optional int32 cd_time = 6;
+        optional int32 duration_time = 7;
+}
+
+message C2S_CountryBuyInteriorTimes {
+        optional ProtocolType type = 1 [default = C_2_S_COUNTRY_BUY_INTERIOR_TIMES];
+}
+
+message S2C_CountryBuyInteriorTimes {
+        optional ProtocolType type = 1 [default = S_2_C_COUNTRY_BUY_INTERIOR_TIMES];
+        optional int32 times = 2;
+}
+
+message C2S_CountryDoInterior {
+        optional ProtocolType type = 1 [default = C_2_S_COUNTRY_DO_INTERIOR];
+        optional int32 interior_type = 2;
+}
+
+message S2C_CountryDoInterior {
+        optional ProtocolType type = 1 [default = S_2_C_COUNTRY_DO_INTERIOR];
+        optional int32 interior_type = 2;
+        optional int32 exp = 3;
+        optional int32 times = 4;
+        optional int32 performance = 5;
+}
+
+message C2S_CountryRank {
+        optional ProtocolType type = 1 [default = C_2_S_COUNTRY_RANK];
+        optional int32 rank_type = 2;
+}
+
+message S2C_CountryRank {
+        optional ProtocolType type = 1 [default = S_2_C_COUNTRY_RANK];
+        optional int32 rank_type = 2;
+        repeated Officer officers = 3;
+}
+
+message C2S_CountryDrawSalary {
+        optional ProtocolType type = 1 [default = C_2_S_COUNTRY_DRAW_SALARY];
+        optional int32 salary_type = 2; //1=官职俸禄 2=爵位俸禄 3=封赏天下
+}
+
+message S2C_CountryDrawSalary {
+        optional ProtocolType type = 1 [default = S_2_C_COUNTRY_DRAW_SALARY];
+        optional int32 salary_type = 2;
+}
+
+message C2S_CountryCity {
+        optional ProtocolType type = 1 [default = C_2_S_COUNTRY_CITY];
+}
+
+message S2C_CountryCity {
+        optional ProtocolType type = 1 [default = S_2_C_COUNTRY_CITY];
+        message City {
+            optional int32 city_id = 1;
+            optional int32 dev = 2;
+        };
+        repeated City citys = 2;
+}

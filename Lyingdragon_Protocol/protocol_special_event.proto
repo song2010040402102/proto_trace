@@ -1,0 +1,53 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_SpecialEventLoad {
+        optional ProtocolType type = 1 [default = C_2_S_SPECIAL_EVENT_LOAD];
+}
+
+message S2C_SpecialEventLoad {
+        optional ProtocolType type = 1 [default = S_2_C_SPECIAL_EVENT_LOAD];
+        optional int32 id = 2;
+        optional int32 left_time = 3;
+        optional int32 state = 4;
+        repeated int32 done_event_ids = 5;
+        message EventInfo {
+                optional int32 id = 1;
+                optional int32 state = 2;
+        }
+        repeated EventInfo infos = 6;
+}
+
+
+message C2S_SpecialEventDo {
+        optional ProtocolType type = 1 [default = C_2_S_SPECIAL_EVENT_DO];
+        optional int32 event_id = 2;
+        optional int32 idx = 3;
+        optional int32 free_cost = 4;
+        optional int32 army_id = 5;
+        optional int32 belong_city_id = 6;
+}
+
+message S2C_SpecialEventDo {
+        optional ProtocolType type = 1 [default = S_2_C_SPECIAL_EVENT_DO];
+        optional int32 event_id = 2;
+        optional int32 event_type = 3;
+        optional int32 result = 4;
+        optional int64 report_id = 5;
+        repeated RewardType rwds = 6;
+        optional int32 army_id = 7;
+        optional int32 ret = 8;
+}
+
+message C2S_SpecialEventDraw {
+        optional ProtocolType type = 1 [default = C_2_S_SPECIAL_EVENT_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_SpecialEventDraw {
+        optional ProtocolType type = 1 [default = S_2_C_SPECIAL_EVENT_DRAW];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+        repeated RewardType rwds = 4;
+}

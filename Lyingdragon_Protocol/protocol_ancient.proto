@@ -1,0 +1,122 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_AncientInfo {
+        optional ProtocolType type = 1 [default = C_2_S_ANCIENT_INFO];
+}
+
+message S2C_AncientInfo {
+        optional ProtocolType type = 1 [default = S_2_C_ANCIENT_INFO];
+        optional int32 enter_times = 2;
+        optional int32 buy_times = 3;
+        repeated int32 ids = 4;
+        optional int32 cur_id = 5;
+        optional int32 skip_times = 6;
+        message Instance {
+                optional int32 id = 1;
+                optional int32 status = 2; // 1 pass
+        }
+        repeated Instance items = 7;
+}
+
+message C2S_AncientEnter {
+        optional ProtocolType type = 1 [default = C_2_S_ANCIENT_ENTER];
+        optional int32 id = 2;
+}
+
+message S2C_AncientEnter {
+        optional ProtocolType type = 1 [default = S_2_C_ANCIENT_ENTER];
+        optional int32 id = 2;
+        repeated int32 instance_ids = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_AncientAttack {
+        optional ProtocolType type = 1 [default = C_2_S_ANCIENT_ATTACK];
+        optional bool skip = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_AncientAttack {
+        optional ProtocolType type = 1 [default = S_2_C_ANCIENT_ATTACK];
+        optional int32 instance_id = 2;
+        optional int32 result = 3; // > 0 win
+        optional int64 report_id = 4;
+        optional int32 event_status = 5; // 1 chest, 2 pvp, 3 business, 4 super npc
+        optional int64 event_value = 6;
+        message PvP {
+            message GeneralInfo {
+                optional int32 id = 1;
+                optional int32 pos = 2;
+                optional int32 soldier_id = 3;
+            }
+            optional string pvp_name = 1;
+            optional int32 pvp_lvl = 2;
+            optional int32 pvp_country = 3;
+            optional int32 pvp_power = 4;
+            optional int32 pvp_img_id = 5;
+            optional int32 pvp_img_type = 6;
+            optional int32 from_id = 7;
+            repeated GeneralInfo gfs = 8;
+        }
+        optional PvP pvp = 7;
+        repeated int32 shop_ids = 8;
+        repeated RewardType rewards = 9;
+        optional int32 ret = 10;
+}
+
+message C2S_AncientOpenChest {
+        optional ProtocolType type = 1 [default = C_2_S_ANCIENT_OPEN_CHEST];
+}
+
+message S2C_AncientOpenChest {
+        optional ProtocolType type = 1 [default = S_2_C_ANCIENT_OPEN_CHEST];
+        repeated RewardType rewards = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_AncientBuyItem {
+        optional ProtocolType type = 1 [default = C_2_S_ANCIENT_BUY_ITEM];
+        optional int32 id = 2;
+}
+
+message S2C_AncientBuyItem {
+        optional ProtocolType type = 1 [default = S_2_C_ANCIENT_BUY_ITEM];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_AncientBuyTimes {
+        optional ProtocolType type = 1 [default = C_2_S_ANCIENT_BUY_TIMES];
+}
+
+message S2C_AncientBuyTimes {
+        optional ProtocolType type = 1 [default = S_2_C_ANCIENT_BUY_TIMES];
+        optional int32 times = 3;
+        optional int32 buy_times = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_AncientPVPBattle {
+        optional ProtocolType type = 1 [default = C_2_S_ANCIENT_PVP_BATTLE];
+        optional int32 army_id = 2;
+}
+
+message S2C_AncientPVPBattle {
+        optional ProtocolType type = 1 [default = S_2_C_ANCIENT_PVP_BATTLE];
+        optional int32 result = 2;
+        optional int64 report_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_AncientBuyShop {
+        optional ProtocolType type = 1 [default = C_2_S_ANCIENT_BUY_SHOP];
+        optional int32 id = 2;
+}
+
+message S2C_AncientBuyShop {
+        optional ProtocolType type = 1 [default = S_2_C_ANCIENT_BUY_SHOP];
+        optional int32 id = 2;
+        optional int32 ret = 3;
+}

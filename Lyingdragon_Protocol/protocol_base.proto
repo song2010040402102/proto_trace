@@ -1,0 +1,2325 @@
+package Lyingdragon.Protocol;
+option optimize_for = SPEED;
+
+enum ProtocolType {
+     C2S_KEEP_ALIVE_ACK         = 0;
+     S2C_KEEP_ALIVE_ACK         = 4;
+     C2S_TSS_SDK                = 5;
+     S2C_TSS_SDK                = 6;
+     C2S_TSS_DIRTY_WORD_CHECK   = 7;
+     S2C_TSS_DIRTY_WORD_CHECK   = 8;
+     C2S_CONNECT_TO_SERVER      = 9;
+     S2C_CONNECT_TO_SERVER      = 10;
+     S2C_IN_QUENE_NUM           = 11;
+     S2C_PROTOCOL_ACK           = 12;
+     S2C_SESSION_ROLE_ID        = 14;
+     S2C_RECONNECT_TO_SERVER    = 16;
+     S2C_GATE_SESSION_SEED      = 18;
+     S2C_ERROR_CODE             = 98;
+     S2C_GATE_STATE             = 100;
+     S2C_MAINTENANCE            = 101;
+
+     //account
+     C_2_S_ACCOUNT_BASE                     = 5000;
+     C_2_S_ACCOUNT_LOGIN                    = 5001;
+     S_2_C_ACCOUNT_LOGIN                    = 5002;
+     C_2_S_ACCOUNT_CREATE                   = 5003;
+     S_2_C_ACCOUNT_CREATE                   = 5004;
+     C_2_S_ACCOUNT_LOAD_CHAR                = 5005;
+     S_2_C_ACCOUNT_LOAD_CHAR                = 5006;
+     C_2_S_ACCOUNT_RAND_NAME                = 5007;
+     S_2_C_ACCOUNT_RAND_NAME                = 5008;
+     S_2_C_ACCOUNT_LOAD_END                 = 5018;
+     S_2_C_ACCOUNT_GAME_TIME                = 5020;
+     C_2_S_ACCOUNT_SWAP_SESSION             = 5021;
+     S_2_C_ACCOUNT_SWAP_SESSION             = 5022;
+     S_2_C_ACCOUNT_SERVER_TIME              = 5024;
+     S_2_C_ACCOUNT_FORBIDDEN                = 5026;
+     S_2_C_ACCOUNT_SERVER_NODE              = 5028;
+     C_2_S_ACCOUNT_LEAST_PLAYER_NUM_COUNTRY = 5029;
+     S_2_C_ACCOUNT_LEAST_PLAYER_NUM_COUNTRY = 5030;
+     C_2_S_ACCOUNT_GATE_RECONNECT           = 5031;
+     S_2_C_ACCOUNT_KICK_OFF                 = 5034;
+     C_2_S_ACCOUNT_QUERY                    = 5035;
+     S_2_C_ACCOUNT_QUERY                    = 5036;
+     S_2_C_CREDIT_SCORE_LIMIT               = 5037;
+     C_2_S_ACCOUNT_TOP                      = 5100;
+
+     //collection
+     C_2_S_COLLECTION_BASE         = 5100;
+     C_2_S_COLLECTION_LOAD_INFO    = 5101;
+     S_2_C_COLLECTION_LOAD_INFO    = 5102;
+     C_2_S_COLLECTION_DO           = 5103;
+     S_2_C_COLLECTION_DO           = 5104;
+     C_2_S_COLLECTION_DO_FORCE     = 5105;
+     S_2_C_COLLECTION_DO_FORCE     = 5106;
+     C_2_S_COLLECTION_EVENT_SELECT = 5107;
+     S_2_C_COLLECTION_EVENT_SELECT = 5108;
+     C_2_S_COLLECTION_FRAM_HARVEST = 5109;
+     S_2_C_COLLECTION_FRAM_HARVEST = 5110;
+     C_2_S_COLLECTION_TOP          = 5200;
+
+     //thief
+     C_2_S_THIEF_BASE                       = 5200;
+     C_2_S_THIEF_INFO                       = 5201;
+     S_2_C_THIEF_INFO                       = 5202;
+     C_2_S_THIEF_BATTLE                     = 5203;
+     S_2_C_THIEF_BATTLE                     = 5204;
+     S_2_C_THIEF_DEAD_NTF                   = 5206;
+     C_2_S_THIEF_TOP                        = 5300;
+
+     //king
+     C_2_S_KING_BASE                         = 5300;
+     C_2_S_KING_LOAD_MAIN_INFO               = 5301;
+     S_2_C_KING_LOAD_MAIN_INFO               = 5302;
+     C_2_S_KING_LARGESS_PLAYERS              = 5303;
+     S_2_C_KING_LARGESS_PLAYERS              = 5304;
+     C_2_S_KING_OFFICER_ISSUE_ORDER          = 5305;
+     S_2_C_KING_OFFICER_ISSUE_ORDER          = 5306;
+     C_2_S_KING_LOAD_AFFAIRS                 = 5307;
+     S_2_C_KING_LOAD_AFFAIRS                 = 5308;
+     C_2_S_KING_CONTRIBUTE_AFFAIRS           = 5309;
+     S_2_C_KING_CONTRIBUTE_AFFAIRS           = 5310;
+     C_2_S_KING_LOAD_MILITARY                = 5311;
+     S_2_C_KING_LOAD_MILITARY                = 5312;
+     S_2_C_KING_LOAD_MILITARY_BEGIN          = 5313;
+     S_2_C_KING_LOAD_MILITARY_END            = 5314;
+     C_2_S_KING_JOIN_SUPER_MEMBER            = 5315;
+     S_2_C_KING_JOIN_SUPER_MEMBER            = 5316;
+     C_2_S_KING_FIRE_SUPER_MEMBER            = 5317;
+     S_2_C_KING_FIRE_SUPER_MEMBER            = 5318;
+     C_2_S_KING_LEAVE_SUPER_MEMBER           = 5319;
+     S_2_C_KING_LEAVE_SUPER_MEMBER           = 5320;
+     C_2_S_KING_LOAD_OFFICER_INFO            = 5321;
+     S_2_C_KING_LOAD_OFFICER_INFO            = 5323;
+     C_2_S_KING_GET_SALARY                   = 5325;
+     S_2_C_KING_GET_SALARY                   = 5326;
+     C_2_S_KING_INJECT_FUNDS                 = 5327;
+     S_2_C_KING_INJECT_FUNDS                 = 5328;
+     C_2_S_KING_LOAD_TREASURY                = 5329;
+     S_2_C_KING_LOAD_TREASURY                = 5330;
+     C_2_S_KING_PLUNDER_WAR_START            = 5331;
+     S_2_C_KING_PLUNDER_WAR_START            = 5332;
+     S_2_C_KING_PLUNDER_WAR_START_RET        = 5333;
+     S_2_C_KING_LOAD_PLUNDER_WAR_INFO        = 5335;
+     S_2_C_KING_PLUNDER_WAR_BATTLE           = 5336;
+     S_2_C_KING_PLUNDER_WAR_RES              = 5337;
+     S_2_C_KING_PLUNDER_WAR_RESULT           = 5338;
+     S_2_C_KING_PLUNDER_WAR_END              = 5339;
+     S_2_C_KING_LARGE_BENIFIT                = 5340;
+     C_2_S_KING_JOIN_PLUNDER_WAR             = 5341;
+     S_2_C_KING_JOIN_PLUNDER_WAR             = 5342;
+     C_2_S_KING_OPEN_WAR_WINDOW              = 5343;
+     S_2_C_KING_OPEN_WAR_WINDOW              = 5344;
+     C_2_S_KING_CLOSE_WAR_WINDOW             = 5345;
+     S_2_C_KING_CLOSE_WAR_WINDOW             = 5346;
+     C_2_S_KING_DRAW_LARGESS_REWARD          = 5347;
+     S_2_C_KING_DRAW_LARGESS_REWARD          = 5348;
+     C_2_S_KING_MILITARY_INFO                = 5349;
+     S_2_C_KING_MILITARY_INFO                = 5350;
+     S_2_C_KING_LARGESS                      = 5351;
+     S_2_C_KING_INJECT_FUNDS_INFO            = 5352;
+     S_2_C_KING_ISSUE_ORDER_INFO             = 5353;
+     S_2_C_KING_CUP_STATE                    = 5354;
+     S_2_C_KING_UPDATE_PLUNDER_WAR_INTEGAL   = 5355;
+     S_2_C_KING_DELETE_WAR_PLAYER            = 5356;
+     S_2_C_KING_INFO                         = 5357;
+     C_2_S_KING_TOP                          = 5400;
+
+     //smelt
+     C_2_S_SMELT_BASE          = 5400;
+     C_2_S_SMELT_LOAD_INFO     = 5401;
+     S_2_C_SMELT_LOAD_INFO     = 5402;
+     C_2_S_SMELT_SELECT_CRIT   = 5403;
+     S_2_C_SMELT_SELECT_CRIT   = 5404;
+     C_2_S_SMELT_SELECT_GOLD   = 5405;
+     S_2_C_SMELT_SELECT_GOLD   = 5406;
+     C_2_S_SMELT_DO_SMELT      = 5407;
+     S_2_C_SMELT_DO_SMELT      = 5408;
+     C_2_S_SMELT_BUY_TIMES     = 5409;
+     S_2_C_SMELT_BUY_TIMES     = 5410;
+     C_2_S_SMELT_SELL_SMELT    = 5411;
+     S_2_C_SMELT_SELL_SMELT    = 5412;
+     C_2_S_SMELT_TOP           = 5500;
+
+     //equipment
+     C_2_S_EQUIPMENT_BASE                       = 5500;
+     C_2_S_EQUIPMENT_ACTION                     = 5501;
+     S_2_C_EQUIPMENT_ACTION                     = 5502;
+     C_2_S_EQUIPMENT_LOADALL                    = 5503;
+     S_2_C_EQUIPMENT_LOADALL                    = 5504;
+     C_2_S_EQUIPMENT_EQUIP_ITEM                 = 5505;
+     S_2_C_EQUIPMENT_EQUIP_ITEM                 = 5506;
+     C_2_S_EQUIPMENT_UNEQUIP_ITEM               = 5507;
+     C_2_S_EQUIPMENT_COMPOSITE_PUTIN_ITEM       = 5511;
+     S_2_C_EQUIPMENT_COMPOSITE_PUTIN_ITEM       = 5512;
+     C_2_S_EQUIPMENT_COMPOSITE_TAKEOUT_ITEM     = 5513;
+     S_2_C_EQUIPMENT_COMPOSITE_TAKEOUT_ITEM     = 5514;
+     C_2_S_EQUIPMENT_COMPOSITE_ITEM             = 5515;
+     S_2_C_EQUIPMENT_COMPOSITE_ITEM             = 5516;
+     C_2_S_EQUIPMENT_EQUIP_GF_ITEM              = 5517;
+     S_2_C_EQUIPMENT_EQUIP_GF_ITEM              = 5518;
+     C_2_S_EQUIPMENT_UNEQUIP_GF_ITEM            = 5519;
+     S_2_C_EQUIPMENT_UNEQUIP_GF_ITEM            = 5520;
+     C_2_S_EQUIPMENT_EXCHANGE_ITEM              = 5521;
+     S_2_C_EQUIPMENT_EXCHANGE_ITEM              = 5522;
+     C_2_S_EQUIPMENT_ONE_KEY_COMPOSITE_ITEM     = 5523;
+     S_2_C_EQUIPMENT_ONE_KEY_COMPOSITE_ITEM     = 5524;
+     C_2_S_EQUIPMENT_BIND                       = 5525;
+     S_2_C_EQUIPMENT_BIND                       = 5526;
+     C_2_S_EQUIPMENT_ADD_NEW                    = 5527;
+     S_2_C_EQUIPMENT_ADD_NEW                    = 5528;
+     C_2_S_EQUIPMENT_SELL                       = 5529;
+     S_2_C_EQUIPMENT_SELL                       = 5530;
+     C_2_S_EQUIPMENT_CASTING                    = 5531;
+     S_2_C_EQUIPMENT_CASTING                    = 5532;
+     C_2_S_EQUIPMENT_SOLO_LOAD                  = 5533;
+     S_2_C_EQUIPMENT_SOLO_LOAD                  = 5534;
+     C_2_S_EQUIPMENT_SOLO_COMPOSITE             = 5535;
+     S_2_C_EQUIPMENT_SOLO_COMPOSITE             = 5536;
+     C_2_S_EQUIPMENT_SOLO_WEAR                  = 5537;
+     S_2_C_EQUIPMENT_SOLO_WEAR                  = 5538;
+     C_2_S_EQUIPMENT_SOLO_SELL                  = 5539;
+     S_2_C_EQUIPMENT_SOLO_SELL                  = 5540;
+     C_2_S_EQUIPMENT_SOLO_PART_LEVEL_UP         = 5543;
+     S_2_C_EQUIPMENT_SOLO_PART_LEVEL_UP         = 5544;
+     C_2_S_EQUIPMENT_ONE_KEY_ACTION             = 5545;
+     S_2_C_EQUIPMENT_ONE_KEY_ACTION             = 5546;
+     S_2_C_EQUIPMENT_LOADALL_END                = 5548;
+     C_2_S_EQUIPMENT_REFRESH                    = 5549;
+     S_2_C_EQUIPMENT_REFRESH                    = 5550;
+     C_2_S_EQUIPMENT_RECAST                     = 5551;
+     S_2_C_EQUIPMENT_RECAST                     = 5552;
+     C_2_S_EQUIPMENT_RECAST_CONFIRM             = 5553;
+     S_2_C_EQUIPMENT_RECAST_CONFIRM             = 5554;
+     C_2_S_EQUIPMENT_DECOMPOSE                  = 5555;
+     S_2_C_EQUIPMENT_DECOMPOSE                  = 5556;
+     C_2_S_EQUIPMENT_IMPRINT                    = 5557;
+     S_2_C_EQUIPMENT_IMPRINT                    = 5558;
+     C_2_S_EQUIPMENT_SAVE_IMPRINT               = 5559;
+     S_2_C_EQUIPMENT_SAVE_IMPRINT               = 5560;
+     C_2_S_EQUIPMENT_IMPRINT_STONE              = 5561;
+     S_2_C_EQUIPMENT_IMPRINT_STONE              = 5562;
+     C_2_S_EQUIPMENT_MUTI_EQUIP                 = 5563;
+     S_2_C_EQUIPMENT_MUTI_EQUIP                 = 5564;
+     C_2_S_EQUIPMENT_APPRAISE                   = 5565;
+     S_2_C_EQUIPMENT_APPRAISE                   = 5566;
+     C_2_S_EQUIPMENT_COMPOSE                    = 5567;
+     S_2_C_EQUIPMENT_COMPOSE                    = 5568;
+     C_2_S_EQUIPMENT_TOP                        = 5600;
+
+     //formation
+     C_2_S_FORMATION_BASE                           = 5600;
+     C_2_S_FORMATION_INFO                           = 5601;
+     S_2_C_FORMATION_INFO                           = 5602;
+     C_2_S_FORMATION_GENARAL_BATTLE                 = 5603;
+     S_2_C_FORMATION_GENARAL_CHANGE                 = 5604;
+     C_2_S_FORMATION_REMOVE_GENARAL                 = 5605;
+     C_2_S_FORMATION_SET_DEFAULT                    = 5607;
+     S_2_C_FORMATION_SET_DEFAULT                    = 5608;
+     C_2_S_FORMATION_LOAD_ALL_BOSOM_FRIEND_BATTLE   = 5613;
+     S_2_C_FORMATION_LOAD_ALL_BOSOM_FRIEND_BATTLE   = 5614;
+     C_2_S_FORMATION_BOSOM_FRIEND_BATTLE            = 5615;
+     S_2_C_FORMATION_BOSOM_FRIEND_BATTLE            = 5616;
+     C_2_S_FORMATION_GENERAL_LIMIT_SOLDIER_NUM      = 5629;
+     S_2_C_FORMATION_GENERAL_LIMIT_SOLDIER_NUM      = 5630;
+     C_2_S_FORMATION_TOP                            = 5700;
+
+     //world boss
+     C_2_S_WORLD_BOSS_BASE              = 5700;
+     C_2_S_WORLD_BOSS_INFO              = 5701;
+     S_2_C_WORLD_BOSS_INFO              = 5702;
+     C_2_S_WORLD_BOSS_TEAM_INFO         = 5703;
+     S_2_C_WORLD_BOSS_TEAM_INFO         = 5704;
+     C_2_S_WORLD_BOSS_CREATE            = 5705;
+     S_2_C_WORLD_BOSS_CREATE            = 5706;
+     C_2_S_WORLD_BOSS_JOIN              = 5707;
+     S_2_C_WORLD_BOSS_JOIN              = 5708;
+     C_2_S_WORLD_BOSS_KICK_OUT          = 5709;
+     S_2_C_WORLD_BOSS_KICK_OUT          = 5710;
+     C_2_S_WORLD_BOSS_QUIT              = 5711;
+     S_2_C_WORLD_BOSS_QUIT              = 5712;
+     C_2_S_WORLD_BOSS_BATTLE            = 5713;
+     S_2_C_WORLD_BOSS_BATTLE            = 5714;
+     S_2_C_WORLD_BOSS_DEAD              = 5716;
+     C_2_S_WORLD_BOSS_SUMMON            = 5717;
+     S_2_C_WORLD_BOSS_SUMMON            = 5718;
+     C_2_S_WORLD_BOSS_PURSUE_ATTACK     = 5719;
+     S_2_C_WORLD_BOSS_PURSUE_ATTACK     = 5720;
+     C_2_S_WORLD_BOSS_CLAIM_RANK        = 5721;
+     S_2_C_WORLD_BOSS_CLAIM_RANK        = 5722;
+     C_2_S_WORLD_BOSS_TOP               = 5800;
+
+     //warehouse
+     C_2_S_WAREHOUSE_BASE               = 5800;
+     C_2_S_WAREHOUSE_ACCELERATE_CELL    = 5801;
+     S_2_C_WAREHOUSE_ACCELERATE_CELL    = 5802;
+     C_2_S_WAREHOUSE_UNBIND_CELL        = 5803;
+     S_2_C_WAREHOUSE_UNBIND_CELL        = 5804;
+     C_2_S_WAREHOUSE_LOAD_RESOURCE      = 5805;
+     S_2_C_WAREHOUSE_LOAD_RESOURCE      = 5806;
+     C_2_S_WAREHOUSE_GET_WALLET_REWARD  = 5807;
+     S_2_C_WAREHOUSE_GET_WALLET_REWARD  = 5808;
+     C_2_S_WAREHOUSE_LOAD_CELL_INFO     = 5809;
+     S_2_C_WAREHOUSE_LOAD_CELL_INFO     = 5810;
+     C_2_S_WAREHOUSE_LOAD_WALLET_INFO   = 5811;
+     S_2_C_WAREHOUSE_LOAD_WALLET_INFO   = 5812;
+     C_2_S_WAREHOUSE_TOP                = 5900;
+
+     //technology
+     C_2_S_TECHNOLOGY_BASE              = 5900;
+     C_2_S_TECHNOLOGY_LOAD              = 5901;
+     S_2_C_TECHNOLOGY_LOAD              = 5902;
+     C_2_S_TECHNOLOGY_LEVEL_UP          = 5903;
+     S_2_C_TECHNOLOGY_LEVEL_UP          = 5904;
+     C_2_S_TECHNOLOGY_FINISH            = 5905;
+     S_2_C_TECHNOLOGY_FINISH            = 5906;
+     C_2_S_TECHNOLOGY_ALLOT_POINT       = 5907;
+     S_2_C_TECHNOLOGY_ALLOT_POINT       = 5908;
+     C_2_S_TECHNOLOGY_RECYCLE_POINT     = 5909;
+     S_2_C_TECHNOLOGY_RECYCLE_POINT     = 5910;
+     C_2_S_TECHNOLOGY_TOP               = 6000;
+
+     //patrol
+     C_2_S_PATROL_BASE          = 6000;
+     C_2_S_PATROL_INFO          = 6001;
+     S_2_C_PATROL_INFO          = 6002;
+     C_2_S_PATROL_REFRESH       = 6003;
+     S_2_C_PATROL_REFRESH       = 6004;
+     C_2_S_PATROL_USE_CARD      = 6005;
+     S_2_C_PATROL_USE_CARD      = 6006;
+     C_2_S_PATROL_SEARCH        = 6007;
+     S_2_C_PATROL_SEARCH        = 6008;
+     C_2_S_PATROL_BUY           = 6009;
+     S_2_C_PATROL_BUY           = 6010;
+     C_2_S_PATROL_TOP           = 6100;
+
+     //general
+     C_2_S_GENERAL_BASE                         = 6100;
+     C_2_S_GENERAL_ALL_INFO                     = 6101;
+     S_2_C_GENERAL_ALL_INFO                     = 6102;
+     C_2_S_GENERAL_INFO                         = 6103;
+     S_2_C_GENERAL_INFO                         = 6104;
+     C_2_S_GENERAL_UNLOCK_SOLDIER               = 6105;
+     S_2_C_GENERAL_UNLOCK_SOLDIER               = 6106;
+     C_2_S_GENERAL_ADVANCE_SOLDIER              = 6109;
+     S_2_C_GENERAL_ADVANCE_SOLDIER              = 6110;
+     C_2_S_GENERAL_STRATEGICS_LEVEL_UP          = 6111;
+     S_2_C_GENERAL_STRATEGICS_LEVEL_UP          = 6112;
+     C_2_S_GENERAL_COMPOSE                      = 6115;
+     S_2_C_GENERAL_COMPOSE                      = 6116;
+     C_2_S_GENERAL_SET_BATTLE_SOLDIER           = 6119;
+     S_2_C_GENERAL_UPDATE_INFO                  = 6120;
+     C_2_S_GENERAL_SET_MAIN                     = 6121;
+     S_2_C_GENERAL_SET_MAIN                     = 6122;
+     C_2_S_GENERAL_REWARD                       = 6149;
+     S_2_C_GENERAL_REWARD                       = 6150;
+     C_2_S_GENERAL_GROUP_INFO                   = 6151;
+     S_2_C_GENERAL_GROUP_INFO                   = 6152;
+     C_2_S_GENERAL_GROUP_UPDATE                 = 6153;
+     S_2_C_GENERAL_GROUP_UPDATE                 = 6154;
+     C_2_S_GENERAL_SWORN_REWARD_INFO            = 6155;
+     S_2_C_GENERAL_SWORN_REWARD_INFO            = 6156;
+     C_2_S_GENERAL_SWORN_REWARD                 = 6157;
+     S_2_C_GENERAL_SWORN_REWARD                 = 6158;
+     C_2_S_GENERAL_TOP                          = 6200;
+
+     //general_school
+     C_2_S_GENERAL_SCHOOL_BASE                  = 6400;
+     C_2_S_GENERAL_SCHOOL_CHILD_RAND_NAME       = 6401;
+     S_2_C_GENERAL_SCHOOL_CHILD_RAND_NAME       = 6402;
+     C_2_S_GENERAL_SCHOOL_CHILD_INFO            = 6403;
+     S_2_C_GENERAL_SCHOOL_CHILD_INFO            = 6404;
+     C_2_S_GENERAL_SCHOOL_CHILD_OLD_INFO        = 6405;
+     S_2_C_GENERAL_SCHOOL_CHILD_OLD_INFO        = 6406;
+     C_2_S_GENERAL_SCHOOL_CHILD_CREATE          = 6407;
+     S_2_C_GENERAL_SCHOOL_CHILD_CREATE          = 6408;
+     C_2_S_GENERAL_SCHOOL_CHILD_TEACHER         = 6409;
+     S_2_C_GENERAL_SCHOOL_CHILD_TEACHER         = 6410;
+     C_2_S_GENERAL_SCHOOL_PROJECT_REFRESH       = 6411;
+     S_2_C_GENERAL_SCHOOL_PROJECT_REFRESH       = 6412;
+     C_2_S_GENERAL_SCHOOL_PROJECT_TRAIN         = 6413;
+     S_2_C_GENERAL_SCHOOL_PROJECT_TRAIN         = 6414;
+     C_2_S_GENERAL_SCHOOL_CHILD_HEAD            = 6415;
+     S_2_C_GENERAL_SCHOOL_CHILD_HEAD            = 6416;
+     C_2_S_GENERAL_SCHOOL_SKILL_TRAIN           = 6417;
+     S_2_C_GENERAL_SCHOOL_SKILL_TRAIN           = 6418;
+     C_2_S_GENERAL_SCHOOL_DO_MAKE               = 6419;
+     S_2_C_GENERAL_SCHOOL_DO_MAKE               = 6420;
+     C_2_S_GENERAL_SCHOOL_USE_GOD_BLESS         = 6421;
+     S_2_C_GENERAL_SCHOOL_USE_GOD_BLESS         = 6422;
+     C_2_S_GENERAL_SCHOOL_CHILD_REBUILD         = 6423;
+     C_2_S_GENERAL_SCHOOL_REBUILD               = 6425;
+     S_2_C_GENERAL_SCHOOL_REBUILD               = 6426;
+     C_2_S_GENERAL_SCHOOL_CHILD_RENAME          = 6427;
+     S_2_C_GENERAL_SCHOOL_CHILD_RENAME          = 6428;
+     C_2_S_GENERAL_SCHOOL_AWAKE_INFO            = 6431;
+     S_2_C_GENERAL_SCHOOL_AWAKE_INFO            = 6432;
+     C_2_S_GENERAL_SCHOOL_AWAKE_TRAIN           = 6433;
+     S_2_C_GENERAL_SCHOOL_AWAKE_TRAIN           = 6434;
+     C_2_S_GENERAL_SCHOOL_AWAKE_SKILL_CHOOSE    = 6435;
+     S_2_C_GENERAL_SCHOOL_AWAKE_SKILL_CHOOSE    = 6436;
+     C_2_S_GENERAL_SCHOOL_PROJECT_INFO          = 6437;
+     S_2_C_GENERAL_SCHOOL_PROJECT_INFO          = 6438;
+     C_2_S_GENERAL_SCHOOL_TOP                   = 6500;
+
+     //general_soul
+     C_2_S_GENERAL_SOUL_BASE                    = 6500;
+     C_2_S_GENERAL_SOUL_INFO                    = 6501;
+     S_2_C_GENERAL_SOUL_INFO                    = 6502;
+     C_2_S_GENERAL_SOUL_LEVEL_UP                = 6503;
+     S_2_C_GENERAL_SOUL_LEVEL_UP                = 6504;
+     C_2_S_GENERAL_SOUL_RESET                   = 6505;
+     S_2_C_GENERAL_SOUL_RESET                   = 6506;
+     C_2_S_GENERAL_SOUL_CONFIRM                 = 6509;
+     S_2_C_GENERAL_SOUL_CONFIRM                 = 6510;
+     C_2_S_GENERAL_SOUL_TOP                     = 6600;
+
+     //store
+     C_2_S_STORE_BASE                               = 6600;
+     C_2_S_STORE_ADD_WAREHOUSE_NUM                  = 6601;
+     S_2_C_STORE_ADD_WAREHOUSE_NUM                  = 6602;
+     C_2_S_STORE_SALE_EQUIPMENT_FROM_WAREHOUSE      = 6603;
+     S_2_C_STORE_SALE_EQUIPMENT_FROM_WAREHOUSE      = 6604;
+     C_2_S_STORE_BUY_EQUIPMENT                      = 6605;
+     S_2_C_STORE_BUY_EQUIPMENT                      = 6606;
+     C_2_S_STORE_LOAD_LIMIT_EQUIPMENT_NUM           = 6607;
+     S_2_C_STORE_LOAD_LIMIT_EQUIPMENT_NUM           = 6608;
+     C_2_S_STORE_APPOINT_ITEM                       = 6609;
+     S_2_C_STORE_APPOINT_ITEM                       = 6610;
+     C_2_S_STORE_DRAW_EQUIPMENT                     = 6613;
+     S_2_C_STORE_DRAW_EQUIPMENT                     = 6614;
+     C_2_S_STORE_RECEIVE_REWARD                     = 6615;
+     S_2_C_STORE_RECEIVE_REWARD                     = 6616;
+     C_2_S_STORE_USE_CHEST                          = 6619;
+     S_2_C_STORE_USE_CHEST                          = 6620;
+     C_2_S_STORE_ATT_STONE_INFO                     = 6621;
+     S_2_C_STORE_ATT_STONE_INFO                     = 6622;
+     C_2_S_STORE_AUTO_REINCARNATION                 = 6623;
+     S_2_C_STORE_AUTO_REINCARNATION                 = 6624;
+     C_2_S_STORE_EXCHANGE_JADE_ORANGE               = 6625;
+     S_2_C_STORE_EXCHANGE_JADE_ORANGE               = 6626;
+     C_2_S_STORE_EXCHANGE_JADE_INFO                 = 6635;
+     S_2_C_STORE_EXCHANGE_JADE_INFO                 = 6636;
+     C_2_S_STORE_LOAD_REWARD_RESOURCE_INFO          = 6627;
+     S_2_C_STORE_LOAD_REWARD_RESOURCE_INFO          = 6628;
+     C_2_S_STORE_EXCHANGE                           = 6629;
+     S_2_C_STORE_EXCHANGE                           = 6630;
+     C_2_S_STORE_TOP                                = 6700;
+
+     //trialstower
+     C_2_S_TRIALS_TOWER_BASE                         = 6700;
+     C_2_S_TRIALS_TOWER_INFO                         = 6701;
+     S_2_C_TRIALS_TOWER_INFO                         = 6702;
+     C_2_S_TRIALS_TOWER_FORM_INFO                    = 6703;
+     S_2_C_TRIALS_TOWER_FORM_INFO                    = 6704;
+     C_2_S_TRIALS_TOWER_SET_FORM                     = 6705;
+     S_2_C_TRIALS_TOWER_SET_FORM                     = 6706;
+     C_2_S_TRIALS_TOWER_BATTLE                       = 6707;
+     S_2_C_TRIALS_TOWER_BATTLE                       = 6708;
+     C_2_S_TRIALS_TOWER_RESET                        = 6709;
+     S_2_C_TRIALS_TOWER_RESET                        = 6710;
+     C_2_S_TRIALS_TOWER_RECRUIT_INFO                 = 6713;
+     S_2_C_TRIALS_TOWER_RECRUIT_INFO                 = 6714;
+     C_2_S_TRIALS_TOWER_RECRUIT_GENERAL              = 6715;
+     S_2_C_TRIALS_TOWER_RECRUIT_GENERAL              = 6716;
+     C_2_S_TRIALS_TOWER_DRAW_BOX                     = 6717;
+     S_2_C_TRIALS_TOWER_DRAW_BOX                     = 6718;
+     C_2_S_TRIALS_TOWER_RAND_PLAYER                  = 6719;
+     S_2_C_TRIALS_TOWER_RAND_PLAYER                  = 6720;
+     C_2_S_TRIALS_TOWER_SHOP_INFO                    = 6721;
+     S_2_C_TRIALS_TOWER_SHOP_INFO                    = 6722;
+     C_2_S_TRIALS_TOWER_BUY_ITEM                     = 6723;
+     S_2_C_TRIALS_TOWER_BUY_ITEM                     = 6724;
+     C_2_S_TRIALS_TOWER_DRAW                         = 6725;
+     S_2_C_TRIALS_TOWER_DRAW                         = 6726;
+     C_2_S_TRIALS_TOWER_SWEEP                        = 6727;
+     S_2_C_TRIALS_TOWER_SWEEP                        = 6728;
+     C_2_S_TRIALS_TOWER_REFRESH_SHOP                 = 6729;
+     S_2_C_TRIALS_TOWER_REFRESH_SHOP                 = 6730;
+     C_2_S_TRIALS_TOWER_RANK                         = 6731;
+     S_2_C_TRIALS_TOWER_RANK                         = 6732;
+     C_2_S_TRIALS_TOWER_BUY_LIMIT_ITEM               = 6733;
+     S_2_C_TRIALS_TOWER_BUY_LIMIT_ITEM               = 6734;
+     C_2_S_TRIALS_TOWER_TOP                          = 6800;
+
+     //main city
+     C_2_S_MAIN_CITY_BASE                         = 6800;
+     C_2_S_MAIN_CITY_BUILDING_LIST                = 6801;
+     S_2_C_MAIN_CITY_BUILDING_LIST                = 6802;
+     C_2_S_MAIN_CITY_BUILDING_LEVEL_UP            = 6803;
+     S_2_C_MAIN_CITY_BUILDING_LEVEL_UP            = 6804;
+     C_2_S_MAIN_CITY_BUILDING_FINISH_NOW          = 6805;
+     S_2_C_MAIN_CITY_BUILDING_FINISH_NOW          = 6806;
+     C_2_S_MAIN_CITY_FARM_INFO                    = 6807;
+     S_2_C_MAIN_CITY_FARM_INFO                    = 6808;
+     C_2_S_MAIN_CITY_FARM_COLLECT                 = 6809;
+     S_2_C_MAIN_CITY_FARM_COLLECT                 = 6810;
+     C_2_S_MAIN_CITY_EVENT_LOAD                   = 6811;
+     S_2_C_MAIN_CITY_EVENT_NOTIFY                 = 6812;
+     C_2_S_MAIN_CITY_EVENT_SELECT                 = 6813;
+     S_2_C_MAIN_CITY_EVENT_SELECT                 = 6814;
+     S_2_C_MAIN_CITY_BUILDING_UPDATE_LVL          = 6816;
+     C_2_S_MAIN_CITY_BUILDING_NEW                 = 6817;
+     S_2_C_MAIN_CITY_BUILDING_NEW                 = 6818;
+     C_2_S_MAIN_CITY_BUILDING_MOVE                = 6819;
+     S_2_C_MAIN_CITY_BUILDING_MOVE                = 6820;
+     C_2_S_MAIN_CITY_BUILDING_RECYCLE             = 6821;
+     S_2_C_MAIN_CITY_BUILDING_RECYCLE             = 6822;
+     C_2_S_MAIN_CITY_BUILDING_IMMEDIATE_FINISH    = 6823;
+     S_2_C_MAIN_CITY_BUILDING_IMMEDIATE_FINISH    = 6824;
+     C_2_S_MAIN_CITY_WALL_INFO                    = 6825;
+     S_2_C_MAIN_CITY_WALL_INFO                    = 6826;
+     C_2_S_MAIN_CITY_REPAIR_WALL                  = 6827;
+     S_2_C_MAIN_CITY_REPAIR_WALL                  = 6828;
+     C_2_S_MAIN_CITY_TOP                          = 6900;
+
+     //general_school_field
+     C_2_S_GENERAL_SCHOOL_FIELD_BASE            = 6900;
+     C_2_S_GENERAL_SCHOOL_FIELD_INFO            = 6901;
+     S_2_C_GENERAL_SCHOOL_FIELD_INFO            = 6902;
+     C_2_S_GENERAL_ADD_TRAIN                    = 6903;
+     S_2_C_GENERAL_ADD_TRAIN                    = 6904;
+     C_2_S_GENERAL_OVER_TRAIN                   = 6905;
+     S_2_C_GENERAL_OVER_TRAIN                   = 6906;
+     C_2_S_GENERAL_SUDDEN_FLIGHT                = 6907;
+     S_2_C_GENERAL_SUDDEN_FLIGHT                = 6908;
+     C_2_S_GENERAL_TRAIN_EVENT                  = 6909;
+     S_2_C_GENERAL_TRAIN_EVENT                  = 6910;
+     C_2_S_GENERAL_SCHOOL_FIELD_TOP             = 7000;
+
+     //item
+     C_2_S_ITEM_BASE            = 7000;
+     C_2_S_ITEM_INFO            = 7001;
+     S_2_C_ITEM_INFO            = 7002;
+     C_2_S_ITEM_COMPOSE         = 7003;
+     S_2_C_ITEM_COMPOSE         = 7004;
+     C_2_S_ITEM_SELL            = 7005;
+     S_2_C_ITEM_SELL            = 7006;
+     C_2_S_ITEM_USE             = 7007;
+     S_2_C_ITEM_USE             = 7008;
+     C_2_S_ACCELERATE_ITEM_LIST = 7009;
+     S_2_C_ACCELERATE_ITEM_LIST = 7010;
+     C_2_S_ACCELERATE_ITEM_USE  = 7011;
+     S_2_C_ACCELERATE_ITEM_USE  = 7012;
+     C_2_S_ACCELERATE_ITEM_BUY  = 7013;
+     S_2_C_ACCELERATE_ITEM_BUY  = 7014;
+     C_2_S_BUFF_ITEM_LIST       = 7015;
+     S_2_C_BUFF_ITEM_LIST       = 7016;
+     C_2_S_BUFF_ITEM_USE        = 7017;
+     S_2_C_BUFF_ITEM_USE        = 7018;
+     C_2_S_WORLD_ACCELERATE_ITEM_LIST = 7019;
+     S_2_C_WORLD_ACCELERATE_ITEM_LIST = 7020;
+     C_2_S_WORLD_ACCELERATE_ITEM_USE  = 7021;
+     S_2_C_WORLD_ACCELERATE_ITEM_USE  = 7022;
+     C_2_S_WORLD_ACCELERATE_ITEM_BUY  = 7023;
+     S_2_C_WORLD_ACCELERATE_ITEM_BUY  = 7024;
+     C_2_S_EQUIP_PIECE_LIST     = 7025;
+     S_2_C_EQUIP_PIECE_LIST     = 7026;
+     C_2_S_USE_COLLECTION_ITEM  = 7027;
+     S_2_C_USE_COLLECTION_ITEM  = 7028;
+     C_2_S_ITEM_TOP             = 7100;
+
+     //instance
+     C_2_S_INSTANCE_BASE                        = 7100;
+     C_2_S_INSTANCE_LIST                        = 7101;
+     S_2_C_INSTANCE_LIST                        = 7102;
+     C_2_S_INSTANCE_BATTLE                      = 7103;
+     S_2_C_INSTANCE_BATTLE                      = 7104;
+     C_2_S_INSTANCE_DRAW_SCORE                  = 7105;
+     S_2_C_INSTANCE_DRAW_SCORE                  = 7106;
+     C_2_S_INSTANCE_SWEEP                       = 7107;
+     S_2_C_INSTANCE_SWEEP                       = 7108;
+     C_2_S_INSTANCE_LOAD_GUIDE                  = 7109;
+     S_2_C_INSTANCE_LOAD_GUIDE                  = 7110;
+     S_2_C_INSTANCE_ACHIEVE_REWARD              = 7112;
+     C_2_S_INSTANCE_SIMPLE_ACHIEVE_REWARD       = 7113;
+     S_2_C_INSTANCE_SIMPLE_ACHIEVE_REWARD       = 7114;
+     S_2_C_INSTANCE_HIDE_REWARD                 = 7116;
+     C_2_S_INSTANCE_ATK_NUM                     = 7117;
+     S_2_C_INSTANCE_ATK_NUM                     = 7118;
+     C_2_S_INSTANCE_DRAW                        = 7119;
+     S_2_C_INSTANCE_DRAW                        = 7120;
+     C_2_S_INSTANCE_DRAW_BOX                    = 7121;
+     S_2_C_INSTANCE_DRAW_BOX                    = 7122;
+     C_2_S_INSTANCE_SUPER_GUIDE                 = 7123;
+     S_2_C_INSTANCE_SUPER_GUIDE                 = 7124;
+     C_2_S_INSTANCE_TOP                         = 7200;
+
+     //draft
+     C_2_S_DRAFT_BASE           = 7200;
+     C_2_S_DRAFT_DO_DRAFT       = 7201;
+     S_2_C_DRAFT_FREE_SOLDIER   = 7202;
+     S_2_C_DRAFT_RES            = 7204;
+     C_2_S_DRAFT_INFO           = 7205;
+     S_2_C_DRAFT_INFO           = 7206;
+     C_2_S_DRAFT_SUPPLY_SOLDIER = 7207;
+     S_2_C_DRAFT_SUPPLY_SOLDIER = 7208;
+     C_2_S_DRAFT_TOP            = 7300;
+
+     //role
+     C_2_S_ROLE_BASE                        = 7300;
+     S_2_C_ROLE_INFO                        = 7302;
+     S_2_C_ROLE_UPDATE_BENEFIT              = 7306;
+     S_2_C_ROLE_ORDER_UPPER_LIMIT           = 7308;
+     C_2_S_ROLE_BUY_MILITARY_ORDERS         = 7309;
+     S_2_C_ROLE_BUY_MILITARY_ORDERS         = 7310;
+     S_2_C_ROLE_UPDATE_RESOURCE             = 7312;
+     S_2_C_ROLE_UPDATE_ATTRIBUTE            = 7314;
+     C_2_S_ROLE_RANK                        = 7315;
+     S_2_C_ROLE_RANK                        = 7316;
+     C_2_S_ROLE_GUIDE                       = 7317;
+     S_2_C_ROLE_GUIDE                       = 7318;
+     C_2_S_ROLE_LOAD_IMG                    = 7319;
+     S_2_C_ROLE_LOAD_IMG                    = 7320;
+     C_2_S_ROLE_BUY_IMG                     = 7321;
+     S_2_C_ROLE_BUY_IMG                     = 7322;
+     C_2_S_ROLE_SET_IMG                     = 7323;
+     S_2_C_ROLE_SET_IMG                     = 7324;
+     C_2_S_ROLE_CHOOSE_COUNTRY              = 7325;
+     S_2_C_ROLE_CHOOSE_COUNTRY              = 7326;
+     C_2_S_ROLE_STATE                       = 7327;
+     S_2_C_ROLE_STATE                       = 7328;
+     C_2_S_ROLE_UPDATE_ASSIST_INFO          = 7331;
+     C_2_S_ROLE_RETRIEVE_INFO               = 7335;
+     S_2_C_ROLE_RETRIEVE_INFO               = 7336;
+     C_2_S_ROLE_RETRIEVE_DO                 = 7337;
+     S_2_C_ROLE_RETRIEVE_DO                 = 7338;
+     C_2_S_ROLE_BASIC_INFO                  = 7339;
+     S_2_C_ROLE_BASIC_INFO                  = 7340;
+     C_2_S_ROLE_SET_CHAT_STYLE              = 7341;
+     S_2_C_ROLE_SET_CHAT_STYLE              = 7342;
+     S_2_C_ROLE_DAILY_RESET                 = 7344;
+     C_2_S_ROLE_CHAT_SETTING                = 7345;
+     S_2_C_ROLE_CHAT_SETTING                = 7346;
+     C_2_S_ROLE_OFFICIAL_LEVEL_UP           = 7347;
+     S_2_C_ROLE_OFFICIAL_LEVEL_UP           = 7348;
+     C_2_S_ROLE_OFFICIAL_DRAW_REWARD        = 7349;
+     S_2_C_ROLE_OFFICIAL_DRAW_REWARD        = 7350;
+     C_2_S_ROLE_RENAME                      = 7351;
+     S_2_C_ROLE_RENAME                      = 7352;
+     C_2_S_ROLE_LOAD_OFFICIAL               = 7353;
+     S_2_C_ROLE_LOAD_OFFICIAL               = 7354;
+     C_2_S_ROLE_LOAD_CHAT_STYLE             = 7355;
+     S_2_C_ROLE_LOAD_CHAT_STYLE             = 7356;
+     C_2_S_ROLE_USE_GIFT_CARD               = 7357;
+     S_2_C_ROLE_USE_GIFT_CARD               = 7358;
+     C_2_S_ROLE_CITY_INFO                   = 7359;
+     S_2_C_ROLE_CITY_INFO                   = 7360;
+     C_2_S_ROLE_CITY_DRAW                   = 7361;
+     S_2_C_ROLE_CITY_DRAW                   = 7362;
+     C_2_S_ROLE_OFFICIAL_SALARY_INFO        = 7363;
+     S_2_C_ROLE_OFFICIAL_SALARY_INFO        = 7364;
+     C_2_S_ROLE_DRAW_OFFICIAL_SALARY        = 7365;
+     S_2_C_ROLE_DRAW_OFFICIAL_SALARY        = 7366;
+     C_2_S_ROLE_OFFICIAL_RECRUIT            = 7367;
+     S_2_C_ROLE_OFFICIAL_RECRUIT            = 7368;
+     C_2_S_ROLE_LOAD_GAME_CONFIG            = 7369;
+     S_2_C_ROLE_LOAD_GAME_CONFIG            = 7370;
+     S_2_C_ROLE_LEVEL_UPDATE                = 7372;
+     C_2_S_ROLE_GAME_CONFIG                 = 7373;
+     S_2_C_ROLE_GAME_CONFIG                 = 7374;
+     C_2_S_ROLE_UPDATE_GUIDE                = 7375;
+     S_2_C_ROLE_UPDATE_GUIDE                = 7376;
+     C_2_S_ROLE_REMOVE_GUIDE                = 7377;
+     S_2_C_ROLE_REMOVE_GUIDE                = 7378;
+     C_2_S_ROLE_TLOG_BEHAVIOR               = 7379;
+     S_2_C_ROLE_TLOG_BEHAVIOR               = 7380;
+     C_2_S_ROLE_FIRST_ENTER_SIGN            = 7381;
+     S_2_C_ROLE_FIRST_ENTER_SIGN            = 7382;
+     C_2_S_ROLE_QUESTION_INFO               = 7383;
+     S_2_C_ROLE_QUESTION_INFO               = 7384;
+     C_2_S_ROLE_TLOG_STRATEGY               = 7385;
+     C_2_S_ROLE_BUFF                        = 7391;
+     S_2_C_ROLE_BUFF                        = 7392;
+     S_2_C_ROLE_BUFF_REMOVE                 = 7394;
+     S_2_C_ROLE_FIRST_LOGIN                 = 7396;
+     C_2_S_ROLE_CREDIT_UPDATE               = 7397;
+     S_2_C_ROLE_CREDIT_UPDATE               = 7398;
+     C_2_S_ROLE_TOP                         = 7400;
+
+     //master
+     C_2_S_MASTER_BASE                          = 7400;
+     C_2_S_MASTER_LOAD_INFO                     = 7401;
+     S_2_C_MASTER_LOAD_INFO                     = 7402;
+     C_2_S_MASTER_ALLOC_SKILL                   = 7403;
+     S_2_C_MASTER_ALLOC_SKILL                   = 7404;
+     C_2_S_MASTER_RESET_SKILL                   = 7405;
+     S_2_C_MASTER_RESET_SKILL                   = 7406;
+     C_2_S_MASTER_LOAD_EXP                      = 7407;
+     S_2_C_MASTER_LOAD_EXP                      = 7408;
+     C_2_S_MASTER_SET_HEAD_PORTRAIT             = 7413;
+     S_2_C_MASTER_SET_HEAD_PORTRAIT             = 7414;
+     C_2_S_MASTER_TITLE_INFO                    = 7417;
+     S_2_C_MASTER_TITLE_INFO                    = 7418;
+     C_2_S_MASTER_TITLE_SELECT                  = 7419;
+     C_2_S_MASTER_SEND_BUY_MILITORY_ORDER_TIMES = 7421;
+     S_2_C_MASTER_SEND_BUY_MILITORY_ORDER_TIMES = 7422;
+     C_2_S_MASTER_TOP                           = 7500;
+
+     //rank
+     C_2_S_RANK_BASE                    = 7500;
+     C_2_S_RANK_INFO                    = 7501;
+     S_2_C_RANK_INFO                    = 7502;
+     C_2_S_RANK_SELF_INFO               = 7503;
+     S_2_C_RANK_SELF_INFO               = 7504;
+     C_2_S_RANK_POWER_PROGRESS          = 7507;
+     S_2_C_RANK_POWER_PROGRESS          = 7508;
+     S_2_C_RANK_POWER_ATTRI_INFO        = 7510;
+     C_2_S_RANK_TOP                     = 7600;
+
+     //medal
+     C_2_S_MEDAL_BASE                           = 7600;
+     C_2_S_MEDAL_INFO                           = 7601;
+     S_2_C_MEADL_INFO                           = 7602;
+     C_2_S_MEDAL_HANDLE                         = 7603;
+     S_2_C_MEDAL_HANDLE                         = 7604;
+     C_2_S_MEDAL_GET                            = 7605;
+     S_2_C_MEDAL_GET                            = 7606;
+     C_2_S_MEDAL_COMBINE                        = 7607;
+     S_2_C_MEDAL_COMBINE                        = 7608;
+     C_2_S_MEDAL_INTENSIFY                      = 7609;
+     S_2_C_MEDAL_INTENSIFY                      = 7610;
+     C_2_S_MEDAL_BUY                            = 7611;
+     S_2_C_MEDAL_BUY                            = 7612;
+     C_2_S_MEDAL_BUY_POS                        = 7613;
+     S_2_C_MEDAL_BUY_POS                        = 7614;
+     C_2_S_MEDAL_SHOW                           = 7615;
+     C_2_S_MEDAL_TOP                            = 7700;
+
+     //battle
+     C_2_S_BATTLE_BASE                           = 7700;
+     C_2_S_BATTLE_REQUEST_PVE                    = 7701;
+     C_2_S_BATTLE_JOIN_OR_QUIT_MUTI_BATTLE       = 7703;
+     S_2_C_BATTLE_JOIN_OR_QUIT_RES               = 7704;
+     S_2_C_BATTLE_DEL_MEMBER_MUTI_BATTLE         = 7706;
+     S_2_C_BATTLE_ADD_MEMBER_MUTI_BATTLE         = 7708;
+     S_2_C_BATTLE_LOAD_GENERAL_FIGHT_INFO        = 7710;
+     S_2_C_BATTLE_RES                            = 7712;
+     S_2_C_BATTLE_ADD_PASS_NPCID                 = 7714;
+     C_2_S_BATTLE_TOP                            = 7800;
+
+     //chat
+     C_2_S_CHAT_BASE                    = 7800;
+     C_2_S_CHAT_MSG                     = 7801;
+     S_2_C_CHAT_MSG                     = 7802;
+     S_2_C_CHAT_BROAD_MSG               = 7804;
+     S_2_C_CHAT_FILTER_WORD_LIST        = 7806;
+     S_2_C_CHAT_FILTER_WORD_DELETE      = 7808;
+     C_2_S_CHAT_INCOME_FIND             = 7809;
+     S_2_C_CHAT_INCOME_FIND             = 7810;
+     S_2_C_CHAT_INSTRUCTOR              = 7812;
+     S_2_C_CHAT_PROMPT_INFO             = 7816;
+     S_2_C_CHAT_VIEW                    = 7818;
+     C_2_S_CHAT_MAIN_CITY_LOCK          = 7819;
+     C_2_S_CHAT_OFFLINE_MESSAGE         = 7821;
+     S_2_C_CHAT_OFFLINE_MESSAGE         = 7822;
+     C_2_S_CHAT_IMPEACH                 = 7823;
+     S_2_C_CHAT_IMPEACH                 = 7824;
+     C_2_S_CHAT_NOTICE                  = 7825;
+     S_2_C_CHAT_NOTICE                  = 7826;
+     C_2_S_CHAT_BROAD                   = 7827;
+     S_2_C_CHAT_BROAD                   = 7828;
+     C_2_S_CHAT_RECORD                  = 7829;
+     S_2_C_CHAT_RECORD                  = 7830;
+     C_2_S_CHAT_CONVERSATION_MSG        = 7831;
+     S_2_C_CHAT_CONVERSATION_MSG        = 7832;
+     C_2_S_CHAT_DELETE_CONVERSATION     = 7833;
+     S_2_C_CHAT_DELETE_CONVERSATION     = 7834;
+     C_2_S_CHAT_REPORT_VIOLATION        = 7835;
+     S_2_C_CHAT_REPORT_VIOLATION        = 7836;
+     C_2_S_CHAT_TOP                     = 7900;
+
+     //market
+     C_2_S_MARKET_BASE              = 8100;
+     C_2_S_MARKET_INFO              = 8101;
+     S_2_C_MARKET_INFO              = 8102;
+     C_2_S_MARKET_BUY_FOOD          = 8103;
+     S_2_C_MARKET_BUY_FOOD          = 8104;
+     C_2_S_MARKET_SELL_FOOD         = 8105;
+     S_2_C_MARKET_SELL_FOOD         = 8106;
+     C_2_S_MARKET_BUY_ILLEGAL_FOOD  = 8107;
+     S_2_C_MARKET_BUY_ILLEGAL_FOOD  = 8108;
+     C_2_S_MARKET_BUBBLE_UPDATE     = 8109;
+     S_2_C_MARKET_BUBBLE_UPDATE     = 8110;
+     C_2_S_MARKET_TOP               = 8200;
+
+     //task
+     C_2_S_TASK_BASE                     = 8200;
+     C_2_S_TASK_INFO                     = 8201;
+     S_2_C_TASK_INFO                     = 8202;
+     C_2_S_TASK_DRAW                     = 8203;
+     S_2_C_TASK_DRAW                     = 8204;
+     C_2_S_TASK_DAILY_INFO               = 8205;
+     S_2_C_TASK_DAILY_INFO               = 8206;
+     C_2_S_TASK_ACTIVITY                 = 8207;
+     S_2_C_TASK_ACTIVITY                 = 8208;
+     C_2_S_TASK_ACTIVITY_DRAW            = 8209;
+     S_2_C_TASK_ACTIVITY_DRAW            = 8210;
+     C_2_S_TASK_CHAPTER_INFO             = 8211;
+     S_2_C_TASK_CHAPTER_INFO             = 8212;
+     C_2_S_TASK_CHAPTER_DRAW             = 8213;
+     S_2_C_TASK_CHAPTER_DRAW             = 8214;
+     C_2_S_TASK_FINISH                   = 8215;
+     S_2_C_TASK_FINISH                   = 8216;
+     C_2_S_TASK_CROP_DRAW                = 8217;
+     S_2_C_TASK_CROP_DRAW                = 8218;
+     C_2_S_TASK_OFFICIAL_INFO            = 8219;
+     S_2_C_TASK_OFFICIAL_INFO            = 8220;
+     C_2_S_TASK_OFFICIAL_START           = 8221;
+     S_2_C_TASK_OFFICIAL_START           = 8222;
+     C_2_S_TASK_OFFICIAL_REFRESH         = 8223;
+     S_2_C_TASK_OFFICIAL_REFRESH         = 8224;
+     C_2_S_TASK_OFFICIAL_DRAW            = 8225;
+     S_2_C_TASK_OFFICIAL_DRAW            = 8226;
+     S_2_C_TASK_OFFICIAL_UPDATE          = 8228;
+     C_2_S_SEASON_TASK_INFO              = 8229;
+     S_2_C_SEASON_TASK_INFO              = 8230;
+     C_2_S_SEASON_TASK_DRAW              = 8231;
+     S_2_C_SEASON_TASK_DRAW              = 8232;
+     C_2_S_TASK_OFFICIAL_BATTLE          = 8233;
+     S_2_C_TASK_OFFICIAL_BATTLE          = 8234;
+     C_2_S_TASK_OFFICIAL_ABANDON         = 8235;
+     S_2_C_TASK_OFFICIAL_ABANDON         = 8236;
+     C_2_S_TASK_CROP_OFFICIAL_INFO       = 8237;
+     S_2_C_TASK_CROP_OFFICIAL_INFO       = 8238;
+     C_2_S_TASK_CROP_OFFICIAL_PUBLISH    = 8239;
+     S_2_C_TASK_CROP_OFFICIAL_PUBLISH    = 8240;
+     C_2_S_TASK_CROP_OFFICIAL_REFRESH    = 8241;
+     S_2_C_TASK_CROP_OFFICIAL_REFRESH    = 8242;
+     C_2_S_TASK_CROP_OFFICIAL_DRAW       = 8243;
+     S_2_C_TASK_CROP_OFFICIAL_DRAW       = 8244;
+     C_2_S_TASK_UPDATE_NEW               = 8245;
+     S_2_C_TASK_UPDATE_NEW               = 8246;
+     C_2_S_TASK_TOP                      = 8300;
+
+     //mail
+     C_2_S_MAIL_BASE                    = 8300;
+     C_2_S_MAIL_SEND                    = 8301;
+     S_2_C_MAIL_SEND                    = 8302;
+     C_2_S_MAIL_REWARD                  = 8303;
+     S_2_C_MAIL_REWARD                  = 8304;
+     C_2_S_MAIL_LIST                    = 8305;
+     S_2_C_MAIL_LIST                    = 8306;
+     C_2_S_MAIL_READ                    = 8307;
+     S_2_C_MAIL_READ                    = 8308;
+     C_2_S_MAIL_DELETE                  = 8309;
+     S_2_C_MAIL_DELETE                  = 8310;
+     S_2_C_MAIL_NEW                     = 8312;
+     S_2_C_MAIL_LIST_END                = 8314;
+     C_2_S_MAIL_LOCK                    = 8315;
+     S_2_C_MAIL_LOCK                    = 8316;
+     C_2_S_MAIL_LAST_READ               = 8317;
+     S_2_C_MAIL_LAST_READ               = 8318;
+     C_2_S_MAIL_TOP                     = 8400;
+
+     //shop item
+     C_2_S_SHOP_ITEM_BASE           = 8400;
+     C_2_S_SHOP_ITEM_INFO           = 8401;
+     S_2_C_SHOP_ITEM_INFO           = 8402;
+     C_2_S_SHOP_ITEM_REFRESH        = 8403;
+     S_2_C_SHOP_ITEM_REFRESH        = 8404;
+     C_2_S_SHOP_ITEM_BUY            = 8405;
+     S_2_C_SHOP_ITEM_BUY            = 8406;
+     C_2_S_SHOP_ITEM_BUBBLE_UPDATE  = 8407;
+     S_2_C_SHOP_ITEM_BUBBLE_UPDATE  = 8408;
+     C_2_S_SHOP_GIFT_BUY            = 8409;
+     S_2_C_SHOP_GIFT_BUY            = 8410;
+     C_2_S_SHOP_CLAIM_MONTH_CARD    = 8411;
+     S_2_C_SHOP_CLAIM_MONTH_CARD    = 8412;
+     C_2_S_SHOP_CLAIM_GROWTH        = 8413;
+     S_2_C_SHOP_CLAIM_GROWTH        = 8414;
+     C_2_S_SHOP_GIFT_PUSH_INFO      = 8415;
+     S_2_C_SHOP_GIFT_PUSH_INFO      = 8416;
+     C_2_S_SHOP_CUSTOM_GIFT_BUY     = 8417;
+     S_2_C_SHOP_CUSTOM_GIFT_BUY     = 8418;
+     C_2_S_SHOP_ACTIVITY_GIFT_INFO  = 8419;
+     S_2_C_SHOP_ACTIVITY_GIFT_INFO  = 8420;
+     C_2_S_SHOP_GIFT_INFO           = 8421;
+     S_2_C_SHOP_GIFT_INFO           = 8422;
+     C_2_S_SHOP_CONDITIONAL_OPEN    = 8423;
+     S_2_C_SHOP_CONDITIONAL_OPEN    = 8424;
+     C_2_S_SHOP_INFO                = 8425;
+     S_2_C_SHOP_INFO                = 8426;
+     C_2_S_SHOP_REFRESH             = 8427;
+     S_2_C_SHOP_REFRESH             = 8428;
+     C_2_S_SHOP_BUY                 = 8429;
+     S_2_C_SHOP_BUY                 = 8430;
+     C_2_S_SHOP_ITEM_TOP            = 8500;
+
+     //team pve
+     C_2_S_TEAM_BATTLE_BASE             = 8500;
+     C_2_S_TEAM_BATTLE_LOAD             = 8501;
+     S_2_C_TEAM_BATTLE_LOAD             = 8502;
+     C_2_S_TEAM_BATTLE_ENTER            = 8503;
+     S_2_C_TEAM_BATTLE_ENTER            = 8504;
+     S_2_C_TEAM_BATTLE_TEAM_LIST        = 8506;
+     S_2_C_TEAM_BATTLE_TEAM_DELETE      = 8508;
+     C_2_S_TEAM_BATTLE_CREATE           = 8509;
+     S_2_C_TEAM_BATTLE_CREATE           = 8510;
+     C_2_S_TEAM_BATTLE_JOIN             = 8511;
+     S_2_C_TEAM_BATTLE_JOIN             = 8512;
+     C_2_S_TEAM_BATTLE_QUIT             = 8513;
+     S_2_C_TEAM_BATTLE_QUIT             = 8514;
+     C_2_S_TEAM_BATTLE_CLOSE            = 8515;
+     S_2_S_TEAM_BATTLE_CLOSE            = 8516;
+     C_2_S_TEAM_BATTLE_KICK_OUT         = 8517;
+     S_2_C_TEAM_BATTLE_KICK_OUT         = 8518;
+     S_2_C_TEAM_BATTLE_KICK_OUT_NOTIFY  = 8520;
+     C_2_S_TEAM_BATTLE_CHANGE_LEADER    = 8521;
+     S_2_C_TEAM_BATTLE_CHANGE_LEADER    = 8522;
+     C_2_S_TEAM_BATTLE_LOAD_PLAYERS     = 8525;
+     S_2_C_TEAM_BATTLE_LOAD_PLAYERS     = 8526;
+     S_2_C_TEAM_BATTLE_PLAYER_LEAVE     = 8528;
+     C_2_S_TEAM_BATTLE_LOAD_ORDER       = 8529;
+     S_2_C_TEAM_BATTLE_LOAD_ORDER       = 8530;
+     C_2_S_TEAM_BATTLE_UPDATE_ORDER     = 8531;
+     S_2_C_TEAM_BATTLE_UPDATE_ORDER     = 8532;
+     C_2_S_TEAM_BATTLE_START_BATTLE     = 8533;
+     S_2_C_TEAM_BATTLE_START_BATTLE     = 8534;
+     C_2_S_TEAM_BATTLE_LOAD_FRIEND      = 8535;
+     S_2_C_TEAM_BATTLE_LOAD_FRIEND      = 8536;
+     C_2_S_TEAM_BATTLE_INVITE           = 8537;
+     S_2_C_TEAM_BATTLE_INVITE           = 8538;
+     C_2_S_TEAM_BATTLE_INVITE_REJECT    = 8539;
+     S_2_C_TEAM_BATTLE_INVITE_REJECT    = 8540;
+     C_2_S_TEAM_BATTLE_LOAD_ATK_NUM     = 8541;
+     S_2_C_TEAM_BATTLE_LOAD_ATK_NUM     = 8542;
+     C_2_S_TEAM_BATTLE_INVITE_STATUS    = 8543;
+     S_2_C_TEAM_BATTLE_INVITE_STATUS    = 8544;
+     C_2_S_TEAM_BATTLE_TOP              = 8600;
+
+     //interior
+     C_2_S_INTERIOR_BASE            = 8600;
+     C_2_S_INTERIOR_INFO            = 8601;
+     S_2_C_INTERIOR_INFO            = 8602;
+     C_2_S_INTERIOR_APPIONT         = 8603;
+     S_2_C_INTERIOR_APPIONT         = 8604;
+     C_2_S_INTERIOR_DISMISS         = 8605;
+     S_2_C_INTERIOR_DISMISS         = 8606;
+     C_2_S_INTERIOR_UNLOCK_ADJUTANT = 8607;
+     S_2_C_INTERIOR_UNLOCK_ADJUTANT = 8608;
+     C_2_S_INTERIOR_TOP             = 8700;
+
+     //arena
+     C_2_S_ARENA_BASE                       = 8700;
+     C_2_S_ARENA_LOAD_INFO                  = 8701;
+     S_2_C_ARENA_LOAD_INFO                  = 8702;
+     C_2_S_ARENA_UPDATE_BATTLE_INFO         = 8703;
+     S_2_C_ARENA_UPDATE_BATTLE_INFO         = 8704;
+     C_2_S_ARENA_LOAD_BATTLE_LIST           = 8705;
+     S_2_C_ARENA_LOAD_BATTLE_LIST           = 8706;
+     C_2_S_ARENA_LOAD_OTHER_BATTLE_INFO     = 8707;
+     S_2_C_ARENA_LOAD_OTHER_BATTLE_INFO     = 8708;
+     C_2_S_ARENA_LOAD_RANK                  = 8709;
+     S_2_C_ARENA_LOAD_RANK                  = 8710;
+     C_2_S_ARENA_BATTLE                     = 8711;
+     S_2_C_ARENA_BATTLE                     = 8712;
+     C_2_S_ARENA_LOAD_LOG                   = 8713;
+     S_2_C_ARENA_LOAD_LOG                   = 8714;
+     C_2_S_ARENA_DRAW_REWARD                = 8715;
+     S_2_C_ARENA_DRAW_REWARD                = 8716;
+     C_2_S_ARENA_EXCHANGE                   = 8717;
+     S_2_C_ARENA_EXCHANGE                   = 8718;
+     C_2_S_ARENA_LOAD_TOP_LOG               = 8719;
+     S_2_C_ARENA_LOAD_TOP_LOG               = 8720;
+     C_2_S_ARENA_CLEAR_CD                   = 8721;
+     S_2_C_ARENA_CLEAR_CD                   = 8722;
+     C_2_S_ARENA_BATTLE_BUY                 = 8723;
+     S_2_C_ARENA_BATTLE_BUY                 = 8724;
+     C_2_S_ARENA_SOLO_BATTLE                = 8725;
+     S_2_C_ARENA_SOLO_BATTLE                = 8726;
+     S_2_C_ARENA_SOLO_BATTLE_START          = 8728;
+     S_2_C_ARENA_SOLO_BATTLE_NOTIFY         = 8730;
+     C_2_S_ARENA_SOLO_BATTLE_USE_SKILL      = 8731;
+     C_2_S_ARENA_SOLO_BATTLE_SKIP           = 8733;
+     C_2_S_ARENA_SET_ARMY                   = 8735;
+     S_2_C_ARENA_SET_ARMY                   = 8736;
+     C_2_S_ARENA_ABADON_BATTLE_LIST         = 8737;
+     S_2_C_ARENA_ABADON_BATTLE_LIST         = 8738;
+     S_2_C_ARENA_CLASS_REWARD               = 8740;
+     C_2_S_ARENA_TOP                        = 8800;
+
+     //ancient
+     C_2_S_ANCIENT_BASE            = 8800;
+     C_2_S_ANCIENT_INFO            = 8801;
+     S_2_C_ANCIENT_INFO            = 8802;
+     C_2_S_ANCIENT_ENTER           = 8803;
+     S_2_C_ANCIENT_ENTER           = 8804;
+     C_2_S_ANCIENT_ATTACK          = 8805;
+     S_2_C_ANCIENT_ATTACK          = 8806;
+     C_2_S_ANCIENT_OPEN_CHEST      = 8807;
+     S_2_C_ANCIENT_OPEN_CHEST      = 8808;
+     C_2_S_ANCIENT_BUY_ITEM        = 8809;
+     S_2_C_ANCIENT_BUY_ITEM        = 8810;
+     C_2_S_ANCIENT_BUY_TIMES       = 8811;
+     S_2_C_ANCIENT_BUY_TIMES       = 8812;
+     C_2_S_ANCIENT_PVP_BATTLE      = 8813;
+     S_2_C_ANCIENT_PVP_BATTLE      = 8814;
+     C_2_S_ANCIENT_BUY_SHOP        = 8815;
+     S_2_C_ANCIENT_BUY_SHOP        = 8816;
+     C_2_S_ANCIENT_TOP             = 8900;
+
+     //crop
+     C_2_S_CROP_BASE                        = 9000;
+     C_2_S_CROP_LOAD_LIST                   = 9001;
+     S_2_C_CROP_LOAD_LIST                   = 9002;
+     C_2_S_CROP_CREATE                      = 9003;
+     S_2_C_CROP_CREATE                      = 9004;
+     C_2_S_CROP_APPLY                       = 9005;
+     S_2_C_CROP_APPLY                       = 9006;
+     C_2_S_CROP_APPROVE                     = 9007;
+     S_2_C_CROP_APPROVE                     = 9008;
+     S_2_C_CROP_APPROVE_NOTIFY              = 9010;
+     C_2_S_CROP_REJECT                      = 9011;
+     S_2_C_CROP_REJECT                      = 9012;
+     C_2_S_CROP_MEMBER_LIST                 = 9013;
+     S_2_C_CROP_MEMBER_LIST                 = 9014;
+     C_2_S_CROP_APPLY_LIST                  = 9015;
+     S_2_C_CROP_APPLY_LIST                  = 9016;
+     C_2_S_CROP_KICK_OUT                    = 9017;
+     S_2_C_CROP_KICK_OUT                    = 9018;
+     S_2_C_CROP_KICK_OUT_NOTIFY             = 9020;
+     C_2_S_CROP_EXIT                        = 9021;
+     S_2_C_CROP_EXIT                        = 9022;
+     C_2_S_CROP_APPOINT_POS                 = 9023;
+     S_2_C_CROP_APPOINT_POS                 = 9024;
+     C_2_S_CROP_DISMISS                     = 9025;
+     S_2_C_CROP_DISMISS                     = 9026;
+     C_2_S_CROP_TRANSFER_LEADER             = 9027;
+     S_2_C_CROP_TRANSFER_LEADER             = 9028;
+     C_2_S_CROP_LOAD_INFO                   = 9029;
+     S_2_C_CROP_LOAD_INFO                   = 9030;
+     C_2_S_CROP_CHANGE_LIMIT_ID             = 9031;
+     S_2_C_CROP_CHANGE_LIMIT_ID             = 9032;
+     C_2_S_CROP_CHANGE_BADGE                = 9033;
+     S_2_C_CROP_CHANGE_BADGE                = 9034;
+     C_2_S_CROP_EDIT_DECLARE                = 9035;
+     S_2_C_CROP_EDIT_DECLARE                = 9036;
+     C_2_S_CROP_EDIT_BROAD                  = 9037;
+     S_2_C_CROP_EDIT_BROAD                  = 9038;
+     C_2_S_CROP_TECH_DONATE                 = 9039;
+     S_2_C_CROP_TECH_DONATE                 = 9040;
+     C_2_S_CROP_RENAME                      = 9041;
+     S_2_C_CROP_RENAME                      = 9042;
+     C_2_S_CROP_LOAD_LOG                    = 9043;
+     S_2_C_CROP_LOAD_LOG                    = 9044;
+     C_2_S_CROP_BUILD_ASSIST_LOAD           = 9045;
+     S_2_C_CROP_BUILD_ASSIST_LOAD           = 9046;
+     C_2_S_CROP_BUILD_ASSIST_REQUEST        = 9047;
+     S_2_C_CROP_BUILD_ASSIST_REQUEST        = 9048;
+     S_2_C_CROP_BUILD_ASSIST_REQUEST_BROAD  = 9050;
+     C_2_S_CROP_BUILD_ASSIST_HELP           = 9051;
+     S_2_C_CROP_BUILD_ASSIST_HELP           = 9052;
+     S_2_C_CROP_BUILD_ASSIST_NOTIFY         = 9054;
+     S_2_C_CROP_CREATE_NOTIFY               = 9056;
+     C_2_S_RED_PACKAGE_LOAD                 = 9057;
+     S_2_C_RED_PACKAGE_LOAD                 = 9058;
+     C_2_S_SEE_RED_PACKAGE                  = 9059;
+     S_2_C_SEE_RED_PACKAGE                  = 9060;
+     C_2_S_GET_RED_PACKAGE                  = 9061;
+     S_2_C_GET_RED_PACKAGE                  = 9062;
+     S_2_C_NEW_RED_PACKAGEI_NOTIFY          = 9064;
+     C_2_S_CROP_RECOMMEND_TECH              = 9065;
+     S_2_C_CROP_RECOMMEND_TECH              = 9066;
+     C_2_S_CROP_IMPEACH                     = 9067;
+     S_2_C_CROP_IMPEACH                     = 9068;
+     C_2_S_CROP_FAKE_MEMBER_LIST            = 9069;
+     S_2_C_CROP_FAKE_MEMBER_LIST            = 9070;
+     C_2_S_LOAD_ROLE_RED_PACKAGE            = 9079;
+     S_2_C_LOAD_ROLE_RED_PACKAGE            = 9080;
+     C_2_S_DISPENSE_ROLE_RED_PACKAGE        = 9081;
+     S_2_C_DISPENSE_ROLE_RED_PACKAGE        = 9082;
+     S_2_C_UPDATE_ROLE_RED_PACKAGE          = 9084;
+     C_2_S_CROP_DRAW_REWARD                 = 9087;
+     S_2_C_CROP_DRAW_REWARD                 = 9088;
+     C_2_S_CROP_INVITE                      = 9089;
+     S_2_C_CROP_INVITE                      = 9090;
+     C_2_S_CROP_BUILD_ASSIST_LOG            = 9091;
+     S_2_C_CROP_BUILD_ASSIST_LOG            = 9092;
+     C_2_S_CROP_CREATE_GROUP                = 9093;
+     S_2_C_CROP_CREATE_GROUP                = 9094;
+     C_2_S_CROP_TOP                         = 9100;
+
+     //knight
+     C_2_S_KNIGHT_BASE                  = 9100;
+     C_2_S_KNIGHT_INFO                  = 9101;
+     S_2_C_KNIGHT_INFO                  = 9102;
+     C_2_S_KNIGHT_ENTER                 = 9103;
+     S_2_C_KNIGHT_ENTER                 = 9104;
+     S_2_C_KNIGHT_TEAM_LIST             = 9106;
+     S_2_C_KNIGHT_TEAM_DELETE           = 9108;
+     C_2_S_KNIGHT_CREATE                = 9109;
+     S_2_C_KNIGHT_CREATE                = 9110;
+     C_2_S_KNIGHT_JOIN                  = 9111;
+     S_2_C_KNIGHT_JOIN                  = 9112;
+     C_2_S_KNIGHT_QUIT                  = 9113;
+     S_2_C_KNIGHT_QUIT                  = 9114;
+     C_2_S_KNIGHT_CLOSE                 = 9115;
+     S_2_S_KNIGHT_CLOSE                 = 9116;
+     C_2_S_KNIGHT_KICK_OUT              = 9117;
+     S_2_C_KNIGHT_KICK_OUT              = 9118;
+     S_2_C_KNIGHT_KICK_OUT_NOTIFY       = 9120;
+     C_2_S_KNIGHT_CHANGE_LEADER         = 9121;
+     S_2_C_KNIGHT_CHANGE_LEADER         = 9122;
+     C_2_S_KNIGHT_LOAD_PLAYERS          = 9125;
+     S_2_C_KNIGHT_LOAD_PLAYERS          = 9126;
+     S_2_C_KNIGHT_PLAYER_LEAVE          = 9128;
+     S_2_C_KNIGHT_PLAYER_MOVE           = 9130;
+     C_2_S_KNIGHT_START_BATTLE          = 9133;
+     S_2_C_KNIGHT_START_BATTLE          = 9134;
+     S_2_C_KNIGHT_BATTLE_NOTIFY         = 9136;
+     S_2_C_KNIGHT_FINISH                = 9138;
+     C_2_S_KNIGHT_CLEAR_KILL_CD         = 9139;
+     S_2_C_KNIGHT_CLEAR_KILL_CD         = 9140;
+     C_2_S_KNIGHT_BUY_TIMES             = 9141;
+     S_2_C_KNIGHT_BUY_TIMES             = 9142;
+     C_2_S_KNIGHT_SET_TEAM_JOIN_WAY     = 9143;
+     S_2_C_KNIGHT_SET_TEAM_JOIN_WAY     = 9144;
+     C_2_S_KNIGHT_LOAD_READY            = 9145;
+     S_2_C_KNIGHT_LOAD_READY            = 9146;
+     S_2_C_KNIGHT_ALL_READY             = 9148;
+     S_2_C_KNIGHT_BOSS_DEAD             = 9150;
+     S_2_C_KNIGHT_BOSS_HP_UPDATE        = 9152;
+     S_2_C_KNIGHT_TEAM_BATTLE_NOTIFY    = 9154;
+     C_2_S_KNIGHT_TOP                   = 9200;
+
+     //solo match
+     C_2_S_SOLO_MATCH_BASE        = 9200;
+     C_2_S_SOLO_MATCH_BEGIN       = 9201;
+     S_2_C_SOLO_MATCH_BEGIN       = 9202;
+     C_2_S_SOLO_MATCH_INFO        = 9203;
+     S_2_C_SOLO_MATCH_INFO        = 9204;
+     C_2_S_SOLO_MATCH_JOIN        = 9205;
+     S_2_C_SOLO_MATCH_JOIN        = 9206;
+     C_2_S_SOLO_MATCH_ROUND_INFO  = 9207;
+     S_2_C_SOLO_MATCH_ROUND_INFO  = 9208;
+     C_2_S_SOLO_MATCH_BET         = 9209;
+     S_2_C_SOLO_MATCH_BET         = 9210;
+     C_2_S_SOLO_MATCH_DRAW        = 9211;
+     S_2_C_SOLO_MATCH_DRAW        = 9212;
+     C_2_S_SOLO_MATCH_JOIN_MATCH  = 9213;
+     S_2_C_SOLO_MATCH_JOIN_MATCH  = 9214;
+     C_2_S_SOLO_MATCH_SET_GENERAL = 9215;
+     S_2_C_SOLO_MATCH_SET_GENERAL = 9216;
+     C_2_S_SOLO_MATCH_TOP         = 9300;
+
+     //wife
+     C_2_S_GIRL_BASE            = 9300;
+     C_2_S_GIRL_INFO            = 9301;
+     S_2_C_GIRL_INFO            = 9302;
+     C_2_S_GIRL_SEARCH          = 9303;
+     S_2_C_GIRL_SEARCH          = 9304;
+     C_2_S_GIRL_TALK            = 9305;
+     S_2_C_GIRL_TALK            = 9306;
+     C_2_S_GIRL_GIFT            = 9307;
+     S_2_C_GIRL_GIFT            = 9308;
+     C_2_S_GIRL_MARRY           = 9309;
+     S_2_C_GIRL_MARRY           = 9310;
+     C_2_S_GIRL_DIVORCE         = 9311;
+     S_2_C_GIRL_DIVORCE         = 9312;
+     C_2_S_GIRL_TOP             = 9400;
+
+     //pve event
+     C_2_S_PVE_EVENT_BASE           = 9400;
+     C_2_S_PVE_EVENT_INFO           = 9401;
+     S_2_C_PVE_EVENT_INFO           = 9402;
+     C_2_S_PVE_EVENT_CLICK_OBJECT   = 9403;
+     S_2_C_PVE_EVENT_CLICK_OBJECT   = 9404;
+     C_2_S_PVE_EVENT_DRAW           = 9405;
+     S_2_C_PVE_EVENT_DRAW           = 9406;
+     C_2_S_PVE_EVENT_TOP            = 9500;
+
+     //tavern
+     C_2_S_TAVERN_BASE                  = 9500;
+     C_2_S_TAVERN_INFO                  = 9501;
+     S_2_C_TAVERN_INFO                  = 9502;
+     C_2_S_TAVERN_DRINK                 = 9503;
+     S_2_C_TAVERN_DRINK                 = 9504;
+     C_2_S_TAVERN_TOP                   = 9600;
+
+     //king match
+     C_2_S_KING_MATCH_BASE              = 9600;
+     C_2_S_KING_MATCH_INFO              = 9601;
+     S_2_C_KING_MATCH_INFO              = 9602;
+     S_2_C_KING_MATCH_BEGIN             = 9604;
+     C_2_S_KING_MATCH_ROUND_INFO        = 9605;
+     S_2_C_KING_MATCH_ROUND_INFO        = 9606;
+     C_2_S_KING_MATCH_JOIN              = 9607;
+     S_2_C_KING_MATCH_JOIN              = 9608;
+     C_2_S_KING_MATCH_GROUP_INFO        = 9609;
+     S_2_C_KING_MATCH_GROUP_INFO        = 9610;
+     C_2_S_KING_MATCH_FORM_INFO         = 9611;
+     S_2_C_KING_MATCH_FORM_INFO         = 9612;
+     C_2_S_KING_MATCH_SET_FORM          = 9613;
+     S_2_C_KING_MATCH_SET_FORM          = 9614;
+     C_2_S_KING_MATCH_TOP               = 9700;
+
+     //nation battle
+     C_2_S_NATION_BATTLE_BASE                         = 9700;
+     C_2_S_NATION_BATTLE_ENTER                        = 9701;
+     S_2_C_NATION_BATTLE_ENTER                        = 9702;
+     C_2_S_NATION_BATTLE_LOAD_WORLD_INFO              = 9703;
+     S_2_C_NATION_BATTLE_LOAD_WORLD_INFO              = 9704;
+     C_2_S_NATION_BATTLE_CROP_MOVE                    = 9705;
+     S_2_C_NATION_BATTLE_CROP_MOVE                    = 9706;
+     C_2_S_NATION_BATTLE_LOAD_CITY_STATE              = 9707;
+     S_2_C_NATION_BATTLE_LOAD_CITY_STATE              = 9708;
+     C_2_S_NATION_BATTLE_RETREAT                      = 9711;
+     S_2_C_NATION_BATTLE_RETREAT                      = 9712;
+     C_2_S_NATION_BATTLE_LOAD_ARMY                    = 9713;
+     S_2_C_NATION_BATTLE_LOAD_ARMY                    = 9714;
+     C_2_S_NATION_BATTLE_UPDATE_FORMATION             = 9715;
+     S_2_C_NATION_BATTLE_UPDATE_FORMATION             = 9716;
+     C_2_S_NATION_BATTLE_ATK_CITY                     = 9717;
+     S_2_C_NATION_BATTLE_ATK_CITY                     = 9718;
+     C_2_S_NATION_BATTLE_LOAD_QUEUE_INFO              = 9723;
+     S_2_C_NATION_BATTLE_LOAD_QUEUE_INFO              = 9724;
+     C_2_S_NATION_BATTLE_LOAD_CHANNEL_INFO            = 9725;
+     S_2_C_NATION_BATTLE_LOAD_CHANNEL_INFO            = 9726;
+     S_2_C_NATION_BATTLE_FIELD_NOTIFY                 = 9730;
+     S_2_C_NATION_BATTLE_FIGHT_NOTIFY                 = 9732;
+     C_2_S_NATION_BATTLE_LOAD_SOLO_LIST               = 9733;
+     S_2_C_NATION_BATTLE_LOAD_SOLO_LIST               = 9734;
+     C_2_S_NATION_BATTLE_ATTEND_SOLO                  = 9735;
+     S_2_C_NATION_BATTLE_ATTEND_SOLO                  = 9736;
+     C_2_S_NATION_BATTLE_UPDATE_SOLO_POS              = 9737;
+     S_2_C_NATION_BATTLE_UPDATE_SOLO_POS              = 9738;
+     S_2_C_NATION_BATTLE_SOLO_BATTLE                  = 9740;
+     C_2_S_NATION_BATTLE_LOAD_ENCOURAGE               = 9741;
+     S_2_C_NATION_BATTLE_LOAD_ENCOURAGE               = 9742;
+     C_2_S_NATION_BATTLE_DO_ENCOURAGE                 = 9743;
+     S_2_C_NATION_BATTLE_DO_ENCOURAGE                 = 9744;
+     C_2_S_NATION_BATTLE_LOAD_REPORT_CITY_LIST        = 9749;
+     S_2_C_NATION_BATTLE_LOAD_REPORT_CITY_LIST        = 9750;
+     C_2_S_NATION_BATTLE_LOAD_REPORT_LIST             = 9751;
+     S_2_C_NATION_BATTLE_LOAD_REPORT_LIST             = 9752;
+     C_2_S_NATION_BATTLE_LOAD_WAR_STATE               = 9753;
+     S_2_C_NATION_BATTLE_LOAD_WAR_STATE               = 9754;
+     C_2_S_NATION_BATTLE_DRAW_OCCUPY_REWARD           = 9755;
+     S_2_C_NATION_BATTLE_DRAW_OCCUPY_REWARD           = 9756;
+     C_2_S_NATION_BATTLE_WATCH_BATTLE                 = 9757;
+     S_2_C_NATION_BATTLE_WATCH_BATTLE                 = 9758;
+     S_2_C_NATION_BATTLE_FINISHED                     = 9768;
+     C_2_S_NATION_BATTLE_RELIVE                       = 9769;
+     S_2_C_NATION_BATTLE_RELIVE                       = 9770;
+     S_2_C_NATION_BATTLE_WORLD_RESET                  = 9776;
+     C_2_S_NATION_BATTLE_LOAD_AIM_INFO                = 9777;
+     S_2_C_NATION_BATTLE_LOAD_AIM_INFO                = 9778;
+     C_2_S_NATION_BATTLE_DO_AIM                       = 9779;
+     S_2_C_NATION_BATTLE_DO_AIM                       = 9780;
+     C_2_S_NATION_BATTLE_LOAD_CROP_REPORT             = 9781;
+     S_2_C_NATION_BATTLE_LOAD_CROP_REPORT             = 9782;
+     S_2_C_NATION_BATTLE_UPDATE_POPULATION            = 9790;
+     S_2_C_NATION_BATTLE_POWER_CREATE_BROAD           = 9796;
+     C_2_S_NATION_BATTLE_LOAD_OTHER_ARMY_INFO         = 9797;
+     S_2_C_NATION_BATTLE_LOAD_OTHER_ARMY_INFO         = 9798;
+     S_2_C_NATION_BATTLE_FIELD_REPORT_INFO            = 9799;
+     C_2_S_NATION_BATTLE_TOP                          = 9800;
+
+     //country
+     C_2_S_COUNTRY_BASE                 = 9800;
+     C_2_S_COUNTRY_APPOINT              = 9803;
+     S_2_C_COUNTRY_APPOINT              = 9804;
+     C_2_S_COUNTRY_MANAGE               = 9805;
+     S_2_C_COUNTRY_MANAGE               = 9806;
+     C_2_S_COUNTRY_BUY_INTERIOR_TIMES   = 9807;
+     S_2_C_COUNTRY_BUY_INTERIOR_TIMES   = 9808;
+     C_2_S_COUNTRY_DO_INTERIOR          = 9809;
+     S_2_C_COUNTRY_DO_INTERIOR          = 9810;
+     C_2_S_COUNTRY_RANK                 = 9811;
+     S_2_C_COUNTRY_RANK                 = 9812;
+     C_2_S_COUNTRY_DRAW_SALARY          = 9813;
+     S_2_C_COUNTRY_DRAW_SALARY          = 9814;
+     C_2_S_COUNTRY_CITY                 = 9815;
+     S_2_C_COUNTRY_CITY                 = 9816;
+     C_2_S_COUNTRY_TOP                  = 9900;
+
+     //hunt
+     C_2_S_HUNT_BASE                    = 9900;
+     C_2_S_HUNT_LOAD                    = 9901;
+     S_2_C_HUNT_LOAD                    = 9902;
+     C_2_S_HUNT_START                   = 9903;
+     S_2_C_HUNT_START                   = 9904;
+     C_2_S_HUNT_KILL                    = 9905;
+     S_2_C_HUNT_KILL                    = 9906;
+     C_2_S_HUNT_ESCAPE                  = 9907;
+     S_2_C_HUNT_ESCAPE                  = 9908;
+     C_2_S_HUNT_FINISH                  = 9909;
+     S_2_C_HUNT_FINISH                  = 9910;
+     C_2_S_HUNT_HIT_RATE                = 9911;
+     S_2_C_HUNT_HIT_RATE                = 9912;
+     C_2_S_HUNT_END                     = 9913;
+     S_2_C_HUNT_END                     = 9914;
+     C_2_S_HUNT_TOP                     = 10000;
+
+     //illustrated
+     C_2_S_ILLUSTRATED_BASE               = 10000;
+     C_2_S_ILLUSTRATED_INFO               = 10001;
+     S_2_C_ILLUSTRATED_INFO               = 10002;
+     C_2_S_ILLUSTRATED_RECOMMEND_LIST     = 10003;
+     S_2_C_ILLUSTRATED_RECOMMEND_LIST     = 10004;
+     C_2_S_ILLUSTRATED_RECOMMEND_INFO     = 10005;
+     S_2_C_ILLUSTRATED_RECOMMEND_INFO     = 10006;
+     C_2_S_ILLUSTRATED_ADD_COMMENT        = 10007;
+     S_2_C_ILLUSTRATED_ADD_COMMENT        = 10008;
+     C_2_S_ILLUSTRATED_DEL_COMMENT        = 10009;
+     S_2_C_ILLUSTRATED_DEL_COMMENT        = 10010;
+     C_2_S_ILLUSTRATED_FAVOR              = 10011;
+     S_2_C_ILLUSTRATED_FAVOR              = 10012;
+     C_2_S_ILLUSTRATED_ADD_POINT          = 10013;
+     S_2_C_ILLUSTRATED_ADD_POINT          = 10014;
+     C_2_S_ILLUSTRATED_CHILD_LIST         = 10015;
+     S_2_C_ILLUSTRATED_CHILD_LIST         = 10016;
+     C_2_S_ILLUSTRATED_TOP                = 10100;
+
+     //ancient field
+     C_2_S_ANCIENT_FIELD_BASE                   = 10100;
+     C_2_S_ANCIENT_FIELD_ENTER                  = 10101;
+     S_2_C_ANCIENT_FIELD_ENTER                  = 10102;
+     C_2_S_ANCIENT_FIELD_START_MATCH            = 10103;
+     S_2_C_ANCIENT_FIELD_START_MATCH            = 10104;
+     C_2_S_ANCIENT_FIELD_CANCEL_MATCH           = 10105;
+     S_2_C_ANCIENT_FIELD_CANCEL_MATCH           = 10106;
+     S_2_C_ANCIENT_FIELD_PLAYER_LEAVE           = 10108;
+     C_2_S_ANCIENT_FIELD_UPDATE_FORMATION       = 10109;
+     S_2_C_ANCIENT_FIELD_UPDATE_FORMATION       = 10110;
+     C_2_S_ANCIENT_FIELD_LOAD_TEAM_INFO         = 10111;
+     S_2_C_ANCIENT_FIELD_LOAD_TEAM_INFO         = 10112;
+     S_2_C_ANCIENT_FIELD_NEW_PLAYER_JOIN        = 10114;
+     C_2_S_ANCIENT_FIELD_DO_BATTLE              = 10115;
+     S_2_C_ANCIENT_FIELD_DO_BATTLE              = 10116;
+     S_2_C_ANCIENT_FILED_BATTLE_NOTIFY          = 10118;
+     S_2_C_ANCIENT_FIELD_FINISH_NOTIFY          = 10120;
+     S_2_C_ANCIENT_FIELD_START_BATTLE_NOTIFY    = 10122;
+     C_2_S_ANCIENT_FIELD_TOP                    = 10200;
+
+     //activity
+     C_2_S_ACTIVITY_BASE                = 10200;
+     C_2_S_ACTIVITY_OFFLINE_LOAD        = 10201;
+     S_2_C_ACTIVITY_OFFLINE_LOAD        = 10202;
+     C_2_S_ACTIVITY_OFFLINE_DRAW        = 10203;
+     S_2_C_ACTIVITY_OFFLINE_DRAW        = 10204;
+     C_2_S_ACTIVITY_DAY7_LOAD           = 10205;
+     S_2_C_ACTIVITY_DAY7_LOAD           = 10206;
+     C_2_S_ACTIVITY_DAY7_DRAW           = 10207;
+     S_2_C_ACTIVITY_DAY7_DRAW           = 10208;
+     C_2_S_ACTIVITY_SIGN                = 10209;
+     S_2_C_ACTIVITY_SIGN                = 10210;
+     C_2_S_ACTIVITY_SIGN_LOAD           = 10211;
+     S_2_C_ACTIVITY_SIGN_LOAD           = 10212;
+     C_2_S_ACTIVITY_REMEDY              = 10213;
+     S_2_C_ACTIVITY_REMEDY              = 10214;
+     C_2_S_ACTIVITY_TOTAL_SIGN_AWARD    = 10215;
+     S_2_c_ACTIVITY_TOTAL_SIGN_AWARD    = 10216;
+     C_2_S_ACTIVITY_INFO                = 10217;
+     S_2_C_ACTIVITY_INFO                = 10218;
+     C_2_S_ACTIVITY_WEEK_DRAW           = 10221;
+     S_2_C_ACTIVITY_WEEK_DRAW           = 10222;
+     C_2_S_ACTIVITY_WECHAT_DO           = 10223;
+     S_2_C_ACTIVITY_WECHAT_DO           = 10224;
+     C_2_S_ACTIVITY_DAILY_LOAD          = 10225;
+     S_2_C_ACTIVITY_DAILY_LOAD          = 10226;
+     C_2_S_ACTIVITY_DAILY_DRAW          = 10227;
+     S_2_C_ACTIVITY_DAILY_DRAW          = 10228;
+     C_2_S_ACTIVITY_DAILY_LOGIN_LOAD    = 10229;
+     S_2_C_ACTIVITY_DAILY_LOGIN_LOAD    = 10230;
+     C_2_S_ACTIVITY_DAILY_LOGIN_DRAW    = 10231;
+     S_2_C_ACTIVITY_DAILY_LOGIN_DRAW    = 10232;
+     C_2_S_ACTIVITY_RANK_DRAW           = 10233;
+     S_2_C_ACTIVITY_RANK_DRAW           = 10234;
+     S_2_C_ACTIVITY_CARNIVAL_INFO       = 10236;
+     C_2_S_ACTIVITY_CARNIVAL_TASK_DRAW  = 10237;
+     S_2_C_ACTIVITY_CARNIVAL_TASK_DRAW  = 10238;
+     C_2_S_ACTIVITY_CARNIVAL_DRAW       = 10239;
+     S_2_C_ACTIVITY_CARNIVAL_DRAW       = 10240;
+     C_2_S_ACTIVITY_EXCHANGE_INFO       = 10241;
+     S_2_C_ACTIVITY_EXCHANGE_INFO       = 10242;
+     C_2_S_ACTIVITY_EXCHANGE            = 10243;
+     S_2_C_ACTIVITY_EXCHANGE            = 10244;
+     C_2_S_ACTIVITY_TOP                 = 10300;
+
+     //artifact
+     C_2_S_ARTIFACT_BASE                = 10300;
+     C_2_S_ARTIFACT_LOAD                = 10301;
+     S_2_C_ARTIFACT_NOTIFY              = 10302;
+     C_2_S_ARTIFACT_LEVEL_UP            = 10303;
+     S_2_C_ARTIFACT_LEVEL_UP            = 10304;
+     C_2_S_ARTIFACT_EQUIP               = 10305;
+     S_2_C_ARTIFACT_EQUIP               = 10306;
+     C_2_S_ARTIFACT_UNEQUIP             = 10307;
+     S_2_C_ARTIFACT_UNEQUIP             = 10308;
+     C_2_S_ARTIFACT_TOP                 = 10400;
+
+     //champion
+     C_2_S_CHAMPION_BASE                = 10400;
+     C_2_S_CHAMPION_LOAD                = 10401;
+     S_2_C_CHAMPION_LOAD                = 10402;
+     C_2_S_CHAMPION_ATTEND              = 10403;
+     S_2_C_CHAMPION_ATTEND              = 10404;
+     C_2_S_CHAMPION_UPDATE_FORMATION    = 10405;
+     S_2_C_CHAMPION_UPDATE_FORMATION    = 10406;
+     C_2_S_CHAMPION_LOAD_BATTLE_REPORT  = 10407;
+     S_2_C_CHAMPION_LOAD_BATTLE_REPORT  = 10408;
+     C_2_S_CHAMPION_LOAD_MATCH          = 10409;
+     S_2_C_CHAMPION_LOAD_MATCH          = 10410;
+     C_2_S_CHAMPION_LOAD_MY_OPPONENT    = 10411;
+     S_2_C_CHAMPION_LOAD_MY_OPPONENT    = 10412;
+     C_2_S_CHAMPION_ENCOURAGE           = 10413;
+     S_2_C_CHAMPION_ENCOURAGE           = 10414;
+     C_2_S_CHAMPION_DRAW_ENCOURAGE      = 10415;
+     S_2_C_CHAMPION_DRAW_ENCOURAGE      = 10416;
+     C_2_S_CHAMPION_INSPIRE             = 10417;
+     S_2_C_CHAMPION_INSPIRE             = 10418;
+     C_2_S_CHAMPION_LOAD_REWARD         = 10419;
+     S_2_C_CHAMPION_LOAD_REWARD         = 10420;
+     S_2_C_CHAMPION_STATE_NOTIFY        = 10430;
+     S_2_C_CHAMPION_ROUND_NOTIFY        = 10432;
+     S_2_C_CHAMPION_FINISH              = 10434;
+     S_2_C_CHAMPION_BATTLE_NOTIFY       = 10436;
+     C_2_S_CHAMPION_TOP                 = 10500;
+
+     //horse
+     C_2_S_HORSE_BASE                   = 10600;
+     C_2_S_HORSE_ALL_INFO               = 10601;
+     S_2_C_HORSE_ALL_INFO               = 10602;
+     C_2_S_HORSE_PIECE_COMPOSE          = 10603;
+     S_2_C_HORSE_PIECE_COMPOSE          = 10604;
+     C_2_S_HORSE_LOAD_PIECE_NUM         = 10605;
+     S_2_C_HORSE_LOAD_PIECE_NUM         = 10606;
+     C_2_S_HORSE_ADD_EXP                = 10607;
+     S_2_C_HORSE_ADD_EXP                = 10608;
+     C_2_S_HORSE_RANK_UP                = 10609;
+     S_2_C_HORSE_RANK_UP                = 10610;
+     C_2_S_HORSE_SKILL_BOOK_USE         = 10611;
+     S_2_C_HORSE_SKILL_BOOK_USE         = 10612;
+     C_2_S_HORSE_JOIN_BATTLE            = 10613;
+     S_2_C_HORSE_JOIN_BATTLE            = 10614;
+     C_2_S_HORSE_REMOVE                 = 10615;
+     S_2_C_HORSE_REMOVE                 = 10616;
+     C_2_S_HORSE_REBUILD                = 10617;
+     S_2_C_HORSE_REBUILD                = 10618;
+     C_2_S_HORSE_BIND                   = 10619;
+     S_2_C_HORSE_BIND                   = 10620;
+     C_2_S_HORSE_UNBIND                 = 10621;
+     S_2_C_HORSE_UNBIND                 = 10622;
+     C_2_S_HORSE_STAR_UP                = 10623;
+     S_2_C_HORSE_STAR_UP                = 10624;
+     C_2_S_HORSE_EXCHANGE               = 10625;
+     S_2_C_HORSE_EXCHANGE               = 10626;
+     S_2_C_HORSE_NOTICE_ATTR            = 10627;
+     C_2_S_HORSE_TOP                    = 10700;
+
+    // harbour
+    C_2_S_HARBOUR_BASE                  = 10700;
+    C_2_S_HARBOUR_SEA_INTENSIFY         = 10701;
+    S_2_C_HARBOUR_SEA_INTENSIFY         = 10702;
+    C_2_S_HARBOUR_ROLE_INFO             = 10703;
+    S_2_C_HARBOUR_ROLE_INFO             = 10704;
+    C_2_S_HARBOUR_TECH_UPGRADE          = 10705;
+    S_2_C_HARBOUR_TECH_UPGRADE          = 10706;
+    C_2_S_HARBOUR_SAIL                  = 10707;
+    S_2_C_HARBOUR_SAIL                  = 10708;
+    C_2_S_HARBOUR_CARAVAN_INFO          = 10709;
+    S_2_C_HARBOUR_CARAVAN_INFO          = 10710;
+    C_2_S_HARBOUR_ROB                   = 10711;
+    S_2_C_HARBOUR_ROB                   = 10712;
+    C_2_S_HARBOUR_INFO                  = 10713;
+    S_2_C_HARBOUR_INFO                  = 10714;
+    C_2_S_HARBOUR_EXCHANGE              = 10715;
+    S_2_C_HARBOUR_EXCHANGE              = 10716;
+    C_2_S_HARBOUR_PIRATE                = 10717;
+    S_2_C_HARBOUR_PIRATE                = 10718;
+    C_2_S_HARBOUR_TECH_CHANGE           = 10719;
+    S_2_C_HARBOUR_TECH_CHANGE           = 10720;
+    C_2_S_HARBOUR_TOP                   = 10800;
+
+    //vip
+    C_2_S_VIP_BASE         = 10800;
+    C_2_S_VIP_INFO         = 10801;
+    S_2_C_VIP_INFO         = 10802;
+    C_2_S_VIP_SIGN         = 10803;
+    S_2_C_VIP_SIGN         = 10804;
+    C_2_S_VIP_BUY_EXP      = 10805;
+    S_2_C_VIP_BUY_EXP      = 10806;
+    C_2_S_VIP_BUY_GIFT     = 10807;
+    S_2_C_VIP_BUY_GIFT     = 10808;
+    S_2_C_VIP_REWARD       = 10810;
+    S_2_C_VIP_RECHARGE     = 10812;
+    C_2_S_VIP_TOP          = 10900;
+
+    // crop2
+    C_2_S_CROP_BASE2                    = 10900;
+    C_2_S_CROP_LOAD_GIFT                = 10901;
+    S_2_C_CROP_LOAD_GIFT                = 10902;
+    C_2_S_CROP_DRAW_GIFT                = 10903;
+    S_2_C_CROP_DRAW_GIFT                = 10904;
+    C_2_S_CROP_DRAW_POINT               = 10905;
+    S_2_C_CROP_DRAW_POINT               = 10906;
+    C_2_S_CROP_BUY_GIFT                 = 10907;
+    S_2_C_CROP_BUY_GIFT                 = 10908;
+    C_2_S_CROP_SHOP_LOAD                = 10909;
+    S_2_C_CROP_SHOP_LOAD                = 10910;
+    C_2_S_CROP_SHOP_BUY                 = 10911;
+    S_2_C_CROP_SHOP_BUY                 = 10912;
+    S_2_C_CROP_SHOP_BUY_NOTIFY          = 10914;
+    C_2_S_CROP_BABY_LOAD                = 10917;
+    S_2_C_CROP_BABY_LOAD                = 10918;
+    C_2_S_CROP_BABY_SEND_GIFT           = 10919;
+    S_2_C_CROP_BABY_SEND_GIFT           = 10920;
+    S_2_C_CROP_BABY_NOTIFY_GIFT         = 10922;
+    C_2_S_CROP_BABY_GIFT_BUY            = 10923;
+    S_2_C_CROP_BABY_GIFT_BUY            = 10924;
+    C_2_S_CROP_BABY_UPDATE_MESSAGE      = 10925;
+    S_2_C_CROP_BABY_NOTIFY_MESSAGE      = 10926;
+    C_2_S_CROP_BABY_RANK_LOAD           = 10927;
+    S_2_C_CROP_BABY_RANK_LOAD           = 10928;
+    C_2_S_CROP_LOAD_RELATION_INFO       = 10929;
+    S_2_C_CROP_LOAD_RELATION_INFO       = 10930;
+    C_2_S_CROP_RELATION_APPLY           = 10931;
+    S_2_C_CROP_RELATION_APPLY           = 10932;
+    C_2_S_CROP_RELATION_RESPONSE        = 10933;
+    S_2_C_CROP_RELATION_RESPONSE        = 10934;
+    C_2_S_CROP_LAND_LOAD_INFO           = 10935;
+    S_2_C_CROP_LAND_LOAD_INFO           = 10936;
+    C_2_S_CROP_LAND_CREATE              = 10937;
+    S_2_C_CROP_LAND_CREATE              = 10938;
+    C_2_S_CROP_LAND_REMOVE              = 10939;
+    S_2_C_CROP_LAND_REMOVE              = 10940;
+    C_2_S_CROP_LAND_LOAD_ALL_INFO       = 10941;
+    S_2_C_CROP_LAND_LOAD_ALL_INFO       = 10942;
+    C_2_S_CROP_LAND_DECLARE_BATTLE      = 10943;
+    S_2_C_CROP_LAND_DECLARE_BATTLE      = 10944;
+    S_2_C_CROP_NATION_BATTLE_STATE      = 10946;
+    S_2_C_CROP_SHOP_RESET_NOTIFY        = 10952;
+    C_2_S_CROP_INVITE_REJECT            = 10953;
+    S_2_C_CROP_INVITE_REJECT            = 10954;
+    S_2_C_CROP_LIMIT_TIME               = 10956;
+    C_2_S_CROP_CITY_REWARD              = 10957;
+    S_2_C_CROP_CITY_REWARD              = 10958;
+    C_2_S_CROP_MANOR_LOAD_INFO          = 10959;
+    S_2_C_CROP_MANOR_LOAD_INFO          = 10960;
+    C_2_S_CROP_MANOR_CREATE             = 10961;
+    S_2_C_CROP_MANOR_CREATE             = 10962;
+    C_2_S_CROP_MANOR_ACTION             = 10963;
+    S_2_C_CROP_MANOR_ACTION             = 10964;
+    S_2_C_CROP_MANOR_UPDATE             = 10966;
+    C_2_S_CROP_LIST_MAP_MARK            = 10967;
+    S_2_C_CROP_LIST_MAP_MARK            = 10968;
+    C_2_S_CROP_ADD_MAP_MARK             = 10969;
+    S_2_C_CROP_ADD_MAP_MARK             = 10970;
+    C_2_S_CROP_DEL_MAP_MARK             = 10971;
+    S_2_C_CROP_DEL_MAP_MARK             = 10972;
+    C_2_S_CROP_SHOP_BUY_STOCK           = 10973;
+    S_2_C_CROP_SHOP_BUY_STOCK           = 10974;
+    C_2_S_CROP_APPOINT_MAYOR            = 10975;
+    S_2_C_CROP_APPOINT_MAYOR            = 10976;
+    C_2_S_CROP_START_STATE_TECH         = 10979;
+    S_2_C_CROP_START_STATE_TECH         = 10980;
+    C_2_S_CROP_BUILDING_INDUSTRY_INFO   = 10981;
+    S_2_C_CROP_BUILDING_INDUSTRY_INFO   = 10982;
+
+    C_2_S_CROP_TOP2                     = 11000;
+
+    //friend
+    C_2_S_FRIEND_BASE                   = 11000;
+    C_2_S_FRIEND_LIST                   = 11001;
+    S_2_C_FRIEND_LIST                   = 11002;
+    C_2_S_FRIEND_RECOMMEND              = 11003;
+    S_2_C_FRIEND_RECOMMEND              = 11004;
+    C_2_S_FRIEND_SEARCH                 = 11005;
+    S_2_C_FRIEND_SEARCH                 = 11006;
+    C_2_S_FRIEND_DELETE                 = 11007;
+    S_2_C_FRIEND_DELETE                 = 11008;
+    C_2_S_FRIEND_APPLY                  = 11009;
+    S_2_C_FRIEND_APPLY                  = 11010;
+    C_2_S_FRIEND_APPLY_RESPONSE         = 11011;
+    S_2_C_FRIEND_APPLY_RESPONSE         = 11012;
+    C_2_S_FRIEND_BLACK_LIST             = 11013;
+    S_2_C_FRIEND_BLACK_LIST             = 11014;
+    C_2_S_FRIEND_CHAT_RECORD            = 11015;
+    S_2_C_FRIEND_CHAT_RECORD            = 11016;
+    C_2_S_FRIEND_SET_BLACK              = 11017;
+    S_2_C_FRIEND_SET_BLACK              = 11018;
+    C_2_S_FRIEND_CHAT_RESET             = 11019;
+    S_2_C_FRIEND_CHAT_RESET             = 11020;
+    C_2_S_FRIEND_SEND_GIFT              = 11021;
+    S_2_C_FRIEND_SEND_GIFT              = 11022;
+    C_2_S_FRIEND_RECEIVE_GIFT           = 11023;
+    S_2_C_FRIEND_RECEIVE_GIFT           = 11024;
+    C_2_S_FRIEND_SEND_GIFT_ALL          = 11025;
+    S_2_C_FRIEND_SEND_GIFT_ALL          = 11026;
+    C_2_S_FRIEND_RECEIVE_GIFT_ALL       = 11027;
+    S_2_C_FRIEND_RECEIVE_GIFT_ALL       = 11028;
+    C_2_S_FRIEND_SEND_GIFT_ALL_QQ       = 11029;
+    S_2_C_FRIEND_SEND_GIFT_ALL_QQ       = 11030;
+    S_2_C_FRIEND_SEND_GIFT_NOTIFY       = 11032;
+    C_2_S_FRIEND_TOP                    = 12000;
+
+    //super arena
+    C_2_S_SUPER_ARENA_BASE                  = 12000;
+    C_2_S_SUPER_ARENA_LOAD_INFO             = 12001;
+    S_2_C_SUPER_ARENA_LOAD_INFO             = 12002;
+    C_2_S_SUPER_ARENA_UPDATE_INFO           = 12003;
+    S_2_C_SUPER_ARENA_UPDATE_INFO           = 12004;
+    C_2_S_SUPER_ARENA_LOAD_BATTLE_LIST      = 12005;
+    S_2_C_SUPER_ARENA_LOAD_BATTLE_LIST      = 12006;
+    C_2_S_SUPER_ARENA_LOAD_OTHER_INFO       = 12007;
+    S_2_C_SUPER_ARENA_LOAD_OTHER_INFO       = 12008;
+    C_2_S_SUPER_ARENA_LOAD_RANK             = 12009;
+    S_2_C_SUPER_ARENA_LOAD_RANK             = 12010;
+    C_2_S_SUPER_ARENA_BATTLE                = 12011;
+    S_2_C_SUPER_ARENA_BATTLE                = 12012;
+    C_2_S_SUPER_ARENA_DRAW_REWARD           = 12013;
+    S_2_C_SUPER_ARENA_DRAW_REWARD           = 12014;
+    C_2_S_SUPER_ARENA_UPGRADE_GRADE         = 12015;
+    S_2_C_SUPER_ARENA_UPGRADE_GRADE         = 12016;
+    C_2_S_SUPER_ARENA_CLEAR_CD              = 12017;
+    S_2_C_SUPER_ARENA_CLEAR_CD              = 12018;
+    C_2_S_SUPER_ARENA_LOG                   = 12019;
+    S_2_C_SUPER_ARENA_LOG                   = 12020;
+    C_2_S_SUPER_ARENA_TOP_LOG               = 12021;
+    S_2_C_SUPER_ARENA_TOP_LOG               = 12022;
+    C_2_S_SUPER_ARENA_THEME                 = 12023;
+    S_2_C_SUPER_ARENA_THEME                 = 12024;
+    C_2_S_SUPER_ARENA_PROMOTE_LOG           = 12025;
+    S_2_C_SUPER_ARENA_PROMOTE_LOG           = 12026;
+    C_2_S_SUPER_ARENA_TOP                   = 13000;
+
+    //expedition
+    C_2_S_EXPEDITION_BASE           = 13000;
+    C_2_S_EXPEDITION_LIST           = 13001;
+    S_2_C_EXPEDITION_LIST           = 13002;
+    C_2_S_EXPEDITION_INFO           = 13003;
+    S_2_C_EXPEDITION_INFO           = 13004;
+    C_2_S_EXPEDITION_CREATE         = 13005;
+    S_2_C_EXPEDITION_CREATE         = 13006;
+    C_2_S_EXPEDITION_JOIN           = 13007;
+    S_2_C_EXPEDITION_JOIN           = 13008;
+    C_2_S_EXPEDITION_QUIT           = 13009;
+    S_2_C_EXPEDITION_QUIT           = 13010;
+    C_2_S_EXPEDITION_KICK           = 13011;
+    S_2_C_EXPEDITION_KICK           = 13012;
+    C_2_S_EXPEDITION_CHANGE_ORDER   = 13013;
+    S_2_C_EXPEDITION_CHANGE_ORDER   = 13014;
+    C_2_S_EXPEDITION_FORMATION      = 13015;
+    S_2_C_EXPEDITION_FORMATION      = 13016;
+    C_2_S_EXPEDITION_SET_FORMATION  = 13017;
+    S_2_C_EXPEDITION_SET_FORMATION  = 13018;
+    C_2_S_EXPEDITION_PREPARE        = 13019;
+    S_2_C_EXPEDITION_PREPARE        = 13020;
+    C_2_S_EXPEDITION_START          = 13021;
+    S_2_C_EXPEDITION_START          = 13022;
+    C_2_S_EXPEDITION_STAGE_INFO     = 13023;
+    S_2_C_EXPEDITION_STAGE_INFO     = 13024;
+    C_2_S_EXPEDITION_BATTLE         = 13025;
+    S_2_C_EXPEDITION_BATTLE         = 13026;
+    C_2_S_EXPEDITION_FINISH         = 13027;
+    S_2_C_EXPEDITION_FINISH         = 13028;
+    C_2_S_EXPEDITION_TOP            = 13100;
+
+    //report barrage
+    C_2_S_REPORT_BARRAGE_BASE     = 13100;
+    C_2_S_REPORT_BARRAGE_LOAD     = 13101;
+    S_2_C_REPORT_BARRAGE_LOAD     = 13102;
+    C_2_S_REPORT_BARRAGE_ADD      = 13103;
+    S_2_C_REPORT_BARRAGE_ADD      = 13104;
+    C_2_S_REPORT_BARRAGE_TOP      = 13200;
+
+    //gift
+    C_2_S_GIFT_BASE                 = 13200;
+    C_2_S_GIFT_LOAD_INFO            = 13201;
+    S_2_C_GIFT_LOAD_INFO            = 13202;
+    C_2_S_GIFT_CARD_AWARD           = 13203;
+    S_2_C_GIFT_CARD_AWARD           = 13204;
+    C_2_S_GIFT_BUY                  = 13205;
+    S_2_C_GIFT_BUY                  = 13206;
+    S_2_C_GIFT_UPDATE               = 13208;
+    C_2_S_GIFT_TOP                  = 13300;
+
+    //crop boss
+    C_2_S_CROP_BOSS_BASE                = 13300;
+    C_2_S_CROP_BOSS_INFO                = 13301;
+    S_2_C_CROP_BOSS_INFO                = 13302;
+    C_2_S_CROP_BOSS_DRAW_REWARD         = 13303;
+    S_2_C_CROP_BOSS_DRAW_REWARD         = 13304;
+    C_2_S_CROP_BOSS_BATTLE              = 13305;
+    S_2_C_CROP_BOSS_BATTLE              = 13306;
+    C_2_S_CROP_BOSS_SUMMON              = 13307;
+    S_2_C_CROP_BOSS_SUMMON              = 13308;
+    S_2_C_CROP_BOSS_KILL                = 13310;
+    C_2_S_CROP_BOSS_TOP                 = 13400;
+
+    //DRAMA
+    C_2_S_DRAMA_BASE     = 13400;
+    C_2_S_DRAMA_LIST     = 13401;
+    S_2_C_DRAMA_LIST     = 13402;
+    C_2_S_DRAMA_DRAW     = 13403;
+    S_2_C_DRAMA_DRAW     = 13404;
+    C_2_S_DRAMA_TOP      = 13500;
+
+    // reward
+    C_2_S_REWARD_BASE               = 13500;
+    C_2_S_REWARD_INFO               = 13501;
+    S_2_C_REWARD_INFO               = 13502;
+    C_2_S_REWARD_LEVEL              = 13503;
+    S_2_C_REWARD_LEVEL              = 13504;
+    C_2_S_REWARD_ONLINE             = 13505;
+    S_2_C_REWARD_ONLINE             = 13506;
+    C_2_S_REWARD_TOP                = 13600;
+
+    //lord
+    C_2_S_LORD_BASE                 = 13600;
+    C_2_S_LORD_INFO                 = 13601;
+    S_2_C_LORD_INFO                 = 13602;
+    C_2_S_LORD_APPLY_LIST           = 13603;
+    S_2_C_LORD_APPLY_LIST           = 13604;
+    C_2_S_LORD_SEARCH_LIST          = 13605;
+    S_2_C_LORD_SEARCH_LIST          = 13606;
+    C_2_S_LORD_PUTOUT_TASK          = 13607;
+    S_2_C_LORD_PUTOUT_TASK          = 13608;
+    C_2_S_LORD_APPLY                = 13609;
+    S_2_C_LORD_APPLY                = 13610;
+    C_2_S_LORD_APPROVE              = 13611;
+    S_2_C_LORD_APPROVE              = 13612;
+    C_2_S_LORD_TEACH                = 13613;
+    S_2_C_LORD_TEACH                = 13614;
+    C_2_S_LORD_REPLY_TEACH          = 13615;
+    S_2_C_LORD_REPLY_TEACH          = 13616;
+    C_2_S_LORD_FINISH_TASK          = 13617;
+    S_2_C_LORD_FINISH_TASK          = 13618;
+    C_2_S_LORD_ABANDON              = 13619;
+    S_2_C_LORD_ABANDON              = 13620;
+    C_2_S_LORD_REVOLT               = 13621;
+    S_2_C_LORD_REVOLT               = 13622;
+    C_2_S_LORD_CONQUE               = 13623;
+    S_2_C_LORD_CONQUE               = 13624;
+    C_2_S_LORD_FINISH_TEACH         = 13625;
+    S_2_C_LORD_FINISH_TEACH         = 13626;
+    C_2_S_LORD_DRAW_TAX             = 13627;
+    S_2_C_LORD_DRAW_TAX             = 13628;
+    S_2_C_LORD_CONQUE_NOTIFY        = 13630;
+    C_2_S_LORD_UPDATE_LEFT_MESSAGE  = 13631;
+    S_2_C_LORD_UPDATE_LEFT_MESSAGE  = 13632;
+    C_2_S_LORD_TOP                  = 13700;
+
+    //nation battle2
+    C_2_S_NATION_BATTLE2_BASE                    = 13700;
+    C_2_S_NATION_BATTLE_POWER_LOG                = 13701;
+    S_2_C_NATION_BATTLE_POWER_LOG                = 13702;
+    S_2_C_NATION_BATTLE_RESULT_NOTIFY            = 13704;
+    S_2_C_NATION_BATTLE_BATTLE_START_TIME        = 13708;
+    C_2_S_NATION_BATTLE_POWER_INFO               = 13709;
+    S_2_C_NATION_BATTLE_POWER_INFO               = 13710;
+    C_2_S_NATION_BATTLE_POWER_ACTION_DRAW        = 13711;
+    S_2_C_NATION_BATTLE_POWER_ACTION_DRAW        = 13712;
+    C_2_S_NATION_BATTLE_CITY_EXPEL               = 13713;
+    S_2_C_NATION_BATTLE_CITY_EXPEL               = 13714;
+    C_2_S_NATION_BATTLE_DRAFT_SOLDIER            = 13715;
+    S_2_C_NATION_BATTLE_DRAFT_SOLDIER            = 13716;
+    C_2_S_NATION_BATTLE_EMPIRE_REWARD            = 13717;
+    S_2_C_NATION_BATTLE_EMPIRE_REWARD            = 13718;
+    C_2_S_NATION_BATTLE_SUPPLY_SOLDIER_SET       = 13719;
+    S_2_C_NATION_BATTLE_SUPPLY_SOLDIER_SET       = 13720;
+    S_2_C_NATION_BATTLE_ARRIVE_NOTIFY            = 13722;
+    S_2_C_NATION_BATTLE_DISMISS_ARMY             = 13724;
+    S_2_C_NATION_BATTLE_CITY_OCCUPIED            = 13726;
+    C_2_S_NATION_BATTLE_ABANDON_CITY             = 13727;
+    S_2_C_NATION_BATTLE_ABANDON_CITY             = 13728;
+    C_2_S_NATION_BATTLE_DRAW_OCCUPY_CITY         = 13729;
+    S_C_2_NATION_BATTLE_DRAW_OCCUPY_CITY         = 13730;
+    C_2_S_NATION_BATTLE2_TOP                     = 13800;
+
+    //etched
+    C_2_S_ETCHED_BASE       = 13800;
+    C_2_S_ETCHED_INFO       = 13801;
+    S_2_C_ETCHED_INFO       = 13802;
+    C_2_S_ETCHED_MIX        = 13803;
+    S_2_C_ETCHED_MIX        = 13804;
+    C_2_S_ETCHED_BRAND      = 13805;
+    S_2_C_ETCHED_BRAND      = 13806;
+    C_2_S_ETCHED_UNBRAND    = 13807;
+    S_2_C_ETCHED_UNBRAND    = 13808;
+    C_2_S_ETCHED_TOP        = 13900;
+
+    //world
+    C_2_S_WORLD_BASE                        = 13900;
+    C_2_S_WORLD_ABANDON_VASSAL              = 13901;
+    S_2_C_WORLD_ABANDON_VASSAL              = 13902;
+    C_2_S_WORLD_REVOLT                      = 13903;
+    S_2_C_WORLD_REVOLT                      = 13904;
+    C_2_S_WORLD_GET_ROB_CITY                = 13905;
+    S_2_C_WORLD_GET_ROB_CITY                = 13906;
+    C_2_S_WORLD_DRAW_TAX                    = 13907;
+    S_2_C_WORLD_DRAW_TAX                    = 13908;
+    S_2_C_WORLD_BATTLE_INFO                 = 13910;
+    C_2_S_WORLD_ARRIVE_HOME                 = 13911;
+    S_2_C_WORLD_ARRIVE_HOME                 = 13912;
+    S_2_C_WORLD_REMOVE_OBJECT               = 13914;
+    C_2_S_WORLD_BUILDING_REWARD             = 13915;
+    S_2_C_WORLD_BUILDING_REWARD             = 13916;
+    C_2_S_WORLD_WAR_FOG_LOAD		    = 13919;
+    S_2_C_WORLD_WAR_FOG_LOAD		    = 13920;
+    C_2_S_WORLD_WAR_FOG_UPDATE		    = 13921;
+    S_2_C_WORLD_WAR_FOG_UPDATE		    = 13922;
+    S_2_C_WORLD_POWER_CREATE_BROAD          = 13982;
+    C_2_S_WORLD_ROB_INDUSTRY                = 13983;
+    S_2_C_WORLD_ROB_INDUSTRY                = 13984;
+    C_2_S_WORLD_SEARCH_OBJECT               = 13985;
+    S_2_C_WORLD_SEARCH_OBJECT               = 13986;
+    C_2_S_WORLD_TOP                         = 14000;
+
+    //auction
+    C_2_S_AUCTION_BASE                      = 14000;
+    C_2_S_CROP_AUCTION_LOAD                 = 14013;
+    S_2_C_CROP_AUCTION_LOAD                 = 14014;
+    C_2_S_CROP_AUCTION_BID                  = 14015;
+    S_2_C_CROP_AUCTION_BID                  = 14016;
+    C_2_S_CROP_AUCTION_LOG                  = 14017;
+    S_2_C_CROP_AUCTION_LOG                  = 14018;
+    S_2_C_CROP_AUCTION_NOTICE               = 14019;
+    C_2_S_CROP_AUCTION_ITEM                 = 14020;
+    S_2_C_CROP_AUCTION_ITEM                 = 14021;
+    C_2_S_AUCTION_TOP                       = 15000;
+
+      //caravan
+    C_2_S_CARAVAN_BASE                     = 15000;
+    C_2_S_CARAVAN_LOAD_INFO                = 15001;
+    S_2_C_CARAVAN_ROUTE_NOTIFY             = 15002;
+    C_2_S_CARAVAN_DISPATCH                 = 15003;
+    S_2_C_CARAVAN_DISPATCH                 = 15004;
+    C_2_S_CARAVAN_RECALL                   = 15005;
+    S_2_C_CARAVAN_RECALL                   = 15006;
+    C_2_S_CARAVAN_DRAW                     = 15007;
+    S_2_C_CARAVAN_DRAW                     = 15008;
+    C_2_S_CARAVAN_TOP                      = 15100;
+
+    //passport
+    C_2_S_PASSPORT_BASE                 = 15100;
+    C_2_S_PASSPORT_LOAD_INFO            = 15101;
+    S_2_C_PASSPORT_LOAD_INFO            = 15102;
+    C_2_S_PASSPORT_DRAW_REWARD          = 15103;
+    S_2_C_PASSPORT_DRAW_REWARD          = 15104;
+    C_2_S_PASSPORT_TASK_REWARD          = 15105;
+    S_2_C_PASSPORT_TASK_REWARD          = 15106;
+    C_2_S_PASSPORT_RANK_INFO            = 15107;
+    S_2_C_PASSPORT_RANK_INFO            = 15108;
+    C_2_S_PASSPORT_RANK_DRAW            = 15109;
+    S_2_C_PASSPORT_RANK_DRAW            = 15110;
+    C_2_S_PASSPORT_BUY_EXP              = 15111;
+    S_2_C_PASSPORT_BUY_EXP              = 15112;
+    C_2_S_PASSPORT_TOP                  = 15200;
+
+    //Treasure
+    C_2_S_TREASURE_BASE                 = 15200;
+    C_2_S_TREASURE_LOAD                 = 15201;
+    S_2_C_TREASURE_LOAD                 = 15202;
+    C_2_S_TREASURE_APPRAISAL            = 15203;
+    S_2_C_TREASURE_APPRAISAL            = 15204;
+    C_2_S_TREASURE_TOP                  = 15300;
+
+    //EggBox
+    C_2_S_EGG_BOX_BASE                  = 15300;
+    C_2_S_EGG_BOX_LOAD                  = 15301;
+    S_2_C_EGG_BOX_LOAD                  = 15302;
+    C_2_S_EGG_BOX_DRAW                  = 15303;
+    S_2_C_EGG_BOX_DRAW                  = 15304;
+    C_2_S_EGG_BOX_TOP                   = 15400;
+
+    //battle report collection
+    C_2_S_BR_COLLECTION_BASE            = 15400;
+    C_2_S_BR_COLLECTION_LIST            = 15401;
+    S_2_C_BR_COLLECTION_LIST            = 15402;
+    C_2_S_BR_COLLECTION_ADD             = 15403;
+    S_2_C_BR_COLLECTION_ADD             = 15404;
+    C_2_S_BR_COLLECTION_DEL             = 15405;
+    S_2_C_BR_COLLECTION_DEL             = 15406;
+    C_2_S_BR_COLLECTION_TOP             = 15500;
+
+    //SpecialEvent
+    C_2_S_SPECIAL_EVENT_BASE            = 15500;
+    C_2_S_SPECIAL_EVENT_LOAD            = 15501;
+    S_2_C_SPECIAL_EVENT_LOAD            = 15502;
+    C_2_S_SPECIAL_EVENT_DO              = 15503;
+    S_2_C_SPECIAL_EVENT_DO              = 15504;
+    C_2_S_SPECIAL_EVENT_DRAW            = 15505;
+    S_2_C_SPECIAL_EVENT_DRAW            = 15506;
+    C_2_S_SPECIAL_EVENT_TOP             = 15600;
+
+    //citizen
+    C_2_S_CITIZEN_BASE              = 15600;
+    C_2_S_CITIZEN_LIST              = 15601;
+    S_2_C_CITIZEN_LIST              = 15602;
+    C_2_S_CITIZEN_INFO              = 15603;
+    S_2_C_CITIZEN_INFO              = 15604;
+    C_2_S_CITIZEN_MOVE_CITY         = 15605;
+    S_2_C_CITIZEN_MOVE_CITY         = 15606;
+    C_2_S_CITIZEN_ATTACK            = 15607;
+    S_2_C_CITIZEN_ATTACK            = 15608;
+    S_2_C_CITIZEN_ATTACK_RESULT     = 15610;
+    C_2_S_CITIZEN_REVOLT            = 15611;
+    S_2_C_CITIZEN_REVOLT            = 15612;
+    C_2_S_CITIZEN_DRAW_TAX          = 15613;
+    S_2_C_CITIZEN_DRAW_TAX          = 15614;
+    C_2_S_CITIZEN_ABANDON_VASSAL    = 15615;
+    S_2_C_CITIZEN_ABANDON_VASSAL    = 15616;
+    C_2_S_CITIZEN_NUM               = 15617;
+    S_2_C_CITIZEN_NUM               = 15618;
+    S_2_C_CITIZEN_OCCUPIED          = 15620;
+    C_2_S_CITIZEN_GET_ROB_CITY      = 15621;
+    S_2_C_CITIZEN_GET_ROB_CITY      = 15622;
+    C_2_S_CITIZEN_DEVELOP_CITY      = 15623;
+    S_2_C_CITIZEN_DEVELOP_CITY      = 15624;
+    C_2_S_CITIZEN_TOP               = 15700;
+
+    //RomanceMode
+    C_2_S_ROMANCE_MODE_BASE         = 15700;
+    C_2_S_ROMANCE_MODE_INFO         = 15701;
+    S_2_C_ROMANCE_MODE_INFO         = 15702;
+    C_2_S_ROMANCE_MODE_BATTLE       = 15703;
+    S_2_C_ROMANCE_MODE_BATTLE       = 15704;
+    C_2_S_ROMANCE_MODE_TOP          = 15800;
+
+    //world res
+    C_2_S_WORLD_RES_BASE               = 15800;
+    C_2_S_WORLD_RES_OCCUPY             = 15831;
+    S_2_C_WORLD_RES_OCCUPY             = 15832;
+    C_2_S_WORLD_RES_GARRISON           = 15833;
+    S_2_C_WORLD_RES_GARRISON           = 15834;
+    C_2_S_WORLD_RES_RETREAT            = 15835;
+    S_2_C_WORLD_RES_RETREAT            = 15836;
+    C_2_S_WORLD_RES_GIVEUP             = 15837;
+    S_2_C_WORLD_RES_GIVEUP             = 15838;
+    S_2_C_WORLD_RES_DETAIL_INFO        = 15840;
+    C_2_S_WORLD_RES_ROB                = 15841;
+    S_2_C_WORLD_RES_ROB                = 15842;
+    C_2_S_WORLD_RES_SPEED_UP           = 15843;
+    S_2_C_WORLD_RES_SPEED_UP           = 15844;
+    C_2_S_WORLD_RES_TOP                = 15900;
+
+    //industry
+    C_2_S_INDUSTRY_BASE                 = 15900;
+    C_2_S_INDUSTRY_LOAD_INFO            = 15901;
+    S_2_C_INDUSTRY_LOAD_INFO            = 15902;
+    C_2_S_INDUSTRY_BUILD                = 15903;
+    S_2_C_INDUSTRY_BUILD                = 15904;
+    C_2_S_INDUSTRY_DISMANTLE            = 15905;
+    S_2_C_INDUSTRY_DISMANTLE            = 15906;
+    C_2_S_INDUSTRY_ATK                  = 15907;
+    S_2_C_INDUSTRY_ATK                  = 15908;
+    S_2_C_INDUSTRY_ADD_ARMY             = 15910;
+    S_2_C_INDUSTRY_BUILD_UPDATE         = 15912;
+    S_2_C_INDUSTRY_REPAIR_UPDATE        = 15914;
+    C_2_S_INDUSTRY_RETREAT              = 15915;
+    S_2_C_INDUSTRY_RETREAT              = 15916;
+    C_2_S_INDUSTRY_LOAD_BRIEF_INFO      = 15917;
+    S_2_C_INDUSTRY_LOAD_BRIEF_INFO      = 15918;
+    C_2_S_INDUSTRY_LOAD_SINGLE_INFO     = 15919;
+    S_2_C_INDUSTRY_LOAD_SINGLE_INFO     = 15920;
+    C_2_S_INDUSTRY_REPAIR               = 15921;
+    S_2_C_INDUSTRY_REPAIR               = 15922;
+    C_2_S_INDUSTRY_STONE_ABANDON        = 15923;
+    S_2_C_INDUSTRY_STONE_ABANDON        = 15924;
+    S_2_C_INDUSTRY_STONE_UPDATE         = 15926;
+    C_2_S_INDUSTRY_STONE_ATK            = 15927;
+    S_2_C_INDUSTRY_STONE_ATK            = 15928;
+    S_2_C_INDUSTRY_TOWER_ATK            = 15930;
+    C_2_S_INDUSTRY_MOVE                 = 15931;
+    S_2_C_INDUSTRY_MOVE                 = 15932;
+    C_2_S_INDUSTRY_PRODUCE_CATAPULT     = 15933;
+    S_2_C_INDUSTRY_PRODUCE_CATAPULT     = 15934;
+    C_2_S_INDUSTRY_DRAW                 = 15939;
+    S_2_C_INDUSTRY_DRAW                 = 15940;
+    C_2_S_INDUSTRY_MAKE_FOG             = 15941;
+    S_2_C_INDUSTRY_MAKE_FOG             = 15942;
+    C_2_S_INDUSTRY_QUERY_GUARD          = 15943;
+    S_2_C_INDUSTRY_QUERY_GUARD          = 15944;
+    C_2_S_INDUSTRY_HIRE_GUARD           = 15945;
+    S_2_C_INDUSTRY_HIRE_GUARD           = 15946;
+    C_2_S_INDUSTRY_PARY_INFO            = 15947;
+    S_2_C_INDUSTRY_PARY_INFO            = 15948;
+    C_2_S_INDUSTRY_PARY                 = 15949;
+    S_2_C_INDUSTRY_PARY                 = 15950;
+    S_2_C_INDUSTRY_RANGE_TARGET_CHANGE  = 15952;
+    C_2_S_INDUSTRY_RESET_CATAPULT       = 15953;
+    S_2_C_INDUSTRY_RESET_CATAPULT       = 15954;
+    C_2_S_INDUSTRY_LEVEL_UP             = 15955;
+    S_2_C_INDUSTRY_LEVEL_UP             = 15956;
+    C_2_S_INDUSTRY_TOP                  = 16000;
+
+    //world2
+    C_2_S_WORLD2_BASE                   = 16000;
+    C_2_S_WORLD2_ENTER                  = 16001;
+    S_2_C_WORLD2_ENTER                  = 16002;
+    C_2_S_WORLD2_LEAVE                  = 16003;
+    S_2_C_WORLD2_LEAVE                  = 16004;
+    C_2_S_WORLD2_MOVE                   = 16007;
+    S_2_C_WORLD2_MOVE                   = 16008;
+    C_2_S_WORLD2_STOP                   = 16009;
+    S_2_C_WORLD2_STOP                   = 16010;
+    C_2_S_WORLD2_WORLD_CITY             = 16011;
+    S_2_C_WORLD2_WORLD_CITY             = 16012;
+    C_2_S_WORLD2_PLAYER                 = 16013;
+    S_2_C_WORLD2_PLAYER                 = 16014;
+    C_2_S_WORLD2_ARMY                   = 16015;
+    S_2_C_WORLD2_ARMY                   = 16016;
+    S_2_C_WORLD2_MOVING_ARMY            = 16018;
+    C_2_S_WORLD2_CITY_BUILDING          = 16019;
+    S_2_C_WORLD2_CITY_BUILDING          = 16020;
+    C_2_S_WORLD2_MOVE_CITY              = 16021;
+    S_2_C_WORLD2_MOVE_CITY              = 16022;
+    S_2_C_WORLD2_UPDATE_VISIBILITY      = 16024;
+    S_2_C_WORLD2_REDIRECTION            = 16026;
+    S_2_C_WORLD2_STOP_NTF               = 16027;
+    S_2_C_WORLD2_UPDATE_POSITION        = 16028;
+    C_2_S_WORLD2_UPDATE_FORMATION       = 16029;
+    S_2_C_WORLD2_UPDATE_FORMATION       = 16030;
+    C_2_S_WROLD2_VIEW                   = 16031;
+    S_2_C_WORLD2_VIEW                   = 16032;
+    C_2_S_WORLD2_GET_OBJ                = 16033;
+    S_2_C_WORLD2_GET_OBJ                = 16034;
+    C_2_S_WORLD2_ATK_ARMY               = 16035;
+    S_2_C_WORLD2_ATK_ARMY               = 16036;
+    C_2_S_WORLD2_KICK_PLAYER_CITY       = 16037;
+    S_2_C_WORLD2_KICK_PLAYER_CITY       = 16038;
+    C_2_S_WORLD2_ATK_INDUSTRY           = 16039;
+    S_2_C_WORLD2_ATK_INDUSTRY           = 16040;
+    C_2_S_WORLD2_ARMY_USE_ITEM          = 16041;
+    S_2_C_WORLD2_ARMY_USE_ITEM          = 16042;
+    C_2_S_WORLD2_DECLARE_CITY           = 16043;
+    S_2_C_WORLD2_DECLARE_CITY           = 16044;
+    S_2_C_WORLD2_CITY_WAR_STATE_NTF     = 16046;
+    S_2_C_WORLD2_FINISH_CITY_WAR_NTF    = 16048;
+    C_2_S_WORLD2_CITY_BATTLE_IFNO       = 16049;
+    S_2_C_WORLD2_CITY_BATTLE_INFO       = 16050;
+    C_2_S_WORLD2_CITY_BATTLE_REWARD     = 16051;
+    S_2_C_WORLD2_CITY_BATTLE_REWARD     = 16052;
+    S_2_C_WORLD2_GUARD                  = 16054;
+    S_2_C_WORLD2_CHANGE_SPEED           = 16056;
+    C_2_S_WORLD2_ATK_GUARD              = 16057;
+    S_2_C_WORLD2_ATK_GUARD              = 16058;
+    C_2_S_WORLD2_DEVELOP_CITY           = 16061;
+    S_2_C_WORLD2_DEVELOP_CITY           = 16062;
+    C_2_S_WORLD2_ATK_PLAYER             = 16063;
+    S_2_C_WORLD2_ATK_PLAYER             = 16064;
+    C_2_S_WORLD2_OPEN_CITY_GATE         = 16065;
+    S_2_C_WORLD2_OPEN_CITY_GATE         = 16066;
+    C_2_S_WORLD2_CITY_BATTLE_RECORD     = 16067;
+    S_2_C_WORLD2_CITY_BATTLE_RECORD     = 16068;
+    C_2_S_WORLD2_CITY_BATTLE_SCORE_INFO = 16069;
+    S_2_C_WORLD2_CITY_BATTLE_SCORE_INFO = 16070;
+    C_2_S_WORLD2_FORTRESS_DEFENSER      = 16071;
+    S_2_C_WORLD2_FORTRESS_DEFENSER      = 16072;
+    C_2_S_WORLD2_BUY_FORTRESS_TICKET    = 16073;
+    S_2_C_WORLD2_BUY_FORTRESS_TICKET    = 16074;
+    C_2_S_WORLD2_DRAFT_SOLDIER          = 16075;
+    S_2_C_WORLD2_DRAFT_SOLDIER          = 16076;
+    C_2_S_WORLD2_CROP_MEMBER_POS        = 16077;
+    S_2_C_WORLD2_CROP_MEMBER_POS        = 16078;
+    S_2_C_WORLD2_TELEPORT               = 16080;
+    S_2_C_WORLD2_TOWER_ATK              = 16082;
+    C_2_S_WORLD2_ROB_PLAYER             = 16083;
+    S_2_C_WORLD2_ROB_PLAYER             = 16084;
+    C_2_S_WORLD2_APPLY_LORD             = 16085;
+    S_2_C_WORLD2_APPLY_LORD             = 16086;
+    C_2_S_WORLD2_APPROVE_LORD           = 16087;
+    S_2_C_WORLD2_APPROVE_LORD           = 16088;
+    C_2_S_WORLD2_DEF_PLAYER             = 16089;
+    S_2_C_WORLD2_DEF_PLAYER             = 16090;
+    C_2_S_WORLD2_LAST_BATTLE_TIME       = 16091;
+    S_2_C_WORLD2_LAST_BATTLE_TIME       = 16092;
+    C_2_S_WORLD2_LOAD_BATTLE_REWARD     = 16093;
+    S_2_C_WORLD2_LOAD_BATTLE_REWARD     = 16094;
+    C_2_S_WORLD2_DRAW_BATTLE_REWARD     = 16095;
+    S_2_C_WORLD2_DRAW_BATTLE_REWARD     = 16096;
+    S_2_C_WORLD2_BRIEF_BATTLE_REPORT    = 16098;
+    C_2_S_WORLD2_TOP                    = 16100;
+
+    // tlog
+    C_2_S_TLOG_BASE                     = 16100;
+    C_2_S_TLOG_DEVICE_FLOW              = 16101;
+    S_2_C_TLOG_DEVICE_FLOW              = 16102;
+    C_2_S_TLOG_CLICK_GIFT               = 16103;
+    S_2_C_TLOG_CLICK_GIFT               = 16104;
+    C_2_S_TLOG_TOP                      = 16200;
+
+	//action limit;
+    C_2_S_ACTION_LIMIT_BASE             = 16200;
+    C_2_S_ACTION_LIMIT_LOAD             = 16201;
+    S_2_C_ACTION_LIMIT_LOAD             = 16202;
+    S_2_C_ACTION_LIMIT_NEW              = 16203;
+    S_2_C_ACTION_LIMIT_NOTICE           = 16204;
+    S_2_C_ACTION_LIMIT_UNBAN            = 16205;
+    C_2_S_ACTION_LIMIT_TOP              = 16300;
+
+     //coin
+    C_2_S_COIN_BASE                     = 16300;
+    C_2_S_QUERY_COIN                    = 16301;
+    S_2_C_QUERY_COIN                    = 16302;
+    C_2_S_CONSUME_COIN                  = 16303;
+    S_2_C_CONSUME_COIN                  = 16304;
+    C_2_S_PRESENT_COIN                  = 16305;
+    S_2_C_PRESENT_COIN                  = 16306;
+    C_2_S_COIN_TOP                      = 16400;
+
+    //fortress battle
+    C_2_S_FORTRESS_BATTLE_BASE          = 16400;
+    C_2_S_FORTRESS_BATTLE_INFO          = 16401;
+    S_2_C_FORTRESS_BATTLE_INFO          = 16402;
+    C_2_S_FORTRESS_BATTLE_DETAIL        = 16403;
+    S_2_C_FORTRESS_BATTLE_DETAIL        = 16404;
+    C_2_S_FORTRESS_BATTLE_DECLARE       = 16405;
+    S_2_C_FORTRESS_BATTLE_DECLARE       = 16406;
+    C_2_S_FORTRESS_BATTLE_JOIN          = 16407;
+    S_2_C_FORTRESS_BATTLE_JOIN          = 16408;
+    C_2_S_FORTRESS_BATTLE_QUIT          = 16409;
+    S_2_C_FORTRESS_BATTLE_QUIT          = 16410;
+    S_2_C_FORTRESS_BATTLE_RESULT_NTF    = 16412;
+    C_2_S_FORTRESS_BATTLE_TOP           = 16500;
+
+    // world
+    S_2_C_WORLD2_STOP_NTF2              = 16500;
+    S_2_C_WORLD2_REDIRECTION2           = 16502;
+
+    //world monster
+    C_2_S_WORLD_MONSTER_BASE            = 16600;
+    S_2_C_WORLD_MONSTER_INFO            = 16602;
+    C_2_S_WORLD_MONSTER_ATK             = 16603;
+    S_2_C_WORLD_MONSTER_ATK             = 16604;
+    C_2_S_WORLD_MONSTER_SEARCH          = 16605;
+    S_2_C_WORLD_MONSTER_SEARCH          = 16606;
+    S_2_C_WORLD_MONSTER_REFRESH         = 16608;
+    C_2_S_WORLD_MONSTER_KILL_INFO       = 16609;
+    S_2_C_WORLD_MONSTER_KILL_INFO       = 16610;
+    C_2_S_WORLD_MONSTER_TOP             = 16700;
+
+    // world team
+    C_2_S_WORLD_TEAM_BASE                   = 16700;
+    C_2_S_WORLD_TEAM_CREATE                 = 16701;
+    S_2_C_WORLD_TEAM_CREATE                 = 16702;
+    C_2_S_WORLD_TEAM_JOIN                   = 16703;
+    S_2_C_WORLD_TEAM_JOIN                   = 16704;
+    C_2_S_WORLD_TEAM_EXIT                   = 16705;
+    S_2_C_WORLD_TEAM_EXIT                   = 16706;
+    C_2_S_WORLD_TEAM_DETAIL                 = 16707;
+    S_2_C_WORLD_TEAM_DETAIL                 = 16708;
+    C_2_S_WORLD_TEAM_UPDATE_BATTLE_ORDER    = 16709;
+    S_2_C_WORLD_TEAM_UPDATE_BATTLE_ORDER    = 16710;
+    S_2_C_WORLD_TEAM_MERGE_NTF              = 16712;
+    C_2_S_WORLD_TEAM_KICK                   = 16713;
+    S_2_C_WORLD_TEAM_KICK                   = 16714;
+    S_2_C_WORLD_TEAM_KICK_NTF               = 16716;
+    S_2_C_WORLD_TEAM_FINISH_NTF             = 16718;
+    C_2_S_WORLD_TEAM_BASIC_INFO_LIST        = 16719;
+    S_2_C_WORLD_TEAM_BASIC_INFO_LIST        = 16720;
+    S_2_C_WORLD_TEAM_DISMISS_NTF            = 16722;
+    C_2_S_WORLD_TEAM_MERGE_ARMY             = 16723;
+    S_2_C_WORLD_TEAM_MERGE_ARMY             = 16724;
+    C_2_S_WORLD_TEAM_MANUAL_START           = 16725;
+    S_2_C_WORLD_TEAM_MANUAL_START           = 16726;
+    S_2_C_WORLD_TEAM_CREATE_NTF             = 16728;
+    S_2_C_WORLD_TEAM                        = 16730;
+    S_2_C_WORLD_TEAM_JOIN_NTF_CROP          = 16732;
+    S_2_C_WORLD_TEAM_LEAVE_NTF_CROP         = 16734;
+    C_2_S_WORLD_TEAM_MANUAL_MOVE            = 16735;
+    S_2_C_WORLD_TEAM_MANUAL_MOVE            = 16736;
+    C_2_S_WORLD_TEAM_TOP                    = 16800;
+
+    //world crop
+    C_2_S_WORLD_CROP_BASE            = 16800;
+    S_2_C_WORLD_CROP                 = 16802;
+    S_2_C_WORLD_CROP_ATK             = 16804;
+    C_2_S_WORLD_CROP_TOP             = 16900;
+}
+
+message C2S_SystemTick {
+        optional ProtocolType type = 1 [default = C2S_KEEP_ALIVE_ACK];
+}
+
+message S2C_SystemTick {
+        optional ProtocolType type = 1 [default = S2C_KEEP_ALIVE_ACK];
+        required int32 keep_alive_ack = 2;
+}
+
+message C2S_TssSDK {
+        optional ProtocolType type = 1 [default = C2S_TSS_SDK];
+        optional bytes anti_data = 2;
+}
+
+message S2C_TssSDK {
+        optional ProtocolType type = 1 [default = S2C_TSS_SDK];
+        optional bytes anti_data = 2;
+}
+
+message C2S_TssDirtyWordCheck {
+        optional ProtocolType type = 1 [default = C2S_TSS_DIRTY_WORD_CHECK];
+        optional string word = 2;
+        optional int32 op_type = 3;
+}
+
+message S2C_TssDirtyWordCheck {
+        optional ProtocolType type = 1 [default = S2C_TSS_DIRTY_WORD_CHECK];
+        optional int32 ret = 2; // 0 normal, 1 dirty word
+        optional string word = 3;
+        optional int32 op_type = 4;
+}
+
+message C2S_ConnectToServer {
+	optional ProtocolType type = 1 [default = C2S_CONNECT_TO_SERVER];
+	optional string server_id = 2;
+	optional int32 zone_id = 3;
+	optional string loginname = 4;
+	optional int64 session_seed = 5;
+}
+
+message S2C_ConnectToServer {
+	enum ConnectRet {
+		ret_ok = 0;
+		ret_no_such_svr = 1;
+		ret_internal_error = 2;
+	};
+	optional ProtocolType type = 1 [default = S2C_CONNECT_TO_SERVER];
+	optional int32 ret = 2;
+	optional int32 quene_num = 3;
+}
+
+message S2C_ReconnectToServer {
+    optional ProtocolType type = 1 [default = S2C_RECONNECT_TO_SERVER];
+    optional int32 state = 2; // 0 success, 1 connecting, 2 failed
+}
+
+message S2C_GateSessionSeed {
+    optional ProtocolType type = 1 [default = S2C_GATE_SESSION_SEED];
+    optional int64 seed = 2;
+}
+
+message S2C_InQueneNum {
+	optional ProtocolType type = 1 [default = S2C_IN_QUENE_NUM];
+	optional int32 num = 2;
+}
+
+message S2C_ProtocolAck {
+	optional ProtocolType type = 1 [default = S2C_PROTOCOL_ACK];
+	optional int32 ack_id = 2;
+}
+
+message S2C_SessionRoleId {
+        optional ProtocolType type = 1 [default = S2C_SESSION_ROLE_ID];
+        optional int64 role_id = 2;
+}
+
+message C2S_AccountGateReconnect {
+	optional ProtocolType type = 1 [default = C_2_S_ACCOUNT_GATE_RECONNECT];
+	optional int64 role_id = 2;
+}
+
+message S2C_GateState {
+        enum StateType {
+             state_ok = 0;
+             state_gs_offline = 1;
+             state_server_is_full = 2;
+             state_server_register_full = 3;
+        };
+        optional ProtocolType type = 1 [default = S2C_GATE_STATE];
+        required int32 state = 2;
+        required int64 key = 3;
+        optional int32 excel_last_changed_rev = 4;
+}
+
+message FormationGenaralLoc {
+        optional int32 index = 1;
+        optional int32 general_id = 2;
+        optional int32 soldier_id = 3;
+}
+
+message RewardType {
+        optional int32 type = 1;
+        optional int32 num = 2;
+        optional int32 param1 = 3;
+        optional int64 id = 4;
+}
+
+message SoloBattleReport {
+        message BattleObject {
+                optional int64 id = 1;
+                optional string name = 2;
+                optional int32 level = 3;
+                optional int32 object_type = 4;
+                optional int32 general_id = 5;
+                optional string general_name = 6;
+                optional int32 general_lvl = 7;
+                optional int32 max_soldier_num = 8;
+                optional int32 strength = 9;
+        }
+        message Action {
+                optional int32 side = 1; //1 attacker, 2 defenser
+                optional int32 action_type = 2;//1 attacker, 2 second attack
+                repeated int32 skill_ids = 3;
+                optional int32 result = 4; //0 normal, 1 dodge, 2 block, 3 fatal kill
+                optional int32 hurt = 5;
+                optional int32 beat_back = 6;
+                optional int32 is_crit = 7;
+        }
+        message Round {
+                optional int32 round = 1;
+                repeated Action actions = 2;
+        }
+        optional BattleObject attacker = 1;
+        optional BattleObject defenser = 2;
+        repeated Round rounds = 3;
+        optional int32 battle_result = 4;
+        repeated RewardType rewards = 5;
+        optional int32 def_crop_id = 6;
+}
+
+message S2C_MainTenance {
+        optional ProtocolType type = 1 [default = S2C_MAINTENANCE];
+        optional int32 begin_time = 2;
+        optional int32 end_time = 3;
+}
+
+message RoleInfo {
+    optional int64 id = 1;
+    optional string name = 2;
+    optional int32 lvl = 3;
+    optional int32 country_id = 4;
+    optional int32 crop_id = 5;
+    optional int32 is_online = 6;
+    optional int32 logout_time = 7;
+    optional int32 force_value = 8;
+    optional int32 city_id = 9;
+    optional int32 img_type = 10;
+    optional int32 img_id = 11;
+    optional int32 arena_score = 12;
+    optional int32 official_lvl = 13;
+}
+
+message WorldPos {
+        optional int32 x = 1;
+        optional int32 y = 2;
+}
+
+message MovePos {
+    optional float x = 1;
+    optional float y = 2;
+}
+
+message FortressDefenser {
+        message General {
+            optional int32 id = 1;
+            optional int32 level = 2;
+            optional int32 star = 3;
+            optional int32 soldier_id = 4;
+            optional int32 soldier_num = 5;
+        }
+        optional int64 id = 1;
+        optional string name = 2;
+        optional int32 main_general_id = 3;
+        repeated General defenser = 4;
+        optional int32 collect_time = 5;
+};
+
+message IntPair {
+    optional int32 id = 1;
+    optional int32 value = 2;
+}

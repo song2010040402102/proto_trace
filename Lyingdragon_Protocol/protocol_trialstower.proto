@@ -1,0 +1,256 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_LoadTrialsTowerInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_INFO];
+}
+
+message S2C_LoadTrialsTowerInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_INFO];
+        message Stage {
+            optional int32 id = 1;
+            optional int32 map_id = 2;
+        }
+        message PassRate {
+            optional int32 id = 1;
+            optional int32 value = 2;//1=pass 2=perfect
+            optional int32 score = 3;
+        }
+        repeated Stage stages = 2;
+        repeated int32 box_ids = 3;
+        optional int32 atk_buff = 4;
+        optional int32 def_buff = 5;
+        optional int32 buff_time = 6;
+        repeated int32 pass_ids = 7;
+        repeated int32 best_ids = 8;
+        optional int32 rand_player_times = 9;
+        optional int32 current_week = 10;
+        optional int32 current_day = 11;
+        repeated PassRate rates = 12;
+        optional int32 total_score = 13;
+}
+
+message C2S_TrialsTowerFormInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_FORM_INFO];
+}
+
+message S2C_TrialsTowerFormInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_FORM_INFO];
+        message Pos {
+            optional int32 pos = 1;
+            optional int32 general_id = 2;
+            optional int32 girl_id = 3;
+        }
+        optional int32 form_id = 2;
+        repeated Pos poses = 3;
+        repeated int32 use_general_ids = 4;
+}
+
+message C2S_TrialsTowerSetForm {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_SET_FORM];
+        message Pos {
+            optional int32 pos = 1;
+            optional int32 general_id = 2;
+            optional int32 girl_id = 3;
+        }
+        optional int32 form_id = 2;
+        repeated Pos poses = 3;
+}
+
+message S2C_TrialsTowerSetForm {
+    optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_SET_FORM];
+    optional int32 ret = 2;
+}
+
+message C2S_TrialsTowerBattle {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_BATTLE];
+        optional int32 id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_TrialsTowerBattle {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_BATTLE];
+        optional int32 id = 2;
+        optional int32 rate = 3;
+        optional int64 report_id = 4;
+        repeated RewardType rewards = 5;
+        optional bool is_best = 6;
+        repeated RewardType best_rewards = 7;
+        repeated RewardType last_rewards = 8;
+        optional bool has_box = 9;
+        optional int32 score = 10;
+        optional int32 ret = 11;
+}
+
+message C2S_TrialsTowerReset {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_RESET];
+        optional int32 map_id = 2;
+}
+
+message S2C_TrialsTowerReset {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_RESET];
+        optional int32 map_id = 2;
+}
+
+message C2S_LoadTowerRecruitInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_RECRUIT_INFO];
+}
+message S2C_LoadTowerRecruitInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_RECRUIT_INFO];
+        repeated int32 recruit_ids = 2;
+}
+
+message C2S_RecruitTowerGeneral {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_RECRUIT_GENERAL];
+        optional int32 recruit_id = 2;
+}
+
+message S2C_RecruitTowerGeneral {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_RECRUIT_GENERAL];
+        optional int32 recruit_id = 2;
+}
+
+message C2S_TrialsTowerDrawBox {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_DRAW_BOX];
+        optional int32 id = 2;
+}
+
+message S2C_TrialsTowerDrawBox {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_DRAW_BOX];
+        optional int32 id = 2;
+        optional int32 buf_type = 3;
+        optional int32 buf_value = 4;
+        optional int32 buf_time = 5;
+        repeated RewardType rewards = 6;
+        optional int32 ret = 7;
+}
+
+message C2S_TrialsTowerRandPlayer {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_RAND_PLAYER];
+        optional int32 map_id = 2;
+        optional bool is_cost = 3;
+}
+
+message S2C_TrialsTowerRandPlayer {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_RAND_PLAYER];
+        message GeneralPos {
+            optional int32 general_id = 1;
+            optional int32 pos = 2;
+            optional int32 soldier_id = 3;
+        }
+        optional int32 map_id = 2;
+        optional int64 role_id = 3;
+        optional string name = 4;
+        optional int32 lvl = 5;
+        optional int32 power = 6;
+        optional int32 country_id = 7;
+        optional int32 form_id = 8;
+        optional int32 main_general = 9;
+        repeated GeneralPos generals = 10;
+        optional int32 rand_player_times = 11;
+}
+
+message C2S_TrialsTowerShopInfo {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_SHOP_INFO];
+}
+
+message S2C_TrialsTowerShopInfo {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_SHOP_INFO];
+        message Item {
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated Item items = 2;
+        optional int32 refresh_times = 3;
+        repeated Item limit_items = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_TrialsTowerBuyItem {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_BUY_ITEM];
+        optional int32 id = 2;
+        optional int32 num = 3;
+}
+
+message S2C_TrialsTowerBuyItem {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_BUY_ITEM];
+        optional int32 id = 2;
+        optional int32 num = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_TrialsTowerBuyLimitItem {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_BUY_LIMIT_ITEM];
+        optional int32 id = 2;
+        optional int32 num = 3;
+}
+
+message S2C_TrialsTowerBuyLimitItem {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_BUY_LIMIT_ITEM];
+        optional int32 id = 2;
+        optional int32 num = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_TrialsTowerDraw {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_DRAW];
+        optional int32 map_id = 2;
+}
+
+message S2C_TrialsTowerDraw {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_DRAW];
+        optional int32 map_id = 2;
+        repeated RewardType rewards = 3;
+}
+
+message C2S_TrialsTowerSweep {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_SWEEP];
+        optional int32 id = 2;
+}
+
+message S2C_TrialsTowerSweep {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_SWEEP];
+        optional int32 id = 2;
+        optional bool has_box = 3;
+        repeated RewardType rewards = 4;
+}
+
+message C2S_TrialsTowerRefreshShop {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_REFRESH_SHOP];
+}
+
+message S2C_TrialsTowerRefreshShop {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_REFRESH_SHOP];
+        message Item {
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated Item items = 2;
+        optional int32 refresh_times = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_TrialsTowerRank {
+        optional ProtocolType type = 1 [default = C_2_S_TRIALS_TOWER_RANK];
+        optional int32 rank_type = 2;//1=pass time rank, 2=score rank
+}
+
+message S2C_TrialsTowerRank {
+        optional ProtocolType type = 1 [default = S_2_C_TRIALS_TOWER_RANK];
+        message RankItem {
+            optional int64 role_id = 1;
+            optional string role_name = 2;
+            optional int32 country_id = 3;
+            optional int32 img_type = 4;
+            optional int32 img_id = 5;
+            optional int32 force_value = 6;
+            optional int32 level = 7;
+            optional int32 rank = 8;
+            optional int32 value = 9;
+        }
+        optional int32 rank_type = 3;
+        optional int32 my_rank = 4;
+        repeated RankItem items = 5;
+}
+

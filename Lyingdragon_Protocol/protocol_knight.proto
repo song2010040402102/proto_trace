@@ -1,0 +1,302 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_KnightInfo {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_INFO];
+    optional int32 instance_id = 2;
+}
+
+message BossItem {
+    optional int64 id = 1;
+    optional int32 troop_id = 2;
+    optional WorldPos pos = 3;
+    optional int64 hp = 4;
+    optional int32 template_id = 5;
+}
+
+message S2C_KnightInfo {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_INFO];
+    repeated BossItem items = 2;
+    optional int32 num = 3;
+    optional int32 buy_num = 4;
+}
+
+message C2S_KnightEnter {   // not used
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_ENTER];
+    optional int32 instance_id = 2;
+}
+
+message S2C_KnightEnter {   // not used
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_ENTER];
+    optional int32 instance_id = 2;
+}
+
+message KnightTeam {
+    message Member {
+        optional int64 player_id = 1;
+	optional int64 id = 2;
+	optional int32 army_id = 3;
+    }
+    optional int64 id = 1;
+    optional string name = 2;
+    optional int32 level = 3;
+    optional int64 leader_id = 4;
+    optional int32 mem_num = 5;
+    optional int32 need_invite = 6;
+    repeated Member members = 8;
+    optional bool is_start = 9;
+}
+
+message S2C_KnightTeamList {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_TEAM_LIST];
+    optional int32 instance_id = 2;
+    repeated KnightTeam teams = 3;
+}
+
+message S2C_KnightTeamDelete {
+    enum DeleteStatus {
+        DS_FINISH = 0;
+        DS_QUIT = 1;
+    };
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_TEAM_DELETE];
+    optional int64 team_id = 2;
+    optional int32 status = 3; // 0 start battle, 1 client
+}
+
+message C2S_KnightCreate {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_CREATE];
+    optional int32 buy_num = 2;
+    optional int32 army_id = 3;
+    optional int32 instance_id = 4;
+}
+
+message S2C_KnightCreate {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_CREATE];
+    optional int64 team_id = 2;
+    optional int32 army_id = 3;
+    optional int32 instance_id = 4;
+    optional int64 id = 5;
+    optional int32 ret = 6;
+}
+
+message C2S_KnightBuyTimes {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_BUY_TIMES];
+    optional int32 buy_num = 2;
+}
+
+message S2C_KnightBuyTimes {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_BUY_TIMES];
+    optional int32 buy_num = 2;
+}
+
+message C2S_KnightSetTeamJoinWay {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_SET_TEAM_JOIN_WAY];
+    optional int32 need_invite = 2;
+    optional int32 instance_id = 3;
+}
+
+message S2C_KnightSetTeamJoinWay {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_SET_TEAM_JOIN_WAY];
+    optional int32 ret = 3;
+}
+
+message C2S_KnightJoin {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_JOIN];
+    optional int64 team_id = 2;
+    optional int32 buy_num = 3;
+    optional int32 army_id = 4;
+    optional int32 instance_id = 5;
+}
+
+message S2C_KnightJoin {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_JOIN];
+    optional int32 ret = 2;
+    optional int64 team_id = 3;
+    optional int32 army_id = 4;
+    optional int32 instance_id = 5;
+    optional int64 id = 6;
+}
+
+message C2S_KnightQuit {    // not used
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_QUIT];
+}
+
+message S2C_KnightQuit {    // not used
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_QUIT];
+}
+
+message C2S_KnightClose {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_CLOSE];
+    optional int32 instance_id = 2;
+}
+
+message S2C_KnightClose {
+    optional ProtocolType type = 1 [default = S_2_S_KNIGHT_CLOSE];
+    optional int32 instance_id = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_KnightKickOut {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_KICK_OUT];
+    optional int64 id = 2;
+    optional int32 instance_id = 3;
+}
+
+message S2C_KnightKickOut {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_KICK_OUT];
+    optional int64 id = 2;
+    optional int32 ret = 3;
+}
+
+message S2C_KnightKickOutNotify {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_KICK_OUT_NOTIFY];
+    optional int64 team_id = 2;
+}
+
+message C2S_KnightChangeLeader {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_CHANGE_LEADER];
+    optional int64 new_leader_id = 2;
+    optional int32 instance_id = 3;
+}
+
+message S2C_KnightChangeLeader {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_CHANGE_LEADER];
+    optional int32 ret = 2;
+}
+
+message C2S_KnightLoadPlayers {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_LOAD_PLAYERS];
+    optional int32 instance_id = 2;
+}
+
+message KnightPlayer {
+    optional int64 id = 1;
+    optional int32 zone_id = 2;
+    optional int64 role_id = 3;
+    optional string name = 4;
+    optional int32 level = 5;
+    optional int32 force_value = 6;
+    optional int32 country_id = 7;
+    optional int32 move_cd = 8;
+    optional int32 kill_cd = 9;
+    optional int32 channel = 10;
+    optional int32 img_type = 11;
+    optional int32 img_id = 12;
+    optional int32 army_id = 13;
+}
+
+message S2C_KnightLoadPlayers {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_LOAD_PLAYERS];
+    optional int64 team_id = 2;
+    repeated KnightPlayer players = 3;
+    optional int32 instance_id = 4;
+    optional int32 ret = 5;
+}
+
+message S2C_KnightPlayerLeave {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_PLAYER_LEAVE];
+    optional int32 instance_id = 2;
+    optional int64 role_id = 3;
+    optional int32 army_id = 4;
+}
+
+message S2C_KnightPlayerMove {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_PLAYER_MOVE];
+    optional int64 id = 2;
+    optional int32 channel_id = 3;
+}
+
+message C2S_KnightStartBattle {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_START_BATTLE];
+    optional int64 instance_id = 2;
+    optional int32 army_id = 3;
+}
+
+message S2C_KnightStartBattle {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_START_BATTLE];
+    optional int32 ret = 2;
+    optional int64 instance_id = 3;
+    optional int32 army_id = 4;
+    optional int64 team_obj_id = 5;
+    optional int32 left_time = 6;
+    optional int64 left_hp = 7;
+}
+
+message S2C_KnightBattleNotify {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_BATTLE_NOTIFY];
+    optional int64 boss_left_hp = 2;
+    optional int32 battle_ret = 3;
+    optional int64 report_id = 4;
+    optional int32 round = 5;
+    optional int64 army_id = 6;
+    optional int64 instance_id = 7;
+    optional int64 damage = 8;
+}
+
+message S2C_KnightFinish {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_FINISH];
+    optional int32 ret = 2;
+    repeated RewardType rwds = 3;
+    optional int64 boss_id = 4;
+    optional int64 id = 5;
+    optional int32 army_id = 6;
+    optional int64 team_obj_id = 7;
+    optional int32 damage = 8;
+}
+
+message C2S_KnightClearKillCD {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_CLEAR_KILL_CD];
+}
+
+message S2C_KnightClearKillCD {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_CLEAR_KILL_CD];
+    optional int32 ret = 2;
+}
+
+message C2S_KnightLoadReady {
+    optional ProtocolType type = 1 [default = C_2_S_KNIGHT_LOAD_READY];
+    optional int32 instance_id = 2;
+}
+
+message S2C_KnightLoadReady {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_LOAD_READY];
+    optional int64 player_id = 2;
+    optional int32 instance_id = 3;
+    optional int32 ret = 4;
+}
+
+message S2C_KnightAllReady {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_ALL_READY];
+    optional int32 instance_id = 2;
+    optional int64 team_id = 3;
+    optional int32 left_time = 4;
+}
+
+message S2C_KnightBossDead {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_BOSS_DEAD];
+    optional int32 instance_id = 2;
+}
+
+message S2C_KnightBossHpUpdate {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_BOSS_HP_UPDATE];
+    optional int64 instance_id = 2;
+    optional int64 left_hp = 3;
+}
+
+message S2C_KnightTeamBattleNotify {
+    optional ProtocolType type = 1 [default = S_2_C_KNIGHT_TEAM_BATTLE_NOTIFY];
+    optional int64 team_obj_id = 2;
+    optional int64 boss_id = 3;
+    message BattleItem {
+        optional int64 attacker_id = 1;
+        optional int32 army_id = 2;
+        optional int32 battle_ret = 3;
+        optional int64 report_id = 4;
+        optional int32 round = 5;
+        optional int64 damage = 6;
+        optional string name = 7;
+    }
+    repeated BattleItem items = 4;
+    optional int64 boss_left_hp = 5;
+}

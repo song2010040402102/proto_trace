@@ -1,0 +1,831 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+enum MsgCode {
+     MC_SUCCESS = 0;
+     MC_OFFLINE = 1;
+
+     MC_NONE    = 5;                //未知错误
+
+     MC_PB_DESERI_FAIL              = 10;//协议反序列化失败
+     MC_RES_NOT_ENOUGH              = 11;//资源不足
+     MC_NOT_MSG_ID                  = 12;//消息包不存在
+     MC_NOT_INIT                    = 13;//未登录成功
+     MC_SOLO_FAIL                   = 14;//单挑失败
+     MC_BATTLE_NOT_RUN              = 15;//战斗运行失败
+     MC_NO_CROP                     = 16;//军团不存在
+     MC_NO_CROP_MEMBER              = 17;//非当前军团成员
+     MC_NO_PERMISSION               = 18;//无权限
+     MC_NOT_EXIST_ACCOUNT           = 19;//账号不存在
+     MC_NOT_OPEN_SEASON             = 20;//赛季未开启
+     MC_NOT_OPEN_FUNCTION           = 21;//功能未开启
+     MC_NOT_HAS_DEFAULT_FORMATION   = 22;//没有默认阵型
+     MC_GENERAL_NOT_FOUND           = 23;//武将不存在
+     MC_CALL_PEER_SERVER_FAIL       = 25;//跨服请求失败
+     MC_FOOD_NUM_LIMIT              = 26;//粮食数量超出上限
+     MC_ARMY_NO_EXIST               = 27;//部队不存在
+     MC_ARMY_NO_FREE                = 28;//部队非空闲
+     MC_NO_CITY                     = 29;//城池不存在
+     MC_GENERAL_NUM_BREAK_LIMIT     = 30;//部队武将数量超出限制
+     MC_ARMY_NOT_ARRIVE             = 31;//部队未到达
+     MC_LEARNER_CANNOT_ATTACK       = 32;//新手不能发起攻击
+     MC_LEARNER_CANNOT_BE_ATTACK    = 33;//新手不能被攻击
+     MC_NO_PLAYER                   = 34;//没有玩家
+     MC_DUPLICATE_NAME              = 35;//名字重复
+     MC_DIRTY_WORLD                 = 36;//敏感词
+     MC_NO_TECH                     = 37;//没有科技
+     MC_SAME_CROP                   = 38;//一个公会
+     MC_NOT_SAME_CROP               = 39;//不是一个公会
+     MC_NO_TASK                     = 40;//没有任务
+     MC_NOT_FIND_TEMP               = 41;//找不到配置信息
+     MC_IN_CITY_BATTLE              = 42;//正在城战中
+     MC_PARAM_INVALID               = 43;//参数错误
+     MC_NOT_FIND_DEFENSER           = 44;//未找到防守者
+
+     //login
+     MC_LOGIN_NAME_EMPTY = 1001;
+     MC_LOGIN_COUNTRY_FAIL = 1002;
+     MC_LOGIN_NOT_CREATE = 1003;
+     MC_LOGIN_INVALID_SIGN = 1004;
+     MC_LOGIN_MAINTENANCE = 1005;
+     MC_LOGIN_MAX_LIMIT = 1006;
+     MC_LOGIN_CREATE_LIMIT = 1007;
+     MC_LOGIN_REPEAT_NAME = 1008;
+     MC_LOGIN_CREATE_FAILED = 1009;
+
+     //tech
+     MC_TECH_NOT_IN_LEVEL_UP = 1101;
+     MC_TECH_NOT_EXIST_ID = 1102;
+     MC_TECH_IN_LEVELUP = 1103;
+     MC_TECH_IN_LOCK = 1104;
+     MC_TECH_NOT_EXIST_GENERAL = 1105;
+     MC_TECH_LEVEL_LIMIT = 1106;
+     MC_TECH_GENERAL_IN_BUSY = 1107;
+     MC_TECH_GENERAL_NOT_APPOINT = 1108;
+     MC_TECH_POINT_NOT_ENOUGH = 1109;
+     MC_TECH_NO_LEVELUP = 1110;//科技不在升级中
+
+     MC_SPECIAL_EVENT_ERROR_STATE                   = 1201;
+     MC_SPECIAL_EVENT_ERROR_OPTION_INDEX            = 1202;
+     MC_SPECIAL_EVENT_NOT_TROOP_TYPE                = 1203;
+     MC_SPECIAL_EVENT_NOT_PASS_INSTANCE             = 1204;
+     MC_SPECIAL_EVENT_NOT_FINISH_CONDITION_EVENT    = 1205;
+     MC_SPECIAL_EVENT_ID_INVALID                    = 1206;
+     MC_SPECIAL_EVENT_HAS_DONE                      = 1207;
+     MC_SPECIAL_EVENT_NO_RAND_EVENT                 = 1208;
+     MC_SPECIAL_EVENT_IN_CD                         = 1209;
+     MC_SPECIAL_EVENT_NO_IN_CD                      = 1210;
+     MC_SPECIAL_EVENT_NO_FINISH                     = 1211;
+     MC_SPECIAL_EVENT_HAS_DRAW                      = 1212;
+
+     //arena
+     MC_ARENA_ERROR_FORM_ID = 1301;
+     MC_ARENA_ERROR_TECH_ID = 1302;
+     MC_ARENA_NO_GENERAL = 1303;
+     MC_ARENA_POS_NOT_OPEN = 1304;
+     MC_ARENA_NO_ITEM = 1305;
+     MC_ARENA_NO_PLAYER = 1306;
+     MC_ARENA_NO_SOLO_BATTLE = 1307;
+     MC_ARENA_SOLO_END = 1308;
+     MC_ARENA_NO_SOLO_SKILL = 1309;
+     MC_ARENA_NO_ATK_ITEM = 1310;
+     MC_ARENA_FIGHT_YOUR_SELF = 1311;
+     MC_ARENA_CD_TIME = 1312;
+     MC_ARENA_NOT_IN_BATTLE_LIST = 1313;
+     MC_ARENA_NUM_LIMIT = 1314;
+     MC_ARENA_NUM_NO_LEFT = 1315;
+     MC_ARENA_NOT_ENOUGH_COST = 1316;
+     MC_ARENA_INIT_FAILED = 1317;
+     MC_ARENA_NO_REWARD = 1318;
+     MC_ARENA_ERROR_EXCHANGE_ID = 1319;
+     MC_ARENA_FORM_TYPE_ERROR = 1320;
+     MC_ARENA_NOT_VALID_SCORE = 1321;
+     MC_ARENA_NO_OPPONENT = 1322;
+     MC_ARENA_NO_NPC = 1323;
+     MC_ARENA_HAS_DRAWED = 1324;
+
+     //gift
+     MC_GIFT_ALREADY_AWARD = 1401;
+     MC_GIFT_AWARD_TIME_OUT = 1402;
+     MC_GIFT_BUY_LIMIT = 1403;
+
+     //general
+     MC_GENERAL_GENERAL_INVALID = 1501;
+     MC_GENERAL_SOLIDER_INVALID = 1502;
+     MC_GENERAL_SOLIDER_IN_LOCK = 1503;
+     MC_GENERAL_LEVEL_LIMIT = 1504;
+     MC_GENERAL_ITEM_INVALID = 1505;
+     MC_GENERAL_ERROR_QUALITY = 1506;
+     MC_GENERAL_ERROR_ID = 1507;
+     MC_GENERAL_NO_GENERAL = 1508;
+     MC_GENERAL_ERROR_REBUILD_TYPE = 1509;
+     MC_GENERAL_ERROR_NAME = 1510;
+     MC_GENERAL_ERROR_GROUP = 1511;
+
+     //crop boss
+     MC_CROP_BOSS_ID_INVALID = 1601;
+     MC_CROP_BOSS_HAS_ATK = 1602;
+     MC_CROP_BOSS_HAS_ACTIVE = 1603;
+
+     //ancient
+     MC_ANCIENT_TIMES_LIMIT = 1701;
+     MC_ANCIENT_ID_INVALID = 1702;
+     MC_ANCIENT_CHAPTER_NO_PASS = 1703;
+     MC_ANCIENT_DAY_LIMIT = 1704;
+     MC_ANCIENT_LEVEL_LIMIT = 1705;
+     MC_ANCIENT_INSTANCE_INVALID = 1706;
+     MC_ANCIENT_UNABLE_SKIP_INSTANCE = 1707;
+     MC_ANCIENT_SKIP_TIMES_LIMIT = 1708;
+     MC_ANCIENT_EVENT_INVALID = 1709;
+     MC_ANCIENT_BUY_TIMES_LIMIT = 1710;
+
+     //chat
+     MC_CHAT_NOT_IN_CITY = 1801;
+     MC_CHAT_OFFLINE_MESSAGE_LIMIT = 1802;
+     MC_CHAT_MSG_TYPE_INVALID = 1803;
+
+     //friend
+     MC_FRIEND_NAME_INVALID = 1901;
+     MC_FRIEND_ROLE_INVALID = 1902;
+     MC_FRIEND_GIFT_INVALID = 1903;
+
+     //industry
+     MC_INDUSTRY_IN_REPAIR_CD           = 2001; //维修在冷却时间
+     MC_INDUSTRY_IN_REPAIR_FULL         = 2002; //维修人数上限
+     MC_INDUSTRY_DEFENCE_FULL           = 2003; //城防值满,不需要维修
+     MC_INDUSTRY_ARMY_NOT_IN_STONE      = 2004; //部队不处于攻城车状态
+     MC_INDUSTRY_STONE_IN_COOLING       = 2005; //投石车处于冷却中
+     MC_INDUSTRY_NOT_EXIST              = 2006; //建筑不存在
+     MC_INDUSTRY_DISTANCE_LIMIT         = 2007; //投石车不处于可攻击范围内
+     MC_INDUSTRY_STONE_ATK_SELF         = 2008; //投石车攻击本军团建筑
+     MC_INDUSTRY_NO_INDUSTRY            = 2009;
+     MC_INDUSTRY_NUM_LIMIT              = 2010;
+     MC_INDUSTRY_NO_WALL                = 2011;
+     MC_INDUSTRY_NO_RESOURCE            = 2012;
+     MC_INDUSTRY_NO_POSITION            = 2013;
+     MC_INDUSTRY_NO_CATAPULT            = 2014;
+     MC_INDUSTRY_NO_CROP_LAND           = 2015;
+     MC_INDUSTRY_CANNOT_DRAW            = 2016;
+     MC_INDUSTRY_NOT_YOUR_CROP          = 2017;
+     MC_INDUSTRY_NO_GUARD               = 2018;
+     MC_INDUSTRY_INVALID_TYPE           = 2019;
+     MC_INDUSTRY_INVALID_LOCATE_TYPE    = 2020;
+
+     //thief
+     MC_THIEF_NOT_EXIST_ID = 2101;
+     MC_THIEF_TIME_OUT = 2102;
+     MC_THIEF_DEAD = 2103;
+
+     //interior
+     MC_INTERIOR_GENERAL_INVALID = 2201;
+     MC_INTERIOR_POS_INVALID = 2202;
+     MC_INTERIOR_GENERAL_IN_BUSY = 2203;
+     MC_INTERIOR_ID_INVALID = 2204;
+     MC_INTERIOR_NUM_LIMIT = 2205;
+     MC_INTERIOR_LEVEL_LIMIT = 2206;
+     MC_INTERIOR_APPOINT_ERROR = 2207;
+     MC_INTERIOR_NO_OFFICIAL = 2208;
+
+     //reward
+     MC_REWAD_ID_INVALID = 2301;
+     MC_REWAD_LEVEL_LIMIT = 2302;
+     MC_REWAD_HAS_DRAW = 2303;
+
+     //role
+     MC_ROLE_BUY_MILITORY_LIMIT     = 2401;
+     MC_ROLE_RANK_NOT_EXIST         = 2402;
+     MC_ROLE_ID_INVALID             = 2403;
+     MC_ROLE_NOT_EXIST_CHAT_STYLE   = 2404;
+     MC_ROLE_NAME_INVALID           = 2405;
+     MC_ROLE_CHAPTER_NO_PASS        = 2406;
+     MC_ROLE_GUIDE_SKIP_THE_SAME    = 2407;
+     MC_ROLE_HAS_REWARD             = 2408;
+     MC_ROLE_MONEY_IN_MAX           = 2409;
+     MC_ROLE_LEVEL_LIMIT            = 2410;
+     MC_ROLE_COUNTRY_LIMIT          = 2411;
+     MC_ROLE_IMG_ID_INVALID         = 2412;
+     MC_ROLE_HAS_COUNTRY            = 2413; //已选择国家
+     MC_ROLE_NOT_EXIST_COUNTRY      = 2414; //国家不存在
+     MC_ROLE_NAME_REPEATED          = 2415;
+
+     //tavern
+     MC_TAVERN_RANDOM_FAIL = 2501;
+     MC_TAVERN_NOT_FIND_TAG = 2502;
+
+     //area
+     MC_AREA_NO_AREA = 2601;
+     MC_AREA_NO_ZONE = 2602;
+     MC_AREA_NO_PLAYER = 2603;
+     MC_AREA_IN_CD = 2604;
+     MC_AREA_NO_CITY = 2605;
+     MC_AREA_LEVEL_LIMIT = 2606;
+     MC_AREA_CITY_CLOSE = 2607;
+     MC_AREA_IN_MOVING = 2608;
+     MC_AREA_MOVE_LIMIT = 2609;
+     MC_AREA_CROP_LIMIT = 2610;
+     MC_AREA_COUNTRY_LIMIT = 2611;
+     MC_AREA_SELF_CITY_LIMIT = 2612;
+     MC_AREA_TYPE_ERROR = 2613;
+     MC_AREA_NO_RESOURCE = 2614;
+     MC_AREA_NO_ENOUGH_COST = 2615;
+     MC_AREA_NO_ARMY = 2616;
+     MC_AREA_NO_GENERAL = 2617;
+     MC_AREA_NO_FORMATION = 2618;
+     MC_AREA_STATE_ERROR = 2619;
+     MC_AREA_ARMY_CITY_ERROR = 2620;
+     MC_AREA_OWN_YOURS = 2621;
+     MC_AREA_NO_OFFICIAL = 2622;
+     MC_AREA_MAX_RES_NUM = 2623;
+     MC_AREA_NOT_OCCUPIED = 2624;
+     MC_AREA_ALREADY_INDUSTRIOUS = 2625;
+     MC_AREA_NOT_INDUSTRIOUS = 2626;
+     MC_AREA_ATTACK_YOUR = 2627;
+     MC_AREA_SAME_COUNTRY = 2628;
+     MC_AREA_NO_DEV = 2629;
+     MC_AREA_DEV_TWICE = 2630;
+     MC_AREA_NO_CROP = 2631;
+     MC_AREA_NO_CROP_MEMBER = 2632;
+     MC_AREA_NOT_LEADER = 2633;
+     MC_AREA_APPERANCE_ALREADY = 2634;
+     MC_AREA_NOT_HAVE_APPERANCE = 2635;
+     MC_AREA_FRESH_VILLAGE = 2636;
+     MC_AREA_FULL_MARK = 2637;
+     MC_AREA_ERROR_IDX = 2638;
+     MC_AREA_NO_POS = 2639;
+     MC_AREA_TIMEOUT = 2640;
+
+     //hunt
+     MC_HUNT_ALREADY_START = 2701;
+     MC_HUNT_MAX_HUNT_NUM = 2702;
+     MC_HUNT_NO_ANIMAL = 2703;
+     MC_HUNT_NUM_IS_ZERO = 2704;
+     MC_HUNT_ARROW_NUM_NOT_ENOUGH = 2705;
+     MC_HUNT_ERROR_TYPE = 2706;
+     MC_HUNT_LEVEL_LIMIT = 2707;
+
+     //master
+     MC_MASTER_ID_INVALID = 2801;
+     MC_MASTER_LEVEL_LIMIT = 2802;
+     MC_MASTER_IN_MAX_POINT = 2803;
+     MC_MASTER_NOT_ENOUGH_POINT = 2804;
+
+     //knight
+     MC_KNIGHT_NO_EXIST_INSTANE = 2901;
+     MC_KNIGHT_LEVEL_LIMIT = 2902;
+     MC_KNIGHT_DAY_NOT_OPEN = 2903;
+     MC_KNIGHT_TIMES_LIMIT = 2904;
+     MC_KNIGHT_ALREADY_IN_TEAM = 2905;
+     MC_KNIGHT_NOT_IN_TEAM = 2906;
+     MC_KNIGHT_HAS_STARTED = 2907;
+     MC_KNIGHT_NOT_LEADER = 2908;
+     MC_KNIGHT_KICK_SELF = 2909;
+     MC_KNIGHT_LEADER_SELF = 2910;
+     MC_KNIGHT_NOT_ENOUGH_PLAYER = 2911;
+     MC_KNIGHT_IN_JOIN_WAY = 2912;
+     MC_KNIGHT_DEAD = 2913;
+     MC_KNIGHT_NO_TEAM = 2914;
+     MC_KNIGHT_TEAM_FULL = 2915;
+     MC_KNIGHT_LEADER_NOT_ARRIVE = 2916;
+     MC_KNIGHT_MEMBER_NOT_ARRIVE = 2917;
+
+     //nation battle
+     MC_NATION_NOT_EXIST_CITY           = 3001;
+     MC_NATION_CITY_IN_BATTLE           = 3002;
+     MC_NATION_RETREAT_DST_FAIL         = 3003;
+     MC_NATION_MOVE_INVALID             = 3004;
+     MC_NATION_RETREAT_ARMY_INVALID     = 3005;
+     MC_NATION_ARMY_NOT_IN_MOVING       = 3006;
+     MC_NATION_RETREAT_ARMY_OVER_TIME   = 3007;
+     MC_NATION_ARMY_NOT_EXIST           = 3008;
+     MC_NATION_ARMY_NOT_OPEN            = 3009;
+     MC_NATION_ARMY_NOT_IN_HOME         = 3010;
+     MC_NATION_ARMY_STATE_NOT_IN_MATCH  = 3011;
+     MC_NATION_ARMY_IN_MOVING           = 3012;
+     MC_NATION_FORMATION_INVALID        = 3013;
+     MC_NATION_GENERAL_INVALID          = 3014;
+     MC_NATION_NOT_IN_DECLARE_TIME      = 3015;
+     MC_NATION_ATK_SELF_CITY            = 3016;
+     MC_NATION_NOT_ATTENDER             = 3017;
+     MC_NATION_NOT_DECLARE              = 3018;
+     MC_NATION_SOLO_MAX_LIMIT           = 3019;
+     MC_NATION_ACCOUNT_REPEATED         = 3020;
+     MC_NATION_BATTLE_NOT_EXIST         = 3021;
+     MC_NATION_REWARD_HAS_DRAW          = 3022;
+     MC_NATION_POWER_ACTION_INVALID     = 3023;
+     MC_NATION_NOT_EMPIRE               = 3024;
+     MC_NATION_DECLARE_LEVEL_LIMIT      = 3025;
+     MC_NATION_DECLARE_CROP_IN_PEACE    = 3026;
+     MC_NATION_COUNTRY_BLOCK_LIMIT      = 3027; //分城受国家限制
+     MC_NATION_COUNTRY_NUM_LIMIT        = 3028; //占领城池数量限制
+     MC_NATION_ARMY_NO_GATHER           = 3029; //部队未集结
+     MC_NATION_CITY_STATE_INVALID       = 3030; //城池状态不对
+     MC_NATION_CITY_ATK_CONDITION_LIMIT = 3031; //城池攻打条件不满足
+
+     //item
+     MC_ITEM_ID_INVALID = 3101;
+     MC_ITEM_NOT_COMPOSE = 3102;
+     MC_ITEM_NUM_INVALID = 3103;
+     MC_ITEM_NOT_SELL = 3104;
+     MC_ITEM_NOT_USE_EFFECT = 3105;
+     MC_ITEM_EFFECT_TYPE_ERROR = 3106;
+
+     //ancient field
+     MC_ANCIENT_FIELD_FORMATION_INVAILD = 3201; //阵型ID错误
+     MC_ANCIENT_FIELD_TECH_NOT_EXIST    = 3202; //科技未开启
+     MC_ANCIENT_FIELD_GENERAL_INVAILD   = 3203; //武将不存在
+     MC_ANCIENT_FIELD_POS_INVAILD       = 3204; //位置未开启
+     MC_ANCIENT_FIELD_EMPTY_GENERAL     = 3205; //武将为空
+
+     //patrol
+     MC_PATROL_ID_NOT_MATCH = 4001;
+
+     //passport
+     MC_PASSPORT_NOT_EXIST_WEEK = 4101;
+     MC_PASSPORT_NOT_FINISH = 4102;
+     MC_PASSPORT_HAS_REWARD = 4103;
+
+     //store
+     MC_STORE_NUM_INVALID = 4201;
+     MC_STORE_ID_INVALID = 4202;
+
+     //crop
+     MC_CROP_BADGE_ID_INVALID       = 4301;
+     MC_CROP_LIMIT_ID_INVALID       = 4302;
+     MC_CROP_EXIST                  = 4303;
+     MC_CROP_JOIN_IN_CD             = 4304;
+     MC_CROP_JOIN_LEVEL_LIMIT       = 4305;
+     MC_CROP_JOIN_NOT_SAME_COUNTRY  = 4306;
+     MC_CROP_NOT_APPLY              = 4307;
+     MC_CROP_KICK_SELF              = 4308;
+     MC_CROP_LEADER_EXIT            = 4309;
+     MC_CROP_USER_INVALID           = 4310;
+     MC_CROP_THE_SAME_POS           = 4311;
+     MC_CROP_NOT_EMPTY              = 4312;
+     MC_CROP_TRANSFER_SELF          = 4313;
+     MC_CROP_BADGE_TIME_LIMIT       = 4315;
+     MC_CROP_TECH_INVALID           = 4316;
+     MC_CROP_TECH_FULL              = 4317;
+     MC_CROP_NO_EXIST_BUILDING      = 4318;
+     MC_CROP_NO_RED_PACKAGE         = 4319;
+     MC_CROP_RED_PACKAGE_TIMEOUT    = 4320;
+     MC_CROP_ACHIEVE_NOT_MATCH      = 4321;
+     MC_CROP_READ_PACKAGE_NUM_LIMIT = 4322;
+     MC_CROP_COST_GOLD_INVALID      = 4323;
+     MC_CROP_RED_PACKAGE_TIMES_LIMIT = 4324;
+     MC_CROP_PARTY_MONEY_INVALID    = 4325;
+     MC_CROP_PARTY_ALREADY_JOIN     = 4326;
+     MC_CROP_PARTY_STATUS_INVALID   = 4327;
+     MC_CROP_PARTY_NO_QUEST         = 4328;
+     MC_CROP_HAS_AWARD              = 4329;
+     MC_CROP_ID_INVALID             = 4330;
+     MC_CROP_GIFT_TIMEOUT           = 4331;
+     MC_CROP_GIFT_NOT_ENOUGH_POINT  = 4332;
+     MC_CROP_TEMP_ID_INVALID        = 4333;
+     MC_CROP_NUM_INVALID            = 4334;
+     MC_CROP_NO_BABY                = 4335;
+     MC_CROP_NO_RELATION            = 4336;//两军团之间不存在同盟或和平关系
+     MC_CROP_NO_RELATION_APPLY      = 4337;//不存在关系请求申请
+     MC_CROP_NO_RELATION_IN_TIME    = 4338;//24小时内不能解除关系
+     MC_CROP_TECH_LEVEL_LIMIT       = 4339;//军团科技等级限制
+     MC_CROP_IMPEACH_TIME_LIMIT     = 4340;//军团长未离线7天
+     MC_CROP_MANOR_ID_INVALID       = 4341;
+     MC_CROP_MANOR_STATUS_INVALID   = 4342;
+     MC_CROP_NO_RELATION_TYPE       = 4343;//军团关系类型不存在
+     MC_CROP_CANT_UPDATE_RELATION   = 4344;//双方正在城战，无法和谈
+     MC_CROP_CANT_ATTACK_FOR_PEACE  = 4345;//因双方议和，无法继续攻打
+     MC_CROP_TECH_DONATE_LIMIT      = 4346;//捐献次数不足
+     MC_CROP_IN_RELATION            = 4347;//军团已经处于该关系
+     MC_CROP_NO_COST                = 4348;
+     MC_CROP_HAS_CROP               = 4349;
+     MC_CROP_INVALID_POS            = 4350;
+     MC_CROP_IS_FULL                = 4351;
+     MC_CROP_IN_DECLARE_CD          = 4352;
+     MC_CROP_NO_DONATE_TYPE         = 4353;
+     MC_CROP_NO_DONATE_LEVEL        = 4354;
+     MC_CROP_NOT_IN_BUILDING_CD     = 4355;
+     MC_CROP_ERROR_BUILDING_LEVEL   = 4356;
+     MC_CROP_ERROR_XML_CONFIG       = 4357;
+     MC_CROP_REJECT_INVITE          = 4358;
+     MC_CROP_ERROR_GIFT_LEVEL       = 4359;
+     MC_CROP_FAILED_TO_BUY          = 4360;
+     MC_CROP_FAILED_MAP_MARK        = 4361;
+     MC_CROP_NO_TECH                = 4362;
+     MC_CROP_ERROR_TECH_LEVEL       = 4363;
+     MC_CROP_TECH_LOCKED            = 4364;
+     MC_CROP_CROP_LAND_MAX_COUNT    = 4365;
+     MC_CROP_CROP_LAND_OCCUPIED     = 4366;
+     MC_CROP_NO_CROP_LAND           = 4367;
+     MC_CROP_DECLARED_CROP_LAND     = 4368;
+     MC_CROP_CROP_TOWER_NO_OWNER    = 4369;
+     MC_CROP_NOT_SAME_COUNTRY       = 4370;
+     MC_CROP_RELATION_IN_DURATION   = 4371;
+     MC_CROP_RELATION_STATE_ERROR   = 4372;
+     MC_CROP_LEAGUE_CROP            = 4373;
+     MC_CROP_JOIN_SCORE_ERROR       = 4374;
+
+     //horse
+     MC_HORSE_TEMP_ID_INVALID = 4401;
+     MC_HORSE_ID_INVALID = 4402;
+     MC_HORSE_IN_MAX_LEVEL = 4403;
+     MC_HORSE_ITEMS_EMPTY = 4404;
+     MC_HORSE_NO_EXIST = 4405;
+     MC_HORSE_UNLOCK = 4406;
+     MC_HORSE_NO_BIND_GENERAL = 4407;
+     MC_HORSE_HAS_BIND_GENERAL = 4408;
+     MC_HORSE_IN_FIGHT = 4409;
+     MC_HORSE_NO_EXIST_BOOK = 4410;
+     MC_HORSE_NO_EXIST_GENERAL = 4411;
+     MC_HORSE_NO_RANK_LEVEL = 4412;
+
+     //world
+     MC_WORLD_NOT_EXIST_INDUSTRY        = 5001; //产业不存在
+     MC_WORLD_ARMY_NOT_FREE             = 5002; //部队不在空闲状态
+     MC_WORLD_PATH_NOT_MATCH            = 5003; //部队路径不对
+     MC_WORLD_INDUSTRY_IN_BUILD         = 5004; //产业正在建造
+     MC_WORLD_STONE_NUM_LIMIT           = 5005; //每日建造投石车限制
+     MC_WORLD_ARMY_IN_STONE             = 5006; //处于投石车状态
+     MC_WORLD_INDUSTRY_BUILD_FULL       = 5007; //修建部队已满
+     MC_WORLD_ARMY_AT_CITY              = 5008; //已经位于主城
+     MC_WORLD_CAN_NOT_ATTACK_ALLY       = 5009; //不能攻击盟友
+     MC_WORLD_ARMY_NUM_LIMIT            = 5010; //已达到部队上限
+     MC_WORLD_ARMY_IN_DEAD              = 5011; //部队处于复活状态
+     MC_WORLD_CITY_STATE_INVALID        = 5012; //城池状态错误
+     MC_WORLD_NOT_VASSAL                = 5013; //不是你的属臣
+     MC_WORLD_ROB_SAME_CROP             = 5014; //不能掠夺或征服同军团玩家
+     MC_WORLD_VASSAL_EXCEED             = 5015; //属臣数量超出
+     MC_WORLD_IN_PROTECT                = 5016; //处于保护时间
+     MC_WORLD_CANNOT_ROB_LOW_LEVEL      = 5017; //不能掠夺低等级玩家
+     MC_WORLD_CANNOT_ROB_SAME_COUNTRY   = 5018; //不能掠夺同国家的玩家
+     MC_WORLD_CANNOT_CONQUE_DIFF_COUNTRY = 5019; //不能征服不同国家的玩家
+     MC_WORLD_NO_POS                    = 5020; //没有合适的位置
+     MC_WORLD_INVALID_POS               = 5021; //移动非法
+     MC_WORLD_NO_OBJECT                 = 5022; //物体不存在
+     MC_WORLD_IN_ATTACK_CD              = 5023; //攻击cd
+     MC_WORLD_STATUS_ERROR              = 5024; //状态错误
+     MC_WORLD_HAS_GARRISONER            = 5025; //拥有守军
+     MC_WORLD_INDUSTRY_DESTROYED        = 5026; //产业被摧毁
+     MC_WORLD_CANNOT_ATTACK_CITY        = 5027; //不能攻击城市
+     MC_WORLD_CITY_DEVELOPED            = 5028; //已经开发过城市
+     MC_WORLD_NOT_YOUR_CITY             = 5029; //不是你的城市
+     MC_WORLD_CANNOT_DEVELOP_CITY       = 5030; //不能开发城市
+     MC_WORLD_NO_BATTLE                 = 5031; //没有战斗
+     MC_WORLD_NO_BATTLE_NO_SCORE        = 5032; //没有战斗分数
+     MC_WORLD_HAS_APPLY_VASSAL          = 5033; //已经申请过属臣
+     MC_WORLD_CANNOT_APPLY_VASSAL       = 5034; //不能申请属臣
+     MC_WORLD_NO_APPLY_VASSAL           = 5035; //不能申请宗主
+     MC_WORLD_VASSAL_RELATION_ERROR     = 5036; //关系错误
+     MC_WORLD_HAVE_LORD                 = 5037; //已经有宗主
+     MC_WORLD_CANNOT_SET_LORD           = 5038; //不能设置宗主
+     MC_INDUSTRY_DISABLE_ATTACK         = 5039;//建筑不能被攻击
+
+     //equipment
+     MC_EQUIP_EQUIP_NOT_EXIST       = 5101;//装备不存在
+     MC_EQUIP_TYPE_ERROR            = 5102;//装备类型错误
+     MC_EQUIP_NOT_LEVEL_UP          = 5103;//装备等级没有提升
+     MC_EQUIP_STATE_ERROR           = 5104;//装备状态错误
+     MC_EQUIP_GENERAL_NOT_FOUND     = 5105;//装备所在武将找不到
+     MC_EQUIP_HAS_GENERAL           = 5106;//装备已经被穿戴
+     MC_EQUIP_NOT_HAS_GENERAL       = 5107;//装备没有被穿戴
+     MC_EQUIP_SAME_GENERAL          = 5108;//武将重复
+     MC_EQUIP_RECAST_FROM_ERROR     = 5109;//铸造装备材料错误
+     MC_EQUIP_RECAST_RQT_NOT_FOUND  = 5110;//铸造品质模板不存在
+     MC_EQUIP_RECAST_NEW_ERROR      = 5111;//铸造生成新装备错误
+     MC_EQUIP_RECAST_TEMP_NOT_FOUND = 5112;//铸造模板不存在
+     MC_EQUIP_RECAST_SAVE_ERROR     = 5113;//铸造保存装备错误
+     MC_EQUIP_IMPRINT_TEMP_NOT_FOUND =5114;//刻纹模板不存在
+     MC_EQUIP_IMPRINT_NOT_EXIST     = 5115;//没有需要保存的刻纹
+     MC_EQUIP_ARMY_BUSY             = 5116;//部队不是空闲状态
+     MC_EQUIP_REFRESH_VALUE_LIMIT   = 5117;//洗练属性达到上限
+     MC_EQUIP_NEED_LEVEL_NOT_ENOUGH = 5118;//穿戴装备，玩家等级不足
+     MC_EQUIP_PIECE_NOT_ENOUGH      = 5119;//装备碎片不足
+     MC_EQUIP_PIECE_COMPOSE_OUT_LIMT= 5120;//装备碎片超过一次性合成上限
+     MC_EQUIP_NO_WORLD_FORMATION    = 5121;
+     MC_EQUIP_EFFECT_NUM_ERROR      = 5122;
+
+     //draft
+     MC_DRAFT_BUILD_LVL_ERROR       = 5200;//兵营等级不够
+     MC_DRAFT_INTERIOR_NOT_EXIST    = 5201;//内政官不存在
+     MC_DRAFT_SOLDIER_LIMIT         = 5202;//兵力超过上限
+     MC_DRAFT_TIMES_LIMIT           = 5203;//征兵次数达到上限
+
+     //instance
+     MC_INSTANCE_NOT_FOUND          = 5300;//副本不存在
+     MC_INSTANCE_PRE_NOT_PASS       = 5301;//前置关卡没有通关
+     MC_INSTANCE_CHAPTER_NOT_FOUND  = 5302;//章节不存在
+     MC_INSTANCE_NO_SOLO            = 5303;//没有单挑部队
+     MC_INSTANCE_TIMES_LIMIT        = 5304;//次数达到上限
+     MC_INSTANCE_BUY_TIMES_LIMIT    = 5305;//购买次数达到上限
+     MC_INSTANCE_LEVEL_LIMIT        = 5306;//等级限制
+     MC_INSTANCE_DATE_LIMIT         = 5307;//日期限制
+     MC_INSTANCE_CHAPTER_RWD_NOT_FOUND = 5308;//章节奖励不存在
+     MC_INSTANCE_RWD_HAS_DRAWED     = 5309;//奖励已经领取
+     MC_INSTANCE_RWD_RATE_ERROR     = 5310;//评分未达要求
+     MC_INSTANCE_NOT_PASS           = 5311;//关卡未通关
+     MC_INSTANCE_ACHIEVE_NOT_FOUND  = 5312;//成就不存在
+     MC_INSTANCE_CHAPTER_NOT_ENTER  = 5313;//章节没有进入
+     MC_INSTANCE_SCORE_NOT_FOUND    = 5314;//分数没有奖励
+     MC_INSTANCE_SCORE_NOT_ENOUGHT  = 5315;//分数不足
+     MC_INSTANCE_NO_RWD             = 5316;//没有奖励
+     MC_INSTANCE_JOIN_LIMIT         = 5317;//参加限制
+     MC_INSTANCE_NO_SUPER_GUIDE     = 5318;
+
+     //task
+     MC_TASK_NOT_FOUND          = 5400;//任务不存在
+     MC_TASK_STATUS_ERROR       = 5401;//任务状态错误
+     MC_TASK_WEEK_ERROR         = 5402;//任务周数错误
+     MC_TASK_GRADE_ERROR        = 5403;//任务级别错误
+     MC_TASK_SEASON_ERROR       = 5404;//任务季节错误
+     MC_TASK_HAS_DRAWED         = 5405;//任务奖励已经领取
+     MC_TASK_ACTIVITY_NOT_ENOUGH = 5406;//活跃度不足
+     MC_TASK_NO_RWD             = 5407;//没有奖励
+     MC_TASK_TYPE_ERROR         = 5408;//任务类型错误
+     MC_TASK_CURRENT_NOT_FINSIH = 5409;//当前任务没有完成
+     MC_TASK_OFFICIAL_NUM_LIMIT = 5410;//官职任务数量达到上限
+     MC_TASK_TEMPLATE_ERROR     = 5411;//数据错误
+
+     //activity
+     MC_ACTIVITY_NO_OFFLINE_TIME    = 5500;//在线时间不足
+     MC_ACTIVITY_HAS_DRAWED         = 5501;//奖励已经领取
+     MC_ACTIVITY_NO_RWD             = 5502;//没有奖励
+     MC_ACTIVITY_RWD_NOT_FOUND      = 5503;//奖励没有找到
+     MC_ACTIVITY_NOT_FINISH         = 5504;//任务没有完成
+     MC_ACTIVITY_SIGN_TIME_LIMIT    = 5505;//签到次数达到上限
+     MC_ACTIVITY_SIGN_DATA_ERROR    = 5506;//签到数据错误
+     MC_ACTIVITY_SIGN_DATE_ERROR    = 5507;//签到活动已经过期
+     MC_ACTIVITY_SIGN_NO_TIMES      = 5508;//签到次数不足
+     MC_ACTIVITY_REMEDY_ERROR       = 5509;//补签失败
+     MC_ACTIVITY_NOT_WECHAT         = 5510;//没有微信关注
+     MC_ACTIVITY_HAVE_WECHAT        = 5511;//已经微信关注
+     MC_ACTIVITY_NOT_FIND_TEMP      = 5512;//找不到配置信息
+     MC_ACTIVITY_DRAW_TIME_ERROT    = 5513;//领取时间不对
+     MC_ACTIVITY_ALREADY_RECEVIED   = 5514;//已经领取过
+     MC_ACTIVITY_NOT_VALID_ID       = 5515;//不是有效id
+     MC_ACTIVITY_NO_CROP            = 5516;//没有公会
+     MC_ACTIVITY_NO_CARNIVAL        = 5517;//没有嘉年华活动
+     MC_ACTIVITY_NO_TASK            = 5518;//没有任务
+     MC_ACTIVITY_NO_ITEM            = 5519;//没有兑换物品
+     MC_ACTIVITY_NO_EXCHANGE_NUM    = 5520;//没有兑换次数
+
+     //drama
+     MC_DRAMA_RWD_HAS_DRAWED        = 5600;//奖励已经领取
+     MC_DRAMA_RWD_NOT_FOUND         = 5601;//奖励数据错误
+
+     //formation
+     MC_FORM_NOT_FOUND              = 5700;//没有该阵型
+     MC_FORM_TECH_NOT_FOUND         = 5701;//没有该阵型科技
+     MC_FORM_POS_NOT_OPEN           = 5702;//该位置没有开放
+     MC_FORM_GENERAL_NO_POS         = 5703;//该武将没有上阵
+     MC_FORM_NO_GENERAL             = 5704;//阵型没有武将
+     MC_FORM_POS_NO_GENERAL         = 5705;//该位置没有武将
+     MC_FORM_LVL_LIMIT              = 5706;//等级限制
+     MC_FORM_SOLDIER_NUM_ERROR      = 5707;//兵力数据错误
+
+     //illustrated
+     MC_ILL_HAS_POINTED             = 5800;//已经评分
+     MC_ILL_NO_GENERAL              = 5801;//没有武将数据
+     MC_ILL_NO_COMMENT              = 5802;//找不到评论
+     MC_ILL_COMMENT_NOT_MYSELF      = 5803;//评论作者不是自己
+     MC_ILL_COMMENT_ALREADY_FAVOR   = 5804;//已经点赞
+     MC_ILL_COMMENT_NOT_FAVOR       = 5805;//未点赞，无法取消
+     MC_ILL_GENERAL_ALREADY_POINT   = 5806;//已经评过分
+
+     //lord
+     MC_LORD_TEXT_TOO_LONG          = 5900;//文本太长
+     MC_LORD_SAME_MSG               = 5901;//消息一致
+     MC_LORD_NO_VASSAL              = 5902;//没有属臣
+     MC_LORD_NO_LORD                = 5903;//没有宗主
+     MC_LORD_CONQUE_VASSAL          = 5904;//不能征服属臣
+     MC_LORD_CONQUE_LORD            = 5905;//不能征服宗主
+     MC_LORD_VASSAL_LIMIT           = 5906;//属臣数量超出限制
+     MC_LORD_NOT_SAME_COUNTRY       = 5907;//国家不一致
+     MC_LORD_NO_ARMY                = 5908;//没有部队
+     MC_LORD_NOT_SAME_CITY          = 5909;//城市不一致
+     MC_LORD_NO_TAX                 = 5910;//没有税收
+
+     //build
+     MC_BUILD_NO_BUILDING           = 6000;//建筑不存在
+     MC_BUILD_LVL_LIMIT             = 6001;//等级限制
+     MC_BUILD_IN_CD                 = 6002;//正在CD当中
+     MC_BUILD_LVL_ERROR             = 6003;//建筑等级错误
+     MC_BUILD_CONDITION             = 6004;//条件没有满足
+     MC_BUILD_INSTANCE_NOT_PASS     = 6005;//副本关卡没有通关
+     MC_BUILD_NO_INTERIOR           = 6006;//没有内政官
+     MC_BUILD_NO_EVENT              = 6007;//事件不存在
+     MC_BUILD_EVENT_CHOOSED         = 6008;//事件已经选择
+     MC_BUILD_NOT_CONSTRUCTION      = 6009;//建筑没有在建造中
+     MC_BUILD_CAN_NOT_BUILD         = 6010;//不能新建该建筑
+     MC_BUILD_EXCEED_LIMIT          = 6011;//超过数量限制
+     MC_BUILD_INVALID_POS           = 6012;//位置错误
+     MC_BUILD_CHAPTER_ERROR         = 6013;
+     MC_BUILD_CANOT_MOVE            = 6014;//不能移动
+     MC_BUILD_NO_WALL               = 6015;//没有城墙
+     MC_BUILD_WALL_HP_FULL          = 6016;//城墙生命值已满
+
+     //market
+     MC_MARKET_BUY_LIMIT            = 6050;//超过买粮限制
+     MC_MARKET_SELL_LIMIT           = 6051;//超过卖粮限制
+
+     //medal
+     MC_MEDAL_NOT_FOUND             = 6100;//没有该军印
+     MC_MEDAL_NOT_OWED              = 6101;//没有获得该军印
+     MC_MEDAL_POS_NUM_LIMIT         = 6102;//军印位置数据已经达到上限
+
+     //patrol
+     MC_PATROL_INDEX_ERROR          = 6200;//索引错误
+     MC_PATROL_NO_CARD              = 6201;//没有卡片
+     MC_PATROL_CARD_ERROR           = 6202;//卡片数据错误
+     MC_PATROL_NO_INTERIOR          = 6203;//没有内政官
+     MC_PATROL_NO_TOKEN             = 6204;//令牌不足
+     MC_PATROL_RAND_RWD_FAIL        = 6205;//随机奖励失败
+
+     //pve event;
+     MC_PVE_EVENT_NOT_FOUND         = 6300;//事件没有找到
+     MC_PVE_EVENT_STATUS_ERROR      = 6301;//事件状态异常
+     MC_PVE_EVENT_NOT_PASS_INSTANCE = 6303;//副本没有通关
+     MC_PVE_EVENT_CREATE_FAIL       = 6304;//生成事件失败
+     MC_PVE_EVENT_OBJ_NOT_FOUND     = 6305;//物体不存在
+     MC_PVE_EVENT_OBJ_TWICE         = 6306;//重复点击物体
+     MC_PVE_EVENT_HAS_DRAWED        = 6307;//奖励已经领取
+
+     //school field
+     MC_SF_GENERAL_IS_TRAINING      = 6400;//武将正在训练
+     MC_SF_EFFECT_ID_ERROR          = 6401;//训练类型错误
+     MC_SF_NO_INTERIOR              = 6402;//没有内政官
+     MC_SF_INTERIOR_IS_BUSY         = 6403;//内政官正忙
+     MC_SF_NO_CHILD                 = 6404;//没有孩子
+     MC_SF_CHILD_NOT_BIRTH          = 6405;//孩子没有出生
+     MC_SF_CHILD_STAGE_ERROR        = 6406;//阶段错误
+     MC_SF_ALREADY_IS_TEACHER       = 6407;//已经是老师
+     MC_SF_CHILD_TRIAN_ERROR        = 6408;//训练错误
+     MC_SF_CHILD_HAS_IMG            = 6409;//已经选择头像
+     MC_SF_GENERAL_TEMPLATE_ERROR   = 6410;//武将模板错误
+     MC_SF_SKILL_ERROR              = 6411;//技能错误
+     MC_SF_HAS_GENERAL              = 6412;//已经拥有武将
+     MC_SF_CHILD_LVL_LIMIT          = 6413;//等级限制
+     MC_SF_NO_TRAIN_POS             = 6414;//没有训练位置
+     MC_SF_TRAIN_NOT_END            = 6415;//训练没有结束
+     MC_SF_TRAIN_EVENT              = 6416;//训练事件未找到
+     MC_SF_TRAIN_REWARD             = 6417;//训练奖励未找到
+
+     //shop
+     MC_SHOP_REFRESH_TIME_LIMIT     = 6500;//刷新次数达到上限
+     MC_SHOP_ITEM_NOT_FOUND         = 6501;//没有商品
+     MC_SHOP_ITEM_SELL              = 6502;//商品已经出售
+     MC_SHOP_CANNOT_OPEN            = 6503;//不能设置为open状态
+     MC_SHOP_MAX_NUM                = 6504;//超过数量限制
+     MC_SHOP_EXPIRE                 = 6505;//限时物品过期
+     MC_SHOP_NO_PRE_GIFT            = 6506;//没购买前置物品
+     MC_SHOP_MONTH_CARD_EXPIRE      = 6507;//月卡过期
+     MC_SHOP_CLAIMED                = 6508;//已经领过
+     MC_SHOP_NOT_BUY                = 6509;//没有购买过
+     MC_SHOP_DATA_ERROR             = 6510;//数据错误
+     MC_SHOP_LEVEL_LIMIT            = 6511;//等级限制
+     MC_SHOP_NO_REFRESH_COUNT       = 6512;//没有刷新次数
+
+
+     //smelt
+     MC_SMELT_LVL_LIMIT             = 6600;//等级限制
+     MC_SMELT_NUM_ERROR             = 6601;//数量错误
+
+     //solo
+     MC_SOLO_NOT_HAS_GENERAL        = 6700;//没有单挑武将
+     MC_SOLO_MATCH_STATUS_ERROR     = 6701;//比赛状态错误
+     MC_SOLO_JOIN_CD                = 6702;//参赛CD冷却中
+     MC_SOLO_ROUND_ERROR            = 6703;//比赛进度错误
+     MC_SOLO_BET_SELF               = 6704;//不能为自己下注
+     MC_SOLO_CAN_NOT_BET            = 6705;//当前不能下注
+     MC_SOLO_BET_ALREADY            = 6706;//已经下注
+
+     //tower
+     MC_TOWER_INSTANCE_NOT_FOUND    = 6800;//关卡数据没有找到
+     MC_TOWER_PREV_INSTANCE_NOT_PASS = 6801;//前置关卡没有通关
+     MC_TOWER_RECRUIT_NOT_FOUND      = 6802;//没有招募武将
+     MC_TOWER_NOT_RECRUIT_PREV      = 6803;//前置武将没有招募
+     MC_TOWER_NOT_HAS_BOX           = 6804;//没有宝箱
+     MC_TOWER_NO_ITEM               = 6805;//没有商品
+     MC_TOWER_ITEM_NUM_LIMIT        = 6806;//购买数量限制
+     MC_TOWER_CAN_NOT_SWEEP         = 6807;//不能扫荡
+     MC_TOWER_SHOP_REFRESH_LIMIT    = 6808;//刷新次数达到上限
+     MC_TOWER_HAS_RECRUIT           = 6809;//已经招募
+     MC_TOWER_SCORE_NOT_ENOUGH      = 6810;//积分不足
+     MC_TOWER_USE_GENERAL_LIMIT     = 6811;//使用武将数量达到上限
+     MC_TOWER_NO_FORMATION_TECH     = 6812;//没有阵型的科技
+     MC_TOWER_POS_ERROR             = 6813;
+     MC_TOWER_NO_GENERAL            = 6814;
+
+     //vip
+     MC_VIP_SIGN_TWICE              = 6900;//只能签名一次
+     MC_VIP_BUY_ID_ERROR            = 6901;//购买错误
+     MC_VIP_BUY_GIFT_TWICE          = 6902;//只能购买一次
+     MC_VIP_CAN_NOT_BUY             = 6903;//不允许购买
+
+     //collection
+     MC_COLLECTION_NUM_EXCEEDED         = 6904;
+     MC_COLLECTION_INTERIOR_ERROR       = 6905;
+     MC_COLLECTION_NO_APPOINT_GENERAL   = 6906;
+     MC_COLLECTION_IN_CD                = 6907;
+     MC_COLLECTION_MAX_TIMES            = 6908;
+     MC_COLLECTION_NOT_ENOUGH_COST      = 6909;
+
+     //citizen
+     MC_CITIZEN_NOT_FOUND           = 7000; //没有居民数据
+     MC_CITIZEN_PLAYER_NUM_LIMIT    = 7001; //已人数上限
+     MC_CITIZEN_CITY_NOT_SELF_CROP  = 7002; //城不属于自己军团
+     MC_CITIZEN_ATTACK_LORD         = 7004; //不能攻击宗主
+     MC_CITIZEN_ATTACK_VASSAL       = 7005; //不能攻击属臣
+     MC_CITIZEN_NO_LORD             = 7006; //没有宗主
+     MC_CITIZEN_NO_VASSAL           = 7007; //没有属臣
+     MC_CITIZEN_DOOR_CLOSED         = 7008; //城门关闭
+
+     //world res
+     MC_RES_INVALID_ID              = 7100; //id错误
+     MC_RES_INVALID_ARMY_ID         = 7101; //部队id不存在
+     MC_RES_ARMY_NOT_IN_FREE        = 7102; //部队非空闲
+     MC_RES_NOT_LEAD                = 7103; //非队长
+     MC_RES_TEAM_IN_BATTLE          = 7104; //处于战斗中
+     MC_RES_GARRISONER_CHANGE       = 7105; //拥有者发生改变
+     MC_RES_DEF_EMPTY               = 7106; //防守方为空
+     MC_RES_NOT_ENOUGH_PLAYER       = 7107; //人数不足
+     MC_RES_UNDER_PROTECT           = 7108; //处于保护状态
+     MC_RES_ARMY_NOT_IN_COLLECTION  = 7109; //部队非采集状态
+     MC_RES_ALREADY_EXISTS_OWNER    = 7110; //已经存在拥有着
+     MC_RES_ALREADY_EXISTS_ARMY     = 7111; //已经存在部队
+     MC_RES_NO_OWNER                = 7112; //无主田矿
+     MC_RSE_NOT_OWNER               = 7113; //不是拥有者
+     MC_RES_HAS_SPEED_UP            = 7114; //已经加速
+
+    //world boss
+    MC_WORLD_BOSS_NO_BOSS           = 7200; //Boss不存在
+    MC_WORLD_BOSS_SUMMON_LIMIT      = 7201; //超过了召唤次数
+    MC_WORLD_BOSS_SUMMON_FAILED     = 7202; //召唤boss失败
+    MC_WORLD_BOSS_SUMMONED          = 7203; //已经召唤了该boss
+    MC_WORLD_BOSS_NOT_FINISHED      = 7204; //战斗还没结束
+    MC_WORLD_BOSS_NOT_YOUR_CROP     = 7205; //不是你公会的boss
+    MC_WORLD_BOSS_CLAIMED           = 7206; //已经领取过奖励了
+    MC_WORLD_BOSS_NOT_DURATION      = 7207; //不是持续时间
+    MC_WORLD_BOSS_HAS_TEAM          = 7208; //已经有队伍了
+    MC_WORLD_BOSS_NO_TEAM           = 7209; //没有队伍
+    MC_WORLD_BOSS_STARTED           = 7210; //已经开始战斗了
+    MC_WORLD_BOSS_TEAM_FULL         = 7211; //队伍满了
+    MC_WORLD_BOSS_ATTACKED          = 7212; //已经打过了
+
+    //crop auction
+    MC_CROP_AUCTION_NO_AUCTION      = 7300; //没有拍卖场
+    MC_CROP_AUCTION_NO_ITEM         = 7301; //不存在对应索引的拍品
+    MC_CROP_AUCTION_ITEM_STATE_ERROR= 7302; //拍品状态不是拍卖中
+    MC_CROP_AUCTION_NOT_JOIN        = 7303; //玩家不能参加拍卖
+    MC_CROP_AUCTION_NOT_CUR_ROLE    = 7304;
+    MC_CROP_AUCTION_PRICE_ERROR     = 7305;
+
+    //fortress battle
+    MC_FORTRESS_BATTLE_NO_BATTLE    = 7400;
+    MC_FORTRESS_BATTLE_STATUS_ERROR = 7401;
+    MC_FORTRESS_BATTLE_CROP_ERROR   = 7402;
+    MC_FORTRESS_BATTLE_FAILED_JOIN  = 7403;
+
+    //romance
+    MC_ROMANCE_NO_TEMP             = 7500;
+    MC_ROMANCE_NO_FORMATION        = 7501;
+    MC_ROMANCE_NO_GENERAL          = 7502;
+    MC_ROMANCE_NO_SOLDIER          = 7503;
+    MC_ROMANCE_ERROR_SOLDIER_LEVEL = 7504;
+    MC_ROMANCE_FORMATION_POS_ERROR = 7505;
+    MC_ROMANCE_TROOP_ERROR         = 7506;
+
+    // team battle
+    MC_TEAM_BATTLE_HAS_TEAM             = 7600;
+    MC_TEAM_BATTLE_FAILED_ADD_PLAYER    = 7601;
+    MC_TEAM_BATTLE_NO_TEAM              = 7602;
+    MC_TEAM_BATTLE_NOT_SAME_SERVER      = 7603;
+    MC_TEAM_BATTLE_NOT_SAME_COUNTRY     = 7604;
+    MC_TEAM_BATTLE_TEAM_FULL            = 7605;
+    MC_TEAM_BATTLE_NOT_LEADER           = 7606;
+    MC_TEAM_BATTLE_NO_PLAYER            = 7607;
+    MC_TEAM_BATTLE_PLAYER_NOT_ENOUGH    = 7608;
+
+    //world monster
+    MC_WORLD_MONSTER_SEARCH_NO_RESULT   = 7700;
+    MC_WORLD_MONSTER_NOT_EXIST          = 7701;
+    MC_WORLD_MONSTER_GROUP_NOT_EXIST    = 7702;
+    MC_WORLD_MONSTER_ARMY_NOT_EXIST     = 7703;
+    MC_WORLD_MONSTER_CREATE_TROOP_FAIL  = 7704;
+
+    //world team
+    MC_WORLD_TEAM_NO_EXIST          = 7800;
+    MC_WORLD_TEAM_HAS_JOIN          = 7801;
+    MC_WORLD_TEAM_NO_MEMBER         = 7802;
+    MC_WORLD_TEAM_NO_AUTH           = 7803;
+    MC_WORLD_TEAM_KICK_SELF         = 7804;
+    MC_WORLD_TEAM_NOT_SAME_CROP     = 7805;
+    MC_WORLD_TEAM_NO_ENEMY          = 7806;
+    MC_WORLD_TEAM_NOT_JOIN          = 7807;
+    MC_WORLD_TEAM_NOT_READY         = 7808;
+    MC_WORLD_TEAM_TOO_MANY_MEMBER   = 7809;
+}
+
+message S2C_ErrorCodeResult {
+        optional ProtocolType type = 1 [default = S2C_ERROR_CODE];
+        optional int32 msg_id = 2;
+        optional int32 code = 3;
+}

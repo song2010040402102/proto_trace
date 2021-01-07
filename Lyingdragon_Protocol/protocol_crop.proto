@@ -1,0 +1,612 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message CropInfo {
+        optional int32 id = 1;
+        optional int32 badge_id = 2;
+        optional string name = 3;
+        optional int32 level = 4;
+        optional string declare_msg = 5;
+        optional int32 mem_num = 6;
+        optional int32 max_mem_num = 7;
+        optional int32 join_type = 8;
+        optional int32 limit_id = 9;
+        message TopMember {
+                optional int64 role_id = 1;
+                optional int32 pos = 2;
+                optional string role_name = 3;
+                optional int32 img_type = 4;
+                optional int32 img_id = 5;
+        }
+        repeated TopMember top3_members = 10;
+        optional int32 country_id = 11;
+        optional int32 exp = 12;
+        optional int32 power_id = 13;
+        optional int32 create_time = 19;
+        optional int32 activity_value = 20;
+        optional int32 crop_money = 21;
+        optional int32 badge_color = 22;
+        optional int32 max_city_num = 23;
+        optional int32 group_type = 24;
+        optional string group_id = 25;
+	    optional int32 max_crop_money = 26;
+        optional int32 limit_score = 27;
+}
+
+message CropMember {
+        optional int64 id = 1;
+        optional int32 pos = 2;
+        optional string name = 3;
+        optional int32 lvl = 4;
+        optional int32 offline_time = 5;
+        optional int32 force_value = 6;
+        optional int32 is_online = 7;
+        optional int32 total_contribute = 8;
+        optional int32 weekly_contribute = 9;
+        optional int32 img_type = 10;
+        optional int32 img_id = 11;
+        optional int32 weekly_money = 12;
+        optional int32 empire_value = 13; //(>>8) > 0 is rank, otherwise is pos. default -1
+        optional int32 total_money = 14;
+        optional int32 group_tips_times = 15;
+        repeated int32 reward_occupy_citys = 16;
+        optional int32 city_mayor = 17;
+}
+
+message CropApplyMember {
+        optional int64 id = 1;
+        optional string name = 2;
+        optional int32 lvl = 3;
+        optional int32 is_online = 4;
+        optional int32 offline_time = 5;
+        optional int32 force_value = 6;
+        optional int32 img_type = 7;
+        optional int32 img_id = 8;
+}
+
+message C2S_CropLoadList {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LOAD_LIST];
+        optional int32 id = 2;
+}
+
+message S2C_CropLoadList {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LOAD_LIST];
+        repeated CropInfo crops = 2;
+        repeated int32 apply_ids = 3;
+        optional int32 my_id = 4;
+        optional int32 is_notify = 5;
+        optional int32 crop_cd = 6;
+        optional int32 finish = 7; //1 send all
+        optional int32 my_rank = 8;
+}
+
+message C2S_CropCreate {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_CREATE];
+        optional string name = 2;
+        optional int32 join_type = 3;
+        optional int32 limit_id = 4;
+        optional int32 badge_id = 5;
+        optional string declare_msg = 6;
+        optional int32 badge_color = 7;
+        optional int32 limit_score = 8;
+}
+
+message S2C_CropCreate {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_CREATE];
+        optional int32 ret = 2;
+        optional int32 crop_id = 3;
+}
+
+message C2S_CropApply {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_APPLY];
+        optional int32 id = 2;
+}
+
+message S2C_CropApply {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_APPLY];
+        optional int32 ret = 2;
+        optional int32 crop_id = 3;
+        optional bool is_join = 4;
+}
+
+message C2S_CropApprove {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_APPROVE];
+        optional int64 id = 2;
+}
+
+message S2C_CropApprove {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_APPROVE];
+        message ApproveInfo {
+                optional int64 id = 2;
+                optional int32 ret = 3;
+        }
+        repeated ApproveInfo infos = 2;
+        optional int32 ret = 3;
+}
+
+message S2C_CropApproveNotify {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_APPROVE_NOTIFY];
+        optional int32 crop_id = 2;
+}
+
+message C2S_CropReject {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_REJECT];
+        optional int64 id = 2;
+}
+
+message S2C_CropReject {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_REJECT];
+        repeated int64 ids = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_CropMemberList {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_MEMBER_LIST];
+        optional int32 crop_id = 2;
+}
+
+message S2C_CropMemberList {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_MEMBER_LIST];
+        repeated CropMember members = 2;
+        optional int32 notify = 3; //0 all, 1 update
+        optional int32 last_rank = 4;
+        optional int32 last_pos = 5;
+        optional int32 crop_id = 6;
+        optional int32 city_reward_time = 7;
+        optional int32 last_total_rank = 8;
+        optional int32 last_total_contribution = 9;
+        optional int32 last_daily_contribution = 10;
+        optional int32 ret = 11;
+}
+
+message C2S_CropApplyList {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_APPLY_LIST];
+}
+
+message S2C_CropApplyList {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_APPLY_LIST];
+        repeated CropApplyMember members = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_CropKickOut {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_KICK_OUT];
+        optional int64 id = 2;
+}
+
+message S2C_CropKickOut {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_KICK_OUT];
+        optional int32 ret = 2;
+        optional int64 id = 3;
+}
+
+message S2C_CropKickOutNotify {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_KICK_OUT_NOTIFY];
+        optional int32 crop_id = 2;
+        optional int64 id = 3;
+}
+
+message C2S_CropExit {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_EXIT];
+}
+
+message S2C_CropExit {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_EXIT];
+        optional int32 ret = 2;
+        optional int64 role_id = 3;
+}
+
+message C2S_CropAppointPos {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_APPOINT_POS];
+        optional int32 new_pos = 2;
+        optional int64 role_id = 3;
+        optional int64 replace_id = 4;
+}
+
+message S2C_CropAppointPos {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_APPOINT_POS];
+        optional int32 ret = 2;
+        optional int32 new_pos = 3;
+        optional int64 role_id = 4;
+        optional int64 replace_id = 5;
+}
+
+message C2S_CropDismiss {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_DISMISS];
+}
+
+message S2C_CropDismiss {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_DISMISS];
+        optional int32 ret = 2; // 1 in declare
+        optional int32 crop_id = 3;
+}
+
+message C2S_CropTransferLeader {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_TRANSFER_LEADER];
+        optional int64 new_leader_id = 2;
+}
+
+message S2C_CropTransferLeader {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_TRANSFER_LEADER];
+        optional int32 new_leader_id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_CropLoadInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LOAD_INFO];
+}
+
+message S2C_CropLoadInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LOAD_INFO];
+        message Tech {
+                optional int32 id = 1;
+                optional int32 level = 2;
+                optional int32 exp = 3;
+        }
+        optional int32 id = 2;
+        optional string broad_msg = 3;
+        repeated Tech teches = 4;
+        optional int32 donate_times = 5;
+        optional int32 badge_time = 6;
+        optional int32 create_time = 7;
+        optional int32 contribution_rank = 9;
+        optional bool is_draw = 10;
+        optional int32 recommend_tech_id = 11;
+        message ImpeachInfo {
+                optional int64 role_id = 1;
+                optional int32 time = 2;
+        }
+        repeated ImpeachInfo impeachs = 12;
+        optional int32 donate_reset_time = 13;
+        message StateTech {
+                optional int32 id = 1;
+                optional int32 start_time = 2;
+                optional int32 end_time = 3;
+                optional int32 state = 4;
+        }
+        repeated StateTech state_teches = 14;
+        optional int32 ret = 15;
+}
+
+message C2S_CropChangeLimitId {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_CHANGE_LIMIT_ID];
+        optional int32 join_type = 2;
+        optional int32 limit_id = 3;
+        optional int32 limit_score = 4;
+}
+
+message S2C_CropChangeLimitId {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_CHANGE_LIMIT_ID];
+        optional int32 join_type = 2;
+        optional int32 limit_id = 3;
+        optional int32 ret = 4;
+        optional int32 limit_score = 5;
+}
+
+message C2S_CropChangeBadge {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_CHANGE_BADGE];
+        optional int32 badge_id = 2;
+}
+
+message S2C_CropChangeBadge {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_CHANGE_BADGE];
+        optional int32 badge_id = 2;
+        optional int32 crop_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_CropEditDeclare {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_EDIT_DECLARE];
+        optional string declare_msg = 2;
+}
+
+message S2C_CropEditDeclare {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_EDIT_DECLARE];
+        optional int32 ret = 2;
+        optional string declare_msg = 3;
+}
+
+message C2S_CropEditBroad {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_EDIT_BROAD];
+        optional string broad_msg = 2;
+}
+
+message S2C_CropEditBroad {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_EDIT_BROAD];
+        optional int32 ret = 2;
+        optional string broad_msg = 3;
+}
+
+message C2S_CropTechDonate {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_TECH_DONATE];
+        optional int32 tech_id = 2;
+        optional int32 donate_type = 3;
+}
+
+message S2C_CropTechDonate {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_TECH_DONATE];
+        optional int32 tech_id = 2;
+        optional int32 tech_level = 3;
+        optional int32 tech_exp = 4;
+        optional int32 contribution = 5;
+        optional int32 rate = 6;
+        optional int32 donate_times = 7;
+        optional int32 donate_reset_time = 8;
+        optional int32 donate_type = 9;
+        optional int32 ret = 10;
+}
+
+message C2S_CropRename {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_RENAME];
+        optional string new_name = 2;
+}
+
+message S2C_CropRename {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_RENAME];
+        optional int32 ret = 2; //1 repeated, 2 dirty word
+        optional int32 crop_id = 3;
+        optional string new_name = 4;
+}
+
+message C2S_CropLoadLog {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LOAD_LOG];
+}
+
+message S2C_CropLoadLog {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LOAD_LOG];
+        message Log {
+                optional int32 id = 1;
+                optional int32 tstamp = 2;
+                repeated string parameters = 3;
+                optional int32 page = 4; //0 crop, 1 battle
+                optional int64 report_id = 5;
+        }
+        repeated Log logs = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_CropBuildAssistLoad {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BUILD_ASSIST_LOAD];
+}
+
+message S2C_CropBuildAssistLoad {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BUILD_ASSIST_LOAD];
+        message Assist {
+                optional int64 role_id = 1;
+                optional int32 build_id = 2;
+                optional int32 is_assisted = 3;
+                optional int32 assisted_num = 4;
+                optional int32 build_lvl = 5;
+        }
+        repeated Assist assists = 2;
+        optional int32 daily_help_contribution = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_CropBuildAssistRequest {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BUILD_ASSIST_REQUEST];
+        optional int32 build_id = 2;
+}
+
+message S2C_CropBuildAssistRequest {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BUILD_ASSIST_REQUEST];
+        optional int32 ret = 2;
+}
+
+message S2C_CropBuildAssistRequestBroad {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BUILD_ASSIST_REQUEST_BROAD];
+        optional int64 role_id = 2;
+        optional int32 build_id = 3;
+}
+
+message C2S_CropBuildAssistHelp {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BUILD_ASSIST_HELP];
+        message Info {
+            optional int64 role_id = 1;
+            optional int32 build_id = 2;
+        }
+        repeated Info infos = 2;
+}
+
+message S2C_CropBuildAssistHelp {
+         optional ProtocolType type = 1 [default = S_2_C_CROP_BUILD_ASSIST_HELP];
+         message Ret {
+                optional int32 ret = 1;//0 ok, 1 not exist, 2 finished
+                optional int64 role_id = 2;
+                optional int32 build_id = 3;
+         }
+         repeated Ret rets = 2;
+         optional int32 ret = 3;
+}
+
+message S2C_CropBuildAssistNotify {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BUILD_ASSIST_NOTIFY];
+        optional int32 build_id = 2;
+        optional int32 cd_time = 3;
+}
+
+message C2S_CropBuildAssistLog {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_BUILD_ASSIST_LOG];
+}
+
+message S2C_CropBuildAssistLog {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_BUILD_ASSIST_LOG];
+        message LogItem {
+                optional int32 build_id = 1;
+                optional string role_name = 2;
+                optional int32 create_time = 3;
+        }
+        repeated LogItem items = 2;
+}
+
+message S2C_CropCreateNotify {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_CREATE_NOTIFY];
+        optional string role_name = 2;
+        optional int32 crop_id = 3;
+        optional string crop_name = 4;
+}
+
+message C2S_RedPackageLoad {
+        optional ProtocolType type = 1 [default = C_2_S_RED_PACKAGE_LOAD];
+}
+
+message RedPackageItem {
+        optional int64 id = 1;
+        optional string name = 2;
+        optional int32 pos = 3;
+        optional int32 max_num = 4;
+        optional int32 cur_num = 5;
+        optional int32 grant_time = 6;
+        optional int32 sum_gold = 7;
+        optional int32 achieve_type = 8;
+        optional int32 temp_id = 9;
+        optional int32 draw_value = 10;
+}
+
+
+message S2C_RedPackageLoad {
+        optional ProtocolType type = 1 [default = S_2_C_RED_PACKAGE_LOAD];
+        repeated RedPackageItem red_package = 2;
+}
+
+message C2S_SeeRedPackage {
+        optional ProtocolType type = 1 [default = C_2_S_SEE_RED_PACKAGE];
+        optional int64 id = 2;
+}
+
+message S2C_SeeRedPackage {
+        optional ProtocolType type = 1 [default = S_2_C_SEE_RED_PACKAGE];
+        message PackageInfo {
+                optional int64 role_id = 1;
+                optional string role_name = 2;
+                optional int32 value = 3;
+                optional int32 pos = 4;
+                optional int32 img_id = 5;
+                optional int32 img_type = 6;
+        }
+        repeated PackageInfo info = 2;
+        optional int32 img_id = 3;
+        optional int32 img_type = 4;
+}
+
+message C2S_GetRedPackage {
+        optional ProtocolType type = 1 [default = C_2_S_GET_RED_PACKAGE];
+        optional int64 id = 2;
+}
+
+message S2C_GetRedPackage {
+        optional ProtocolType type = 1 [default = S_2_C_GET_RED_PACKAGE];
+        optional int32 ret = 2; //0:success
+        optional int32 id = 3;
+}
+
+message S2C_NewRedPackageNTF {
+        optional ProtocolType type = 1 [default = S_2_C_NEW_RED_PACKAGEI_NOTIFY];
+        optional RedPackageItem red_package = 2;
+}
+
+message C2S_RoleRedPackage {
+        optional ProtocolType type = 1 [default = C_2_S_LOAD_ROLE_RED_PACKAGE];
+}
+
+message PackageItem {
+        optional int32 achieve_type = 1;
+        optional int32 id = 2;
+        optional int32 create_time = 3;
+        optional int32 send_time = 4;
+        optional int32 progress = 5;
+}
+message S2C_RoleRedPackage {
+        optional ProtocolType type = 1 [default = S_2_C_LOAD_ROLE_RED_PACKAGE];
+        repeated PackageItem packages = 2;
+        optional int32 snatch_times = 3;
+}
+
+message C2S_DispenseRedPackage {
+        optional ProtocolType type = 1 [default = C_2_S_DISPENSE_ROLE_RED_PACKAGE];
+        optional int32 achieve_type = 2;
+        optional int32 id = 3;
+        optional int32 cost_gold = 4;
+        optional int32 package_num = 5;
+}
+
+message S2C_DispenseRedPackage {
+        optional ProtocolType type = 1 [default = S_2_C_DISPENSE_ROLE_RED_PACKAGE];
+        optional int32 ret = 2; //0 suc
+        optional int32 achieve_type = 3;
+        optional int32 id = 4;
+        optional int32 draw_value = 5;
+}
+
+message S2C_UpdateRoleRedPackage {
+        optional ProtocolType type = 1 [default = S_2_C_UPDATE_ROLE_RED_PACKAGE];
+        repeated PackageItem packages = 2;
+}
+
+message C2S_CropDrawReward {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_DRAW_REWARD];
+}
+
+message S2C_CropDrawReward {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_DRAW_REWARD];
+        optional int32 ret = 2;
+        optional int32 rank = 3;
+}
+
+message C2S_CropInvite {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_INVITE];
+        optional int64 role_id = 2;
+}
+
+message S2C_CropInvite {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_INVITE];
+        optional int32 ret = 2;
+        optional int64 role_id = 3;
+        optional int64 from_id = 4;
+        optional int32 crop_id = 5;
+        optional string role_name = 6;
+}
+
+message C2S_CropRecommendTech {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_RECOMMEND_TECH];
+        optional int32 tech_id = 2;
+}
+
+message S2C_CropRecommendTech {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_RECOMMEND_TECH];
+        optional int32 tech_id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_CropImpeach {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_IMPEACH];
+}
+
+message S2C_CropImpeach {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_IMPEACH];
+        optional int32 ret = 2;
+        optional int64 role_id = 3;
+}
+
+message C2S_CropCreateGroup {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_CREATE_GROUP];
+        optional int32 g_type = 2;
+        optional string id = 3;
+}
+
+message S2C_CropCreateGroup {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_CREATE_GROUP];
+        optional int32 g_type = 2;
+        optional string id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_CropFakeMemberList {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_FAKE_MEMBER_LIST];
+}
+
+message S2C_CropFakeMemberList {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_FAKE_MEMBER_LIST];
+        repeated CropMember members = 2;
+}

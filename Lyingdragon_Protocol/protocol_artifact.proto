@@ -1,0 +1,49 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_ArtifactLoad {
+        optional ProtocolType type = 1 [default = C_2_S_ARTIFACT_LOAD];
+}
+
+message S2C_ArtifactNotify {
+        optional ProtocolType type = 1 [default = S_2_C_ARTIFACT_NOTIFY];
+        message Artifact {
+            optional int32 id = 2;
+            optional int32 level = 3;
+            optional int32 general_id = 4;
+        }
+        repeated Artifact artifacts = 2;
+}
+
+message C2S_ArtifactLevelUp {
+        optional ProtocolType type = 1 [default = C_2_S_ARTIFACT_LEVEL_UP];
+        optional int32 id = 2;
+}
+
+message S2C_ArtifactLevelUp {
+        optional ProtocolType type = 1 [default = S_2_C_ARTIFACT_LEVEL_UP];
+        optional int32 id = 2;
+}
+
+message C2S_ArtifactEquip {
+        optional ProtocolType type = 1 [default = C_2_S_ARTIFACT_EQUIP];
+        optional int32 id = 2;
+        optional int32 general_id = 3;
+}
+
+message S2C_ArtifactEquip {
+        optional ProtocolType type = 1 [default = S_2_C_ARTIFACT_EQUIP];
+        optional int32 id = 2;
+        optional int32 general_id = 3;
+}
+
+message C2S_ArifactUnEquip {
+        optional ProtocolType type = 1 [default = C_2_S_ARTIFACT_UNEQUIP];
+        optional int32 id = 2;
+}
+
+message S2C_ArtifactUnEquip {
+        optional ProtocolType type = 1 [default = S_2_C_ARTIFACT_UNEQUIP];
+        optional int32 id = 2;
+}

@@ -1,0 +1,374 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message OfficerInfo {
+        optional string player_name = 1;
+        optional int32 officer = 2;
+        optional int32 feat = 3;
+        optional int32 rank = 4;
+}
+
+message MainOfficer {
+        optional string player_name = 1;
+        optional int32 officer = 2;
+        optional int32 is_has_auth = 3;
+}
+
+message SuperMember {
+        optional int64 sm_accid = 1;
+        optional string sm_name = 2;
+        optional int32 officer = 3;
+        optional int32 img_type = 4;
+        optional int32 img_id = 5;
+        optional int32 is_online = 6;
+}
+
+message S2C_LoadMainInfo {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LOAD_MAIN_INFO];
+        enum ReturnResult{
+            OK = 0;
+            LEVEL_NOT_REACHED = 1;
+            NO_KING = 2;
+            HAS_KING_WAR = 3;
+        }
+        message MainOfficer {
+            optional string player_name = 2;
+            optional int32 officer = 3;
+            optional int32 is_has_auth = 4;
+        }
+        optional int32 ret = 2;
+        optional int32 officer = 3;
+        repeated MainOfficer off_info = 5;
+}
+
+message C2S_LargessPlayers {
+        optional ProtocolType type = 1 [default = C_2_S_KING_LARGESS_PLAYERS];
+}
+
+message S2C_LargessPlayers {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LARGESS_PLAYERS];
+        enum Result{
+            OK = 0;
+            HAS_LARGESSED = 1;
+            RESVAL_NOT_ENOUGH = 2;
+            IN_PLUNDER_WAR = 3;
+        };
+        optional int32 ret = 2;
+        optional int32 resource_val = 3;
+}
+
+message C2S_OfficerIssueOrder {
+        optional ProtocolType type = 1 [default = C_2_S_KING_OFFICER_ISSUE_ORDER];
+        optional int32 issue_type = 2;
+}
+
+message S2C_OfficerIssueOrder {
+        optional ProtocolType type = 1 [default =  S_2_C_KING_OFFICER_ISSUE_ORDER];
+        optional int32 ret = 2;
+}
+
+message S2C_IssueOrderInfo {
+        optional ProtocolType type = 1 [default = S_2_C_KING_ISSUE_ORDER_INFO];
+        optional string name = 2;
+        optional int32 issue_type = 3;
+        optional int32 affair_id = 4;
+}
+
+message C2S_LoadAffairs {
+        optional ProtocolType type = 1 [default = C_2_S_KING_LOAD_AFFAIRS];
+}
+
+message S2C_LoadAffairs {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LOAD_AFFAIRS];
+        optional int32 double_affair_id = 2;
+        repeated double affair_val = 3;
+}
+
+message C2S_ContributeAffairs {
+        optional ProtocolType type = 1 [default = C_2_S_KING_CONTRIBUTE_AFFAIRS];
+        optional int32 affair_id = 2;
+        optional int32 contribute = 3;
+}
+
+message S2C_ContributeAffairs {
+        optional ProtocolType type = 1 [default = S_2_C_KING_CONTRIBUTE_AFFAIRS];
+        optional int32 ret = 2;
+        optional int32 affair_id = 3;
+        optional int32 affair_val = 4;
+        optional int32 gain_feat = 5;
+}
+
+message C2S_LoadMilitary {
+        optional ProtocolType type = 1 [default = C_2_S_KING_LOAD_MILITARY];
+}
+
+message S2C_LoadMilitary {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LOAD_MILITARY];
+        optional int32 enemy_country_id = 2;
+        optional int32 country_looted_count_serial = 3;
+        repeated SuperMember super_member = 4;
+}
+
+message C2S_JoinSuperMember {
+        optional ProtocolType type = 1 [default = C_2_S_KING_JOIN_SUPER_MEMBER];
+}
+
+message S2C_JoinSuperMember {
+        optional ProtocolType type = 1[default = S_2_C_KING_JOIN_SUPER_MEMBER];
+        optional int32 ret = 2;
+}
+
+message C2S_FireSuperMember {
+        optional ProtocolType type = 1 [default = C_2_S_KING_FIRE_SUPER_MEMBER];
+        required int64 sm_accid = 2;
+}
+
+message S2C_FireSuperMember {
+        enum Result {
+            FIRER = 1;
+            UN_FIRER = 2;
+        }
+        optional ProtocolType type = 1 [default = S_2_C_KING_FIRE_SUPER_MEMBER];
+        optional int32 ret = 2;
+        optional int32 sm_type = 3;
+        optional int64 sm_id = 4;
+        optional int32 join_cd_time = 5;
+}
+
+message C2S_LeaveSuperMember {
+        optional ProtocolType type = 1 [default = C_2_S_KING_LEAVE_SUPER_MEMBER];
+}
+
+message S2C_LeaveSuperMember {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LEAVE_SUPER_MEMBER];
+        optional int32 ret = 2;
+        optional int32 join_cd_time = 3;
+}
+
+message C2S_LoadKingOfficerInfo {
+        optional ProtocolType type = 1 [default = C_2_S_KING_LOAD_OFFICER_INFO];
+}
+
+message S2C_LoadKingOfficerInfo {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LOAD_OFFICER_INFO];
+        optional int32 self_feat = 2;
+        optional int32 self_feat_rank = 3;
+        optional int32 is_draw_salary = 4;
+        repeated OfficerInfo officer_data = 5;
+}
+
+message C2S_GetSalary {
+        optional ProtocolType type = 1 [default = C_2_S_KING_GET_SALARY];
+}
+
+message S2C_GetSalary {
+        optional ProtocolType type = 1 [default = S_2_C_KING_GET_SALARY];
+        optional int32 ret = 2;
+}
+
+
+message C2S_InjectFunds {
+        optional ProtocolType type = 1 [default = C_2_S_KING_INJECT_FUNDS];
+}
+
+message S2C_InjectFunds {
+        optional ProtocolType type = 1 [default = C_2_S_KING_INJECT_FUNDS];
+        enum ReturnResult{
+            OK = 0;
+            FAILED = 1;
+            INJECT_NUMS_OVER = 2;
+        }
+        optional int32 ret = 2;
+        optional int32 resource_val= 3;
+}
+
+message C2S_LoadTreasury {
+        optional ProtocolType type = 1 [default = C_2_S_KING_LOAD_TREASURY];
+}
+
+message S2C_LargessBenifit {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LARGE_BENIFIT];
+        optional int32 money = 2;
+        optional int32 gold = 3;
+        optional int32 food = 4;
+        optional int32 soul = 5;
+}
+
+message S2C_LoadTreasury {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LOAD_TREASURY];
+        optional int32 is_can_largess = 2;
+        optional int32 resource_val = 3;
+        optional int32 money = 4;
+        optional int32 gold = 5;
+        optional int32 food = 6;
+        optional int32 soul = 7;
+}
+
+message C2S_StartPlunderWar {
+        optional ProtocolType type = 1 [default = C_2_S_KING_PLUNDER_WAR_START];
+        optional int32 enemy_country_id = 2;
+        optional int32 start_type = 3;
+}
+
+message S2C_PlunderWarStart {
+        optional ProtocolType type = 1 [default = S_2_C_KING_PLUNDER_WAR_START];
+        optional int32 sponsor_country_id = 2;
+        optional int32 enemy_country_id = 3;
+        optional int32 start_cd_time = 4;
+        optional int32 prepare_cd_time = 5;
+        optional int32 duration_cd_time = 6;
+}
+
+message S2C_PlunderWarStartRet {
+        enum Result{
+            NO_RES_VAL = 0;
+            ALREADY_HAS_WAR = 1;
+            CDTIME_NOT_OVER = 2;
+            TIME_LIMIT = 3;
+        };
+        optional ProtocolType type = 1 [default = S_2_C_KING_PLUNDER_WAR_START_RET];
+        optional int32 ret = 2;
+        optional int32 start_war_cd_time = 3;
+}
+
+message S2C_PlunderWarEnd {
+        optional ProtocolType type = 1 [default = S_2_C_KING_PLUNDER_WAR_END];
+        optional int32 sponsor_Country_id = 2;
+}
+
+message S2C_LoadPlunderWarInfo {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LOAD_PLUNDER_WAR_INFO];
+        message ChannelInfo {
+            optional int32 atk_pos = 1;
+            optional int32 def_pos = 2;
+            repeated string player_name = 3;
+        }
+        optional int32 sponsor_country_id = 2;
+        optional int32 enemy_country_id = 3;
+        repeated ChannelInfo chan_info = 4;
+}
+
+message S2C_PlunderWarBattle {
+        optional ProtocolType type = 1 [default = S_2_C_KING_PLUNDER_WAR_BATTLE];
+        optional int32 sponsor_country_id = 2;
+        optional int32 channel_index = 3;
+        optional int32 is_atk_win = 4;
+        optional string atk_name = 6;
+        optional string def_name = 8;
+        optional int32 report_id = 9;
+}
+
+message S2C_PlunderWarRes {
+        optional ProtocolType type = 1 [default = S_2_C_KING_PLUNDER_WAR_RES];
+        optional int32 sponsor_country_id = 2;
+        optional int32 channel_index = 3;
+        optional int32 is_atk = 4;
+        optional string player_name = 6;
+        optional int32 plunder_res_val = 7;
+}
+
+message S2C_PlunderWarResult {
+        optional ProtocolType type = 1 [default = S_2_C_KING_PLUNDER_WAR_RESULT];
+        optional int32 sponsor_country_id = 2;
+        optional int32 is_win = 3;
+        optional int32 plunder_res_val = 4;
+        optional int32 atk_enemy_count = 5;
+        optional int32 gain_soul = 6;
+        optional int32 gain_feat = 7;
+        optional int32 gain_res = 8;
+}
+
+message C2S_JoinPlunderWar {
+        enum Result{
+            OK = 0;
+            FAILED = 1;
+            IN_OTHER_WAR = 2;
+            NOT_SUPER_MEMBER = 3;
+        };
+        optional ProtocolType type = 1 [default =  C_2_S_KING_JOIN_PLUNDER_WAR];
+        required int32 sponsor_country_id = 2;
+        required int32 channel_index = 3;
+}
+
+message S2C_JoinPlunderWar {
+        enum Result{
+            OK = 1;
+            FAILED = 2;
+            IN_OTHER_WAR = 3;
+            NOT_SUPER_MEMBER = 4;
+        };
+        optional ProtocolType type = 1 [default = S_2_C_KING_JOIN_PLUNDER_WAR];
+        optional int32 sponsor_country_id = 2;
+        optional int32 ret = 3;
+}
+
+
+message C2S_OpenWarWindow {
+        optional ProtocolType type = 1 [default = C_2_S_KING_OPEN_WAR_WINDOW];
+        required int32 sponsor_country_id = 2;
+}
+
+message S2C_OpenWarWindow {
+        optional ProtocolType type = 1 [default = S_2_C_KING_OPEN_WAR_WINDOW];
+        optional int32 sponsor_country_id = 2;
+        optional int32 ret = 3;
+        optional int32 sponsor_integal = 4;
+        optional int32 enemy_integal = 5;
+        optional int32 atk_count = 6;
+        optional int32 resource_val = 7;
+        optional int32 is_in_war = 8;
+}
+
+message C2S_CloseWarWindow {
+        optional ProtocolType type = 1 [default = C_2_S_KING_CLOSE_WAR_WINDOW];
+        required int32 sponsor_country_id = 2;
+}
+
+message S2C_InjectFundsInfo {
+        optional ProtocolType type = 1 [default = S_2_C_KING_INJECT_FUNDS_INFO];
+        optional int32 officer = 2;
+        optional string name = 3;
+}
+
+message C2S_DrawLargessReward {
+        optional ProtocolType type = 1 [default = C_2_S_KING_DRAW_LARGESS_REWARD];
+}
+
+message S2C_KingLargess {
+        optional ProtocolType type = 1 [default = S_2_C_KING_LARGESS];
+        optional int32 year = 2;
+        optional int32 season = 3;
+}
+
+message C2S_MilitaryInfo {
+        optional ProtocolType type = 1 [default = C_2_S_KING_MILITARY_INFO];
+}
+
+message S2C_KingCupState {
+        enum Type{
+            SHOW = 1;
+            UN_SHOW = 2;
+        };
+        optional ProtocolType type = 1 [default = S_2_C_KING_CUP_STATE];
+        optional int32 state = 2;
+}
+
+message S2C_KingInfo {
+        optional ProtocolType type = 1 [default = S_2_C_KING_INFO];
+        optional int32 country_id = 2;
+        optional string king_name = 3;
+}
+
+message S2C_UpdatePlunderWarInteger {
+        optional ProtocolType type = 1 [default = S_2_C_KING_UPDATE_PLUNDER_WAR_INTEGAL];
+        optional int32 sponsor_country_id = 2;
+        optional int32 country_id = 3;
+        optional int32 integal = 4;
+        optional int32 resource_val = 5;
+}
+
+message S2C_DeleteWarPlayer {
+        optional ProtocolType type = 1 [default = S_2_C_KING_DELETE_WAR_PLAYER];
+        optional int32 cd_time = 2;
+}

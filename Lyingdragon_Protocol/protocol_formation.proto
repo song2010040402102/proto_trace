@@ -1,0 +1,109 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message BattleInfo {
+        optional int32 index = 1;
+        optional int32 id = 2;
+}
+
+message BosomFriendBattleInfo  {
+        optional int32 formation_id = 1;
+        optional int32 open_loc_info = 2;
+        optional int32 lvl = 3;
+        repeated BattleInfo battle = 4;
+}
+
+message FormationInfo {
+        optional int32 formation_id = 1;
+        optional int32 open_loc_info = 2;
+        optional int32 lvl = 3;
+        repeated FormationGenaralLoc general_loc = 4;
+}
+
+message C2S_AllFormationInfo {
+        optional ProtocolType type = 1 [default = C_2_S_FORMATION_INFO];
+}
+
+message S2C_AllFormationInfo {
+        optional ProtocolType type = 1 [default = S_2_C_FORMATION_INFO];
+        optional int32 default_id = 2;
+        repeated FormationInfo formations = 4;
+}
+
+message C2S_FormationGeneralBattle {
+        optional ProtocolType type = 1 [default = C_2_S_FORMATION_GENARAL_BATTLE];
+        optional int32 formation_id = 2;
+        optional int32 general_battle_id = 3;
+        optional int32 formation_pos = 4;
+}
+
+message C2S_FormationRemoveGeneral {
+        optional ProtocolType type = 1 [default = C_2_S_FORMATION_REMOVE_GENARAL];
+        optional int32 formation_id = 2;
+        optional int32 general_battle_id = 3;
+        optional int32 replace_general_id = 4;
+}
+
+message S2C_FormationGeneralChange{
+        optional ProtocolType type = 1 [default = S_2_C_FORMATION_GENARAL_CHANGE];
+        optional int32 formation_id = 2;
+        optional int32 change_res = 3;
+        optional int32 general_id = 4;
+        optional int32 formation_pos = 5;
+        optional int32 effect_general_id = 6;
+        optional int32 effect_formation_pos = 7;
+        optional int32 ret = 8;
+}
+
+message C2S_SetDafaultFormation {
+        optional ProtocolType type = 1 [default = C_2_S_FORMATION_SET_DEFAULT];
+        optional int32 formation_id = 2;
+}
+
+message S2C_SetDefaultFormation{
+        optional ProtocolType type = 1 [default = S_2_C_FORMATION_SET_DEFAULT];
+        optional int32 res = 2;
+        optional int32 general_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_LoadAllBosomFriendBattle {
+        optional ProtocolType type = 1 [default = C_2_S_FORMATION_LOAD_ALL_BOSOM_FRIEND_BATTLE];
+}
+
+message S2C_LoadAllBosomFriendBattle {
+        optional ProtocolType type = 1 [default = S_2_C_FORMATION_LOAD_ALL_BOSOM_FRIEND_BATTLE];
+        repeated BosomFriendBattleInfo battle_info = 2;
+}
+
+message C2S_BosomFriendBattle {
+        optional ProtocolType type = 1 [default = C_2_S_FORMATION_BOSOM_FRIEND_BATTLE];
+        message BosomFriendBattle {
+            optional int32 pos = 1;
+            optional int32 id = 2;
+        }
+        optional int32 formation_id = 2;
+        repeated BosomFriendBattle battle = 3;
+}
+
+message S2C_BosomFriendBattle {
+        optional ProtocolType type = 1 [default = S_2_C_FORMATION_BOSOM_FRIEND_BATTLE];
+        optional int32 is_auto = 2;
+        optional int32 formation_id = 3;
+        repeated BattleInfo battle = 4;
+}
+
+message C2S_GeneralLimitSoldierNum {
+        optional ProtocolType type = 1 [default = C_2_S_FORMATION_GENERAL_LIMIT_SOLDIER_NUM];
+        optional int32 general_id = 2;
+        optional int32 soldier_num = 3;
+}
+
+message S2C_GeneralLimitSoldierNum {
+        optional ProtocolType type = 1 [default = S_2_C_FORMATION_GENERAL_LIMIT_SOLDIER_NUM];
+        optional int32 general_id = 2;
+        optional int32 soldier_num = 3;
+        optional int32 ret = 4;
+}
+

@@ -1,0 +1,57 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_BuyFood {
+        optional ProtocolType type = 1 [default = C_2_S_MARKET_BUY_FOOD];
+        optional int32 num = 2;
+}
+
+message S2C_BuyFood {
+        optional ProtocolType type = 1 [default = S_2_C_MARKET_BUY_FOOD];
+        optional int32 total_trade_num = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_LoadMarketInfo {
+        optional ProtocolType type = 1 [default = C_2_S_MARKET_INFO];
+}
+
+message S2C_LoadMarketInfo {
+        optional ProtocolType type = 1 [default = S_2_C_MARKET_INFO];
+        optional double price = 2;
+        optional int32 total_trade_num = 3;
+        optional int32 total_sell_num = 4;
+        optional bool is_price_rise = 5;
+        optional int32 refresh_time = 6;
+        optional bool is_show_bubble = 7;
+}
+
+message C2S_SaleFood {
+        optional ProtocolType type = 1 [default = C_2_S_MARKET_SELL_FOOD];
+        optional int32 num = 2;
+}
+
+message S2C_SaleFood {
+        optional ProtocolType type = 1 [default = S_2_C_MARKET_SELL_FOOD];
+        optional int32  total_sell_num = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_BuyIllegalMarketFood {
+        optional ProtocolType type = 1 [default = C_2_S_MARKET_BUY_ILLEGAL_FOOD];
+        optional int32 num = 2;
+}
+
+message S2C_BuyIllegalMarketFood {
+        optional ProtocolType type = 1 [default = S_2_C_MARKET_BUY_ILLEGAL_FOOD];
+        optional int32 ret = 2;
+}
+
+message C2S_MarketBubbleUpdate {
+        optional ProtocolType type = 1 [default = C_2_S_MARKET_BUBBLE_UPDATE];
+}
+
+message S2C_MarketBubbleUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_MARKET_BUBBLE_UPDATE];
+}

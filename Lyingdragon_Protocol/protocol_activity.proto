@@ -1,0 +1,253 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+
+message C2S_ActivityOfflineLoad {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_OFFLINE_LOAD];
+}
+
+message S2C_ActivityOfflineLoad {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_OFFLINE_LOAD];
+    repeated int32 times = 2;
+}
+
+message C2S_ActivityOfflineDraw {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_OFFLINE_DRAW];
+    repeated int32 ids = 2;
+}
+
+message S2C_ActivityOfflineDraw {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_OFFLINE_DRAW];
+    repeated int32 ids = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_ActivityDay7Load {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_DAY7_LOAD];
+}
+
+message S2C_ActivityDay7Load {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_DAY7_LOAD];
+    message Item {
+        optional int32 id = 1;
+        optional int32 state = 2;
+        optional int32 value = 3;
+    }
+    optional bool is_update = 2;
+    optional bool all_drawed = 3;
+    repeated Item items = 4;
+}
+
+message C2S_ActivityDay7Draw {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_DAY7_DRAW];
+    optional int32 id = 2;//0 all
+}
+
+message S2C_ActivityDay7Draw {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_DAY7_DRAW];
+    optional int32 id = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_ActivitySign {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_SIGN];
+    optional int32 sign_type = 2; //1: month; 2: week
+}
+
+message S2C_ActivitySign {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_SIGN];
+    optional int32 sign_type = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_ActivitySignLoad {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_SIGN_LOAD];
+    optional int32 sign_type = 2;
+}
+
+message S2C_ActivitySignLoad {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_SIGN_LOAD];
+    optional int32 sign_type = 2;
+    optional int32 sign_times = 3;
+    optional int32 remedy_times = 4;
+    optional int32 sign_num = 5;
+    optional int32 total_sign = 6;
+    repeated int32 drawed_days = 7;
+}
+
+message C2S_ActivityRemedy {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_REMEDY];
+}
+
+message S2C_ActivityRemedy {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_REMEDY];
+    optional int32 ret = 2;
+}
+
+message C2S_ActivityTotalSignAward {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_TOTAL_SIGN_AWARD];
+    optional int32 id = 2;
+}
+
+message S2C_ActivityTotalSignAward {
+    optional ProtocolType type = 1 [default = S_2_c_ACTIVITY_TOTAL_SIGN_AWARD];
+    optional int32 ret = 2;
+    optional int32 id = 3;
+}
+
+message C2S_ActivityWeekDraw {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_WEEK_DRAW];
+    optional int32 day = 2;
+}
+
+message S2C_ActivityWeekDraw {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_WEEK_DRAW];
+    optional int32 day = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_ActivityDailyLoad {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_DAILY_LOAD];
+}
+
+message ActivityBaseInfo {
+    optional int32 id = 1;
+    optional int32 start_time = 2;
+    optional int32 claim_time = 3;
+    optional int32 end_time = 4;
+}
+
+message S2C_ActivityDailyLoad {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_DAILY_LOAD];
+    repeated int32 ids = 2;
+}
+
+message C2S_ActivityDailyDraw {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_DAILY_DRAW];
+    optional int32 draw_type = 2;   //0:normal draw 1:repair draw
+    optional int32 draw_id = 3;
+}
+
+message S2C_ActivityDailyDraw {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_DAILY_DRAW];
+    optional int32 draw_type = 2;
+    optional int32 draw_id = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_ActivityWeChatDo {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_WECHAT_DO];
+    optional int32 op_type = 2;
+}
+
+message S2C_ActivityWeChatDo {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_WECHAT_DO];
+    optional int32 state = 2;
+    optional int32 ret = 3;
+}
+message C2S_ActivityDailyLoginLoad {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_DAILY_LOGIN_LOAD];
+}
+
+message C2S_ActivityInfo {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_INFO];
+    optional int32 id = 2;
+}
+
+message S2C_ActivityInfo {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_INFO];
+    repeated ActivityBaseInfo infos = 2;
+}
+
+message S2C_ActivityDailyLoginLoad {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_DAILY_LOGIN_LOAD];
+    optional int32 claimed_day = 2;
+    optional bool can_claim = 3;
+}
+
+message C2S_ActivityDailyLoginDraw {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_DAILY_LOGIN_DRAW];
+}
+
+message S2C_ActivityDailyLoginDraw {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_DAILY_LOGIN_DRAW];
+    optional int32 claimed_day = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_ActivityRankDraw {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_RANK_DRAW];
+    optional int32 id = 2;
+}
+
+message S2C_ActivityRankDraw {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_RANK_DRAW];
+    optional int32 id = 2;
+    optional int32 ret = 3;
+}
+
+message S2C_ActivityCarnivalInfo {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_CARNIVAL_INFO];
+    optional int32 claimed = 2;
+    message Task {
+        optional int32 id = 1;
+        optional int32 value = 2;
+        optional int32 status = 3;
+    }
+    repeated Task tasks = 3;
+}
+
+message C2S_ActivityCarnivalTaskDraw {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_CARNIVAL_TASK_DRAW];
+    optional int32 act_id = 2;
+    optional int32 task_id = 3;
+}
+
+message S2C_ActivityCarnivalTaskDraw {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_CARNIVAL_TASK_DRAW];
+    optional int32 act_id = 2;
+    optional int32 task_id = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_ActivityCarnivalDraw {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_CARNIVAL_DRAW];
+    optional int32 act_id = 2;
+}
+
+message S2C_ActivityCarnivalDraw {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_CARNIVAL_DRAW];
+    optional int32 act_id = 2;
+    repeated RewardType rewards = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_ActivityExchangeInfo {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_EXCHANGE_INFO];
+    optional int32 act_id = 2;
+}
+
+message S2C_ActivityExchangeInfo {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_EXCHANGE_INFO];
+    optional int32 act_id = 2;
+    message Item {
+        optional int32 id = 1;
+        optional int32 exchange_num = 2;
+    }
+    repeated Item exchange_infos = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_ActivityExchange {
+    optional ProtocolType type = 1 [default = C_2_S_ACTIVITY_EXCHANGE];
+    optional int32 act_id = 2;
+    optional int32 item_id = 3;
+}
+
+message S2C_ActivityExchange {
+    optional ProtocolType type = 1 [default = S_2_C_ACTIVITY_EXCHANGE];
+    optional int32 act_id = 2;
+    optional int32 item_id = 3;
+    optional int32 ret = 4;
+}

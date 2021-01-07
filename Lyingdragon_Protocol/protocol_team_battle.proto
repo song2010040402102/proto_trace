@@ -1,0 +1,294 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_TeamBattleLoad {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_LOAD];
+    optional int32 instance_id = 2;
+}
+
+message S2C_TeamBattleLoad {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_LOAD];
+    optional int32 instance_id = 2;
+    optional int32 num = 3;
+    optional int32 atk_num = 4;
+    optional int32 ret = 5;
+}
+
+message C2S_TeamBattleEnter {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_ENTER];
+    optional int32 instance_id = 2;
+}
+
+message S2C_TeamBattleEnter {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_ENTER];
+    optional int32 instance_id = 2;
+    optional int32 ret = 3;
+}
+
+message TeamBattleTeam {
+    optional int64 id = 1;
+    optional string name = 2;
+    optional int32 level = 3;
+    optional int64 leader_id = 4;
+    optional int32 limit_zone_id = 5;
+    optional int32 limit_type = 6;
+    optional int32 limit_value = 7;
+    optional int32 mem_num = 8;
+    optional int32 is_first = 9;
+    optional int32 img_id = 10;
+    optional int32 img_type = 11;
+    optional bool robot_only = 12;
+}
+
+message S2C_TeamBattleTeamList {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_TEAM_LIST];
+    optional int32 instance_id = 2;
+    repeated TeamBattleTeam teams = 3;
+}
+
+message S2C_TeamBattleTeamDelete {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_TEAM_DELETE];
+    optional int64 team_id = 2;
+    optional int32 reason = 3;//0=default, 1=instance attack times ran out
+}
+
+message C2S_TeamBattleCreate {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_CREATE];
+    optional int32 limit_type = 2;
+    optional int32 instance_id = 3;
+    optional int32 army_id = 4;
+}
+
+message S2C_TeamBattleCreate {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_CREATE];
+    optional int64 team_id = 2;
+    optional int32 instance_id = 3;
+    optional int32 army_id = 4;
+    optional int32 ret = 5;
+}
+
+message C2S_TeamBattleJoin {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_JOIN];
+    optional int64 team_id = 2;
+    optional int32 army_id = 3;
+    optional int32 instance_id = 4;
+}
+
+message S2C_TeamBattleJoin {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_JOIN];
+    optional int32 ret = 2;
+    optional int64 team_id = 3;
+    optional int32 instance_id = 4;
+    optional int32 army_id = 5;
+}
+
+message C2S_TeamBattleQuit {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_QUIT];
+    optional int32 instance_id = 2;
+    optional int64 team_id = 3;
+}
+
+message S2C_TeamBattleQuit {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_QUIT];
+    optional int32 instance_id = 2;
+    optional int64 team_id = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_TeamBattleClose {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_CLOSE];
+    optional int32 instance_id = 2;
+}
+
+message S2C_TeamBattleClose {
+    optional ProtocolType type = 1 [default = S_2_S_TEAM_BATTLE_CLOSE];
+    optional int32 instance_id = 2;
+}
+
+message C2S_TeamBattleKickOut {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_KICK_OUT];
+    optional int64 id = 2;
+    optional int32 instance_id = 3;
+    optional int64 team_id = 4;
+}
+
+message S2C_TeamBattleKickOut {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_KICK_OUT];
+    optional int64 id = 2;
+    optional int32 instance_id = 3;
+    optional int64 team_id = 4;
+    optional int32 ret = 5;
+}
+
+message S2C_TeamBattleKickOutNotify {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_KICK_OUT_NOTIFY];
+    optional int64 team_id = 2;
+}
+
+message C2S_TeamBattleChangeLeader {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_CHANGE_LEADER];
+    optional int64 new_leader = 2;
+    optional int64 team_id = 3;
+    optional int32 instance_id = 4;
+}
+
+message S2C_TeamBattleChangeLeader {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_CHANGE_LEADER];
+    optional int32 ret = 2;
+}
+
+message C2S_TeamBattleLoadPlayers {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_LOAD_PLAYERS];
+    optional int32 instance_id = 2;
+    optional int64 team_id = 3;
+}
+
+message TeamBattlePlayer {
+    optional int64 id = 1;
+    optional int32 zone_id = 2;
+    optional int64 role_id = 3;
+    optional string name = 4;
+    optional int32 level = 5;
+    optional int32 force_value = 6;
+    optional int32 country_id = 7;
+    repeated int32 general_ids = 8;
+    optional int32 img_type = 9;
+    optional int32 img_id = 10;
+    optional int32 type = 11; //1=player, 2=npc
+    optional int32 army_id = 12;
+}
+
+message S2C_TeamBattleLoadPlayers {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_LOAD_PLAYERS];
+    optional int64 team_id = 2;
+    repeated TeamBattlePlayer players = 3;
+    optional int32 instance_id = 4;
+    optional int32 ret = 5;
+}
+
+message S2C_TeamBattlePlayerLeave {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_PLAYER_LEAVE];
+    optional int64 id = 2;
+    optional int64 team_id = 3;
+}
+
+message C2S_TeamBattleLoadOrder {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_LOAD_ORDER];
+    optional int32 instance_id = 2;
+    optional int64 team_id = 3;
+}
+
+message S2C_TeamBattleLoadOrder {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_LOAD_ORDER];
+    message Order {
+        optional int64 id = 1;
+        optional int32 pos = 2;
+    }
+    repeated Order orders = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_TeamBattleUpdateOrder {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_UPDATE_ORDER];
+    message Order {
+        optional int64 id = 1;
+        optional int32 pos = 2;
+    }
+    repeated Order orders = 2;
+    optional int32 instance_id = 3;
+    optional int64 team_id = 4;
+}
+
+message S2C_TeamBattleUpdateOrder {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_UPDATE_ORDER];
+    optional int32 ret = 2;
+}
+
+message C2S_TeamBattleStartBattle {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_START_BATTLE];
+    optional bool is_robot = 2;
+    optional int32 instance_id = 3;
+    optional int64 team_id = 4;
+}
+
+message S2C_TeamBattleStartBattle {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_START_BATTLE];
+    optional int32 ret = 2;
+    optional int32 report_zone_id = 3;
+    optional int64 report_id = 4;
+    optional int32 instance_id = 5;
+    optional int64 team_id = 6;
+    optional int32 battle_ret = 7;
+}
+
+message C2S_TeamBattleLoadFriend {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_LOAD_FRIEND];
+    optional int32 instance_id = 2;
+}
+
+message S2C_TeamBattleLoadFriend {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_LOAD_FRIEND];
+    message Item {
+        optional int32 zone_id = 1;
+        repeated int64 ids = 2;
+    }
+    repeated Item items = 2;
+}
+
+message C2S_TeamBattleInvite {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_INVITE];
+    optional int32 invite_type = 2; // 0 crop, 1 friend
+    optional int32 instance_id = 3;
+    optional int64 team_id = 4;
+    optional int64 role_id = 5;
+    optional int32 zone_id = 6;
+}
+
+message S2C_TeamBattleInvite {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_INVITE];
+    optional int32 invite_type = 2;
+    optional int32 instance_id = 3;
+    optional int64 team_id = 4;
+    optional int64 invite_id = 5;
+    optional int32 zone_id = 6;
+    optional int32 ret = 7; //0 suc, 1 offline, 2 in team
+    optional bool is_first = 8;
+}
+
+message C2S_TeamBattleInviteReject {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_INVITE_REJECT];
+    optional int64 role_id = 2;
+    optional int32 zone_id = 3;
+}
+
+message S2C_TeamBattleInviteReject {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_INVITE_REJECT];
+    optional int64 reject_id = 2;
+    optional int32 zone_id = 3;
+}
+
+message C2S_TeamBattleLoadAtkNum {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_LOAD_ATK_NUM];
+}
+
+message S2C_TeamBattleLoadAtkNum {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_LOAD_ATK_NUM];
+    message Num {
+        optional int32 id = 1;
+        optional int32 nums = 2;
+    }
+    repeated Num nums = 2;
+    optional bool is_replace = 3;//if is ture, client must clear all cache
+}
+
+message C2S_TeamBattleInviteStatus {
+    optional ProtocolType type = 1 [default = C_2_S_TEAM_BATTLE_INVITE_STATUS];
+    optional int32 instance_id = 2;
+    optional int64 team_id = 3;
+}
+
+message S2C_TeamBattleInviteStatus {
+    optional ProtocolType type = 1 [default = S_2_C_TEAM_BATTLE_INVITE_STATUS];
+    optional int32 ret = 2;
+}

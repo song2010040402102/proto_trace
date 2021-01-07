@@ -1,0 +1,29 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+
+message C2S_TLogDeviceFlow {
+        optional ProtocolType type = 1 [default = C_2_S_TLOG_DEVICE_FLOW];
+        optional int32 action_type = 2;
+        optional string version = 3;
+        optional string update_version = 4;
+        optional string button_name = 5;
+        optional string view_name = 6;
+        optional int32 view_time = 7;
+}
+
+message S2C_TLogDeviceFlow {
+        optional ProtocolType type = 1 [default = S_2_C_TLOG_DEVICE_FLOW];
+}
+
+message C2S_TLogClickGift {
+        optional ProtocolType type = 1 [default = C_2_S_TLOG_CLICK_GIFT];
+        optional int32 gift_id = 2;
+}
+
+message S2C_TLogClickGift {
+        optional ProtocolType type = 1 [default = S_2_C_TLOG_CLICK_GIFT];
+        optional int32 gift_id = 2;
+        optional int32 ret = 3;
+}

@@ -1,0 +1,23 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_EggBoxLoad {
+    optional ProtocolType type = 1 [default = C_2_S_EGG_BOX_LOAD];
+}
+
+message S2C_EggBoxLoad {
+    optional ProtocolType type = 1 [default = S_2_C_EGG_BOX_LOAD];
+    repeated int32 drawed_ids = 2;
+}
+
+message C2S_EggBoxDraw {
+    optional ProtocolType type = 1 [default = C_2_S_EGG_BOX_DRAW];
+    optional int32 id = 2;
+}
+
+message S2C_EggBoxDraw {
+    optional ProtocolType type = 1 [default = S_2_C_EGG_BOX_DRAW];
+    optional int32 id = 2;
+    repeated RewardType rwds = 3;
+}

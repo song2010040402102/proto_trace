@@ -1,0 +1,49 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_GiftLoadInfo {
+        optional ProtocolType type = 1 [default = C_2_S_GIFT_LOAD_INFO];
+}
+
+message GiftItem {
+        optional int32 gift_id = 1;
+        optional int32 num = 2;
+        optional int32 create_time = 3;
+        optional int32 state = 4; //3 remove
+}
+
+message S2C_GiftLoadInfo {
+        optional ProtocolType type = 1 [default = S_2_C_GIFT_LOAD_INFO];
+        optional int32 daily_gold = 2;
+        optional int32 act_value = 3;
+        optional bool send_present = 4;
+        optional bool daily_award = 5; // card
+        repeated GiftItem items = 6;
+}
+
+message C2S_GiftCardAward {
+        optional ProtocolType type = 1 [default = C_2_S_GIFT_CARD_AWARD];
+}
+
+message S2C_GiftCardAward {
+        optional ProtocolType type = 1 [default = S_2_C_GIFT_LOAD_INFO];
+        optional int32 ret = 2; //0 suc, 1 has award, 2 overtime
+}
+
+//有时间限制的礼包购买，客户端先通知服务器校验是否在有效时间范围内，返回成功后调用第三方支付平台
+message C2S_GiftBuy {
+        optional ProtocolType type = 1 [default = C_2_S_GIFT_BUY];
+        optional int32 gift_id = 2;
+}
+
+message S2C_GiftBuy {
+        optional ProtocolType type = 1 [default = S_2_C_GIFT_BUY];
+        optional int32 ret = 2; // 0 success
+        optional int32 gift_id = 3;
+}
+
+message S2C_GiftUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_GIFT_UPDATE];
+        repeated GiftItem items = 2;
+}

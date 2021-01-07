@@ -1,0 +1,38 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message ReportBarrage {
+    optional int64 report_id = 1;
+    optional int32 id = 2;
+    optional int32 sec = 3;
+    optional int32 usec = 4;
+    optional string content = 5;
+    optional string time_str = 6;
+}
+
+message C2S_ReportBarrageLoad {
+    optional ProtocolType type = 1 [default = C_2_S_REPORT_BARRAGE_LOAD];
+    optional int64 report_id = 2;
+    optional int32 zone_id = 3;
+}
+
+message S2C_ReportBarrageLoad {
+    optional ProtocolType type = 1 [default = S_2_C_REPORT_BARRAGE_LOAD];
+    repeated ReportBarrage barrages = 2;
+}
+
+message C2S_ReportBarrageAdd {
+    optional ProtocolType type = 1 [default = C_2_S_REPORT_BARRAGE_ADD];
+    optional int64 report_id = 2;
+    optional int32 zone_id = 3;
+    optional int32 sec = 4;
+    optional int32 usec = 5;
+    optional string content = 6;
+    optional string time_str = 7;
+}
+
+message S2C_ReportBarrageAdd {
+    optional ProtocolType type = 1 [default = S_2_C_REPORT_BARRAGE_ADD];
+    optional ReportBarrage barrage = 2;
+}

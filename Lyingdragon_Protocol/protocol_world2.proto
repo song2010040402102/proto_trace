@@ -1,0 +1,763 @@
+import "protocol_base.proto";
+import "battle_report.proto";
+
+package Lyingdragon.Protocol;
+
+message WorldObjectBase {
+        optional int64 id = 1;
+        optional int32 type = 2;
+        optional int32 sub_id = 3;
+        optional WorldPos pos = 4;
+        optional int64 owner_id = 5;
+        optional int32 owner_type = 6;
+}
+
+message WorldPlayerCity {
+        optional WorldObjectBase obj = 1;
+        optional RoleInfo role_info = 2;
+        optional int32 atk_value = 3;
+        optional int32 protect_time = 4;
+        optional int32 join_time = 5;
+        optional int32 city_id = 6;
+        optional int32 conque_time = 7;
+        optional int32 tax = 8;
+        optional int32 total_tax = 9;
+        optional int32 dev_type = 10;
+        optional int32 defense_point = 11;
+        optional int32 max_defense_point = 12;
+}
+
+message WorldCity {
+    optional int32 city_id = 1;
+    optional int32 crop_id = 2;
+    optional int64 mayor_id = 3;
+    optional int32 is_door_open = 4;
+    repeated IntPair dev_infos = 5;
+    repeated IntPair declare_crop_infos = 6;
+    optional int32 is_block = 7;
+    optional int32 reward_score = 8;
+    optional int32 fog_end_time = 9;
+    optional int32 status = 10;
+    optional int32 battle_id = 11;
+    optional int32 fortress_battle_time = 12;
+    optional int64 mayor_name = 13;
+    optional int32 declare_crop_id = 14;
+    optional int32 declare_time = 15;
+    repeated IntPair catapult_nums = 16;
+    repeated IntPair delcare_history_crops = 17;
+}
+
+message WorldMovingArmy {
+    optional int64 id = 1;
+    optional int32 army_id = 2;
+    repeated MovePos path_points = 3;
+}
+
+message WorldArmy {
+     message ArmyCD {
+        optional int32 id = 1;
+        optional int32 end_time = 2;
+        optional int32 param = 3;
+      }
+      optional int64 id = 1;
+      optional WorldPos pos = 2;
+      optional RoleInfo role_info = 3;
+      optional int32 army_id = 4;
+      optional int32 general_id = 5;
+      optional int32 formation_id = 6;
+      repeated FormationGenaralLoc locs = 7;
+      optional int32 state = 8;
+      optional int32 atk_time = 9;
+      optional float speed = 10;
+      optional int32 catapult_id = 11;
+      optional int32 catapult_level = 12;
+      optional int32 catapult_hp = 13;
+      repeated ArmyCD cds = 14;
+      optional int32 total_soldier = 15;
+      optional int32 cur_soldier = 16;
+      optional int64 def_object_id = 17;
+      optional int32 fortress_city = 19;
+      optional int32 soldier_id = 20;
+      optional int64 team_obj_id = 21;
+      optional int64 lock_target_obj_id = 22;
+      optional int32 to_do_sth = 23;
+      optional bool skip_battle_open = 24;
+      optional int32 lock_target_obj_type = 25;
+}
+
+message CityBattle {
+        message ScoreItem {
+            optional int64 id = 1;
+            optional string name = 2;
+            optional int32 total = 3;
+            optional int32 army_score = 4;
+            optional int32 industry_score = 5;
+        }
+        message CropScroe {
+            optional int32 crop_id = 1;
+            optional string crop_name = 2;
+            optional int32 score = 3;
+            repeated ScoreItem member_scores = 5;
+        }
+        optional int32 id = 1;
+        optional int32 city_id = 3;
+        optional int32 def_crop = 4;
+        repeated int32 atk_crops = 5;
+        optional int32 begin_time = 6;
+        optional int32 end_time = 7;
+        optional int32 state = 8;
+        optional int32 win_crop = 9;
+        repeated CropScroe crop_scores = 10;
+}
+
+message C2S_World2Enter {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_ENTER];
+}
+
+message S2C_World2Enter {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_ENTER];
+        optional WorldObjectBase my_city = 2;
+        optional int32 ret = 3;
+        repeated WorldMovingArmy moving_armys = 4;
+}
+
+message C2S_World2Leave {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_LEAVE];
+}
+
+message S2C_World2Leave {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_LEAVE];
+}
+
+message C2S_World2Move {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_MOVE];
+        optional int32 army_id = 2;
+        optional float x = 3;
+        optional float y = 4;
+        optional float pos_x = 5;
+        optional float pos_y = 6;
+        repeated MovePos path_points = 7;
+        optional int64 target_obj_id = 8;
+        optional bool skip_battle_open = 9;
+        optional int32 to_do_sth = 10;
+}
+
+message S2C_World2Move {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_MOVE];
+        optional int32 army_id = 2;
+        optional int32 ret = 3;
+	optional float pos_x = 4;
+	optional float pos_y = 5;
+}
+
+message C2S_World2Stop {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_STOP];
+        optional int32 army_id = 2;
+}
+
+message S2C_World2Stop {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_STOP];
+        optional int32 army_id = 2;
+        optional int64 role_id = 3;
+        optional int32 ret = 4;
+}
+
+message World2Object {
+        optional int64 id = 1;
+        optional int32 class_id = 2;
+        optional float pos_x = 3;
+        optional float pos_y = 4;
+        optional float speed = 5;
+        optional float vector_x = 6; // 目标x  原为方向 待和前端一起重命名
+        optional float vector_y = 7; // 目标y
+}
+
+message S2C_World2UpdateVisibility {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_UPDATE_VISIBILITY];
+        repeated int64 out_of_ranges = 2;    // 离开视野的对象
+        repeated World2Object objects = 3;   // 视野内新增的对象
+}
+
+message S2C_World2Redirection {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD2_REDIRECTION];
+    optional int64 id = 2;
+    optional float x = 3;   // 目标x
+    optional float y = 4;   // 目标y
+    optional float pos_x = 5; // 当前x
+    optional float pos_y = 6; // 当前y
+    optional int32 class_id = 7;
+}
+
+message World2Redirection {
+    optional int64 id = 1;
+    optional float x = 2;
+    optional float y = 3;
+    optional float pos_x = 5;
+    optional float pos_y = 6;
+    optional int32 class_id = 7;
+}
+
+message S2C_World2Redirection2 {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD2_REDIRECTION2];
+    repeated World2Redirection objects = 2;
+}
+
+message S2C_World2StopNtf {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD2_STOP_NTF];
+    optional int64 id = 2;
+    optional float pos_x = 3;
+    optional float pos_y = 4;
+    optional int32 class_id = 5;
+}
+
+message World2StopNtf {
+    optional int64 id = 1;
+    optional float pos_x = 2;
+    optional float pos_y = 3;
+    optional int32 class_id = 4;
+}
+
+message S2C_World2StopNtf2 {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD2_STOP_NTF2];
+    repeated World2StopNtf objects = 2;
+}
+
+message S2C_World2UpdatePosition {  // TODO: 原来会对移动数据聚合，待和前端一起调整
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_UPDATE_POSITION];
+        message Position {
+            optional int64 id = 1;
+            optional float pos_x = 2;
+            optional float pos_y = 3;
+        }
+        repeated Position positions = 2;
+}
+
+message S2C_World2Tteleport {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_TELEPORT];
+        optional int64 id = 2;
+        optional float from_x = 3;
+        optional float from_y = 4;
+        optional float to_x = 5;
+        optional float to_y = 6;
+	optional int32 class_id = 7;
+}
+
+message C2S_WorldCity {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_WORLD_CITY];
+        optional int32 city_id = 2;//if = 0,get all city
+}
+
+message S2C_WorldCity {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_WORLD_CITY];
+        repeated WorldCity citys = 2;
+        optional bool finish = 3;
+}
+
+message C2S_WorldPlayer {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_PLAYER];
+        optional int64 role_id = 2;
+}
+
+message S2C_WorldPlayer {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_PLAYER];
+        optional WorldPlayerCity self = 2;
+        optional WorldPlayerCity lord = 3;
+        repeated WorldPlayerCity vassals = 4;
+        repeated RoleInfo lord_applys = 5;
+        repeated RoleInfo my_applys = 6;
+        optional int32 ret = 7;
+}
+
+message C2S_WorldArmy {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_ARMY];
+        optional int64 role_id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_WorldArmy {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_ARMY];
+        repeated WorldArmy armys = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_WorldCityBuilding {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_CITY_BUILDING];
+        optional int32 city_id = 2;
+}
+
+message CityWall {
+        optional int64 id = 1;
+        optional int32 hp = 2;
+        optional int32 pos_x = 3;
+        optional int32 pos_y = 4;
+}
+
+message S2C_WorldCityBuilding {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_CITY_BUILDING];
+        optional int32 city_id = 2;
+        repeated CityWall walls = 3;
+}
+
+message C2S_WorldMoveCity {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_MOVE_CITY];
+        optional int32 target_type = 2;//0=state 1=city 2=crop manor
+        optional int64 target_id = 3;
+        optional int32 pos_x = 4;
+        optional int32 pos_y = 5;
+}
+
+message S2C_WorldMoveCity {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_MOVE_CITY];
+        optional int32 target_type = 2;//0=state 1=city 2=crop manor
+        optional int64 target_id = 3;
+        optional int32 pos_x = 4;
+        optional int32 pos_y = 5;
+        optional WorldPlayerCity player = 6;
+        optional int32 ret = 7;
+        optional int32 old_pos_x = 8;
+        optional int32 old_pos_y = 9;
+}
+
+message C2S_World2UpdateFormation {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_UPDATE_FORMATION];
+        optional int32 army_id = 2;
+        optional int32 form_id = 3;
+        repeated FormationGenaralLoc locs = 4;
+}
+
+message S2C_World2UpdateFormation {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_UPDATE_FORMATION];
+        optional int32 army_id = 2;
+        optional int32 form_id = 3;
+        optional int32 power = 4;
+        optional int32 main_general = 6;
+        repeated FormationGenaralLoc locs = 5;
+        optional int32 ret = 7;
+}
+
+message C2S_World2View {
+        optional ProtocolType type = 1 [default = C_2_S_WROLD2_VIEW];
+        optional int32 x = 2;
+        optional int32 y = 3;
+	optional int32 width = 4;
+	optional int32 height = 5;
+}
+
+message S2C_World2View {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_VIEW];
+        optional int32 x = 2;
+        optional int32 y = 3;
+}
+
+message C2S_World2GetObj {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_GET_OBJ];
+        optional int32 class_id = 2;
+        optional int64 id = 3;
+}
+
+message S2C_World2GetObj {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_GET_OBJ];
+        optional int32 class_id = 2;
+        optional int64 id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_World2AtkArmy {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_ATK_ARMY];
+        optional int32 army_id = 2;
+        optional int64 target_id = 3;
+}
+
+message S2C_World2AtkArmy {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_ATK_ARMY];
+        optional int64 attack_id = 2;
+        optional int64 target_id = 3;
+        optional int32 ret = 4;
+        optional bool is_city_battle = 5;
+        optional int32 result = 6;
+        optional int64 report_id = 7;
+        optional int32 atk_soldier_num = 8;
+        optional int32 atk_catapult_hp = 9;
+        optional int32 def_soldier_num = 10;
+        optional int32 def_catapult_hp = 11;
+	optional BriefSingleBattleReport brief_report = 12;
+}
+
+message C2S_World2KickPlayerCity {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_KICK_PLAYER_CITY];
+        optional int64 role_id = 2;
+        optional int32 pos_x = 3;
+        optional int32 pos_y = 4;
+}
+
+message S2C_World2KickPlayerCity {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_KICK_PLAYER_CITY];
+        optional int32 ret = 2;//1 pos not available
+        optional int64 role_id = 3;
+        optional int32 pos_x = 4;
+        optional int32 pos_y = 5;
+        optional bool is_kick = 6;
+}
+
+message C2S_World2AtkIndustry {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_ATK_INDUSTRY];
+        optional int32 army_id = 2;
+        optional int32 city_id = 3;
+        optional int64 target_id = 4;
+	optional int32 crop_id = 5;
+}
+
+message S2C_World2AtkIndustry {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_ATK_INDUSTRY];
+        optional int32 army_id = 2;
+        optional int32 city_id = 3;
+        optional int64 target_id = 4;
+        optional int32 ret = 5;
+        optional int32 result = 6;
+        optional int64 report_id = 7;
+        optional int32 defence_point = 8;
+        optional int64 atk_id = 9;
+	optional BriefSingleBattleReport brief_report = 10;
+}
+
+message C2S_World2ArmyUseItem {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_ARMY_USE_ITEM];
+        optional int32 army_id = 2;
+        optional int32 item_id = 3;
+}
+
+message S2C_World2ArmyUseItem {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_ARMY_USE_ITEM];
+        optional int32 army_id = 2;
+        optional int32 item_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_World2DeclareCity {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_DECLARE_CITY];
+        optional int32 city_id = 2;
+        optional int32 declare_cost = 3;
+}
+
+message S2C_World2DeclareCity {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_DECLARE_CITY];
+        optional int32 ret = 2; //0 suc, 1 has declare, 2 in battle, 3 in protect, 4 has fallen
+        optional int32 city_id = 3;
+        optional int32 declare_crop_id = 4;
+        optional int64 declare_role_id = 5;
+        optional string declare_role_name = 6;
+        optional string city_name = 7;
+        optional int32 declare_cost = 8;
+}
+
+message S2C_World2CityWarStateNtf {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_CITY_WAR_STATE_NTF];
+	optional int32 state = 2;
+        optional int32 city_id = 3;
+        optional int32 def_crop_id = 4;
+        repeated int32 atk_crop_ids = 5;
+}
+
+message S2C_World2FinishCityWarNtf {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_FINISH_CITY_WAR_NTF];
+        optional int32 city_id = 2;
+        optional int32 def_crop_id = 3;
+        repeated int32 atk_crop_ids = 4;
+        optional int32 win_crop_id = 5;
+}
+
+message C2S_World2CityBattleReward {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_CITY_BATTLE_REWARD];
+        optional int32 city_id = 2;
+}
+
+message S2C_World2CityBattleReward {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_CITY_BATTLE_REWARD];
+        optional int32 city_id = 2;
+        repeated RewardType rwds = 3;
+}
+
+message S2C_World2Guard {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_GUARD];
+        optional int64 id = 2;
+        optional string name = 3;
+        optional WorldPos pos = 4;
+        optional int32 level = 5;
+        optional int32 general_id = 6;
+        optional int32 formation_id = 7;
+        repeated FormationGenaralLoc locs = 8;
+        optional int32 total_soldier = 9;
+        optional int32 cur_soldier = 10;
+        optional int32 last_battle_time = 11;
+        optional int32 city_id = 12;
+        optional int32 crop_id = 13;
+	optional int64 generator_id = 14;
+}
+
+message S2C_World2ChangeSpeed {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_CHANGE_SPEED];
+        optional int64 id = 2;
+        optional float pos_x = 3;
+        optional float pos_y = 4;
+        optional float speed = 5;
+}
+
+
+message C2S_World2AtkGuard {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_ATK_GUARD];
+        optional int32 army_id = 2;
+        optional int64 target_id = 3;
+}
+
+message S2C_World2AtkGuard {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_ATK_GUARD];
+        optional int64 attack_id = 2;
+        optional int64 target_id = 3;
+        optional int32 ret = 4;
+	optional int32 catapult_hp = 5;
+        optional int32 result = 6;
+        optional int64 report_id = 7;
+        optional int32 atk_soldier_num = 8;
+        optional int32 tar_soldier_num = 9;
+	optional BriefSingleBattleReport brief_report = 10;
+}
+
+message C2S_World2AtkPlayer {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_ATK_PLAYER];
+        optional int32 army_id = 2;
+        optional int64 target_id = 3;
+}
+
+message S2C_World2AtkPlayer {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_ATK_PLAYER];
+        optional int32 army_id = 2;
+        optional int64 target_id = 3;
+        optional int64 atk_id = 4;
+        optional int32 defense_point = 5;
+        optional int64 report_id = 6;
+        optional int32 battle_result = 7;
+        optional int32 ret = 8;
+	optional BriefSingleBattleReport brief_report = 9;
+}
+
+message C2S_World2OpenCityGate {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_OPEN_CITY_GATE];
+        optional int32 city_id = 2;
+        optional bool gate_open = 3;
+}
+
+message S2C_World2OpenCityGate {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_OPEN_CITY_GATE];
+        optional int32 city_id = 2;
+        optional bool gate_open = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_World2DevelopCity {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_DEVELOP_CITY];
+        optional int32 city_id = 2;
+        optional int32 dev_type = 3;
+        optional int32 cost_type = 4;
+}
+
+message S2C_World2DevelopCity {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_DEVELOP_CITY];
+        optional int32 city_id = 2;
+        optional int32 dev_type = 3;
+        optional int32 cost_type = 4;
+        optional int32 dev_value = 5;
+        optional int32 ret = 6;
+}
+
+message S2C_World2TowerAtk {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_TOWER_ATK];
+        optional int64 attack_id = 2;
+        optional int64 target_id = 3;
+        optional int32 tar_soldier_num = 4;
+        optional int32 tar_catapult_hp = 5;
+}
+
+message C2S_World2CityBattleRecord {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_CITY_BATTLE_RECORD];
+        optional int32 battle_id = 2;
+}
+
+message S2C_World2CityBattleRecord {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_CITY_BATTLE_RECORD];
+        optional int32 battle_id = 2;
+        repeated CityBattle city_battle = 3;
+}
+
+message C2S_World2CityBattleScoreInfo {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_CITY_BATTLE_SCORE_INFO];
+        optional int32 city_id = 2;
+}
+
+message S2C_World2CityBattleScoreInfo {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_CITY_BATTLE_SCORE_INFO];
+        optional int32 city_id = 2;
+        optional int32 score = 3;
+        optional int32 score_rank = 4;
+        optional int32 damage = 5;
+        optional int32 damage_rank = 6;
+        optional float damage_percent = 7;
+        optional int32 ret = 8;
+}
+
+message C2S_World2FortressDefenser {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_FORTRESS_DEFENSER];
+        optional int32 city_id = 2;
+        optional int64 object_id = 3;
+}
+
+message S2C_World2FortressDefenser {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_FORTRESS_DEFENSER];
+        optional int32 city_id = 2;
+        optional int64 object_id = 3;
+        repeated FortressDefenser defensers = 4;
+        repeated FortressDefenser attackers = 5;
+        optional int32 ret = 6;
+}
+
+message C2S_World2BuyFortressTicket {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_BUY_FORTRESS_TICKET];
+        optional int32 city_id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_World2BuyFortressTicket {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_BUY_FORTRESS_TICKET];
+        optional int32 city_id = 2;
+        optional int32 army_id = 3;
+}
+
+message ArmyDraftInfo {
+        optional int32 general_id = 1;
+        optional int32 num = 2;
+}
+message C2S_World2DraftSoldier {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_DRAFT_SOLDIER];
+        optional int32 army_id = 2;
+        repeated ArmyDraftInfo generals = 3;
+}
+
+message S2C_World2DraftSoldier {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_DRAFT_SOLDIER];
+        optional int32 army_id = 2;
+        repeated ArmyDraftInfo generals = 3;
+}
+
+message C2S_World2CropMemberPos {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_CROP_MEMBER_POS];
+        optional int32 crop_id = 2;
+}
+
+message S2C_World2CropMemberPos {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_CROP_MEMBER_POS];
+        message PosInfo {
+            optional int64 role_id = 1;
+            optional int32 x = 2;
+            optional int32 y = 3;
+        }
+        optional int32 crop_id = 2;
+        repeated PosInfo poes = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_World2RobPlayer {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_ROB_PLAYER];
+        optional int32 army_id = 2;
+        optional int64 player_id = 3;
+        optional int32 rob_type = 4;//0=rob 1=conque
+}
+
+message S2C_World2RobPlayer {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_ROB_PLAYER];
+        optional int32 army_id = 2;
+        optional int64 atk_role_id = 3;
+        optional string atk_name = 4;
+        optional int64 def_role_id = 5;
+        optional string def_name = 6;
+        optional int32 rob_type = 7;
+        repeated int64 report_ids = 8;
+        optional int32 result = 9;
+        repeated RewardType rwds = 10;
+        optional int32 ret = 11;
+}
+
+message C2S_World2ApplyLord {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_APPLY_LORD];
+        optional int64 role_id = 2;
+        optional int32 action = 3;//0=apply 1=cancel
+}
+
+message S2C_World2ApplyLord {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_APPLY_LORD];
+        optional int64 role_id = 2;
+        optional int32 action = 4;//0=apply 1=cancel
+        optional int32 ret = 5;
+        optional int64 apply_id = 6;
+}
+
+message C2S_World2ApproveLord {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_APPROVE_LORD];
+        optional int64 role_id = 2;
+        optional int32 action = 3;
+}
+
+message S2C_World2ApproveLord {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_APPROVE_LORD];
+        optional int64 role_id = 2;
+        optional int64 apply_id = 3;
+        optional int32 action = 4;
+        optional int32 ret = 5;
+        optional WorldPos pos = 6;
+}
+
+message C2S_World2DefPlayer {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD2_DEF_PLAYER];
+        optional int64 role_id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_World2DefPlayer {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD2_DEF_PLAYER];
+        optional int64 role_id = 2;
+        optional int32 army_id = 3;
+        optional int32 ret  = 4;
+        optional int64 obj_id  = 5;
+}
+
+message C2S_World2LastBattleTime {
+	optional ProtocolType type = 1 [default = C_2_S_WORLD2_LAST_BATTLE_TIME];
+}
+
+message S2C_World2LastBattleTime {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD2_LAST_BATTLE_TIME];
+    optional int32 battle_id = 2;
+    optional int32 end_time = 3;
+}
+
+message C2S_World2LoadBattleReward {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD2_LOAD_BATTLE_REWARD];
+}
+
+message S2C_World2LoadBattleReward {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD2_LOAD_BATTLE_REWARD];
+    repeated int32 city_ids = 2;
+}
+
+message C2S_World2DrawBatlleReward {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD2_DRAW_BATTLE_REWARD];
+    optional int32 city_id = 2;
+}
+
+message S2C_World2DrawBattleReward {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD2_DRAW_BATTLE_REWARD];
+    optional int32 ret = 2; //0 success, 1 fail
+    optional int32 city_id = 3;
+}
+
+message S2C_World2BriefBattleReport {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD2_BRIEF_BATTLE_REPORT];
+}

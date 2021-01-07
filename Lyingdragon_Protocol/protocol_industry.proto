@@ -1,0 +1,418 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_IndustryLoadInfo {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_LOAD_INFO];
+        optional int32 city_id = 2; // 0 all
+}
+
+message IndustryItem {
+        optional int64 id = 1;
+        optional int32 industry_id = 2;
+        optional int32 state = 3; //0 normal, 1 build, 2 del, 3 dismantle
+        optional int32 pos = 4;
+        optional int32 defence_point = 5;
+        optional int32 build_point = 6;
+        repeated FortressDefenser armys = 7;
+        optional int32 build_num = 8;
+        optional int32 lvl = 9;
+        optional int32 dismantle_left_time = 10;
+        optional int32 pos_x = 11;
+        optional int32 pos_y = 12;
+        optional int32 param_num = 13;
+        optional int32 crop_id = 14;
+        optional int32 rotation = 15;
+        optional int32 hire_npc_num = 16;
+        optional int32 end_time = 17;
+        optional int32 surplus_num = 18;
+        optional int64 locate_id = 19;
+        optional int32 protect_end_time_sec = 20;
+}
+
+
+message CityIndustryInfo {
+        optional int32 city_id = 1;
+        repeated IndustryItem items = 2;
+}
+
+message S2C_IndustryLoadInfo {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_LOAD_INFO];
+        repeated CityIndustryInfo industries = 2;
+        optional int32 finish = 3;
+}
+
+message C2S_IndustryBuild {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_BUILD];
+        optional int64 locate_id = 2;
+        optional int32 locate_type = 3; //1=city 2=crop land
+        optional int32 industry_id = 4;
+        optional int32 pos_x = 5;
+        optional int32 pos_y = 6;
+        optional int32 rotation = 7;
+}
+
+message S2C_IndustryBuild {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_BUILD];
+        optional int32 ret = 2; //2 num limit
+        optional int64 locate_id = 3;
+        optional int64 id = 4;
+        optional int32 industry_id = 5;
+        optional int32 pos_x = 6;
+        optional int32 pos_y = 7;
+    optional int32 crop_id = 8;
+    optional int32 rotation = 9;
+}
+
+message C2S_IndustryDismantle {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_DISMANTLE];
+        optional int64 id = 2;
+}
+
+message S2C_IndustryDismantle {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_DISMANTLE];
+        optional int32 ret = 2;
+        optional int64 id = 3;
+        optional int32 left_time = 4;
+}
+
+message C2S_IndustryAtk {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_ATK];
+        optional int32 army_id = 2;
+        optional int32 industry_id = 3;
+}
+
+message S2C_IndustryAtk {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_ATK];
+        optional int32 ret = 2; //0 suc, 1 not exist
+        optional int32 id = 3;
+        optional int32 battle_ret = 4;
+        optional int64 report_id = 5;
+        optional int32 army_id = 6;
+        optional int64 locate_id = 7;
+        optional int32 defence_point = 8;
+        optional int64 role_id = 9;
+        optional string role_name = 10;
+        optional int64 def_id = 11;
+        optional int32 atk_industry_time = 12;
+}
+
+message S2C_IndustryAddArmy {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_ADD_ARMY];
+        optional int32 ret = 2; //0 suc, 1 not exist, 2 full point, 3 state error, 4 not enough cost
+        optional int32 action_type = 3; //1 def, 2 build, 3 repair
+        optional int32 id = 4;
+        optional FortressDefenser info = 5;
+}
+
+message S2C_IndustryBuildUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_BUILD_UPDATE];
+        message Item {
+                optional int64 id = 1;
+                optional int32 state = 2;
+                optional int32 build_point = 3;
+                optional int32 defense_point = 4;
+                optional int32 max_defense_point = 5;
+                optional int32 crop_id = 6;
+        }
+        repeated Item items = 2;
+}
+
+message S2C_IndustryRepairUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_REPAIR_UPDATE];
+        message Army {
+                optional int64 role_id = 1;
+                optional int32 army_id = 2;
+        }
+        message Item {
+                optional int64 id = 1;
+                optional int32 defence_point = 2;
+                repeated Army armys = 3; //finish armys
+                optional int32 crop_id = 4;
+        }
+        repeated Item items = 2;
+}
+
+message C2S_IndustryRetreat {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_RETREAT];
+        optional int32 army_id = 2;
+}
+
+message S2C_IndustryRetreat {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_RETREAT];
+        optional int64 role_id = 2;
+        optional int32 army_id = 3;
+        optional int64 id = 4;
+        optional int32 ret = 5;
+        optional int32 surplus_num = 6;
+}
+
+
+message C2S_IndustryLoadSingleInfo {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_LOAD_SINGLE_INFO];
+        optional int64 id = 2;
+
+}
+
+message S2C_IndustryLoadSingleInfo {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_LOAD_SINGLE_INFO];
+        optional IndustryItem item = 2;
+    optional int64 id = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_IndustryRepair {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_REPAIR];
+        optional int32 army_id = 3;
+        optional int64 ind_id = 4;
+}
+
+message S2C_IndustryRepair {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_REPAIR];
+        optional int64 id = 2;
+        optional int64 role_id = 3;
+        optional int32 army_id = 4;
+        optional int32 left_repair_cd = 5;
+        optional int64 object_id = 6;
+        optional int32 ret = 7;
+        optional IndustryItem item = 8;
+}
+
+message C2S_IndustryStoneAbandon {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_STONE_ABANDON];
+        optional int32 army_id = 2;
+}
+
+message S2C_IndustryStoneAbandon {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_STONE_ABANDON];
+        optional int32 army_id = 2;
+        optional int32 ret = 3;
+}
+
+message S2C_IndustryStoneUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_STONE_UPDATE];
+        optional int32 ret = 2; //0 suc , 1 industry has destory
+        optional int32 army_id = 3;
+        optional int32 duration = 4;
+        optional int32 stone_hp = 5;
+}
+
+message C2S_IndustryMove {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_MOVE];
+        optional int64 id = 2;
+        optional int32 pos_x = 4;
+        optional int32 pos_y =5;
+}
+
+message S2C_IndustryMove {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_MOVE];
+        optional int64 id = 2;
+        optional int32 pos_x = 3;
+        optional int32 pos_y = 4;
+        optional int32 ret = 5;
+        optional int32 old_pos_x = 6;
+        optional int32 old_pos_y = 7;
+}
+
+message C2S_IndustryProduceCatapult {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_PRODUCE_CATAPULT];
+        optional int32 army_id = 2;
+        optional int32 catapult_id = 3;
+        optional int64 ind_id = 4;
+}
+
+message S2C_IndustryProduceCatapult {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_PRODUCE_CATAPULT];
+        optional int32 army_id = 2;
+        optional int32 catapult_id = 3;
+        optional int64 ind_id = 4;
+        optional int32 max_hp = 5;
+        optional int32 ret = 6;
+}
+
+message C2S_IndustryDraw {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_DRAW];
+        optional int64 building_id = 2;
+}
+
+message S2C_IndustryDraw {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_DRAW];
+        optional int64 building_id = 2;
+        optional int32 ret = 3;
+        repeated RewardType rwds = 4;
+}
+
+message C2S_IndustryMakeFog {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_MAKE_FOG];
+        optional int64 ind_id = 2;
+        optional int32 city_id = 3;
+}
+
+message S2C_IndustryMakeFog {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_MAKE_FOG];
+        optional int64 ind_id = 2;
+        optional int32 city_id = 3;
+        optional int32 end_time = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_IndustryQueryGuard {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_QUERY_GUARD];
+        optional int64 ind_id = 2;
+}
+
+message S2C_IndustryQueryGuard {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_QUERY_GUARD];
+        optional int32 ind_id = 2;
+        optional int32 level = 3;
+        optional int32 count = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_IndustryHireGuard {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_HIRE_GUARD];
+        optional int64 ind_id = 2;
+        optional int32 count = 3;
+}
+
+message S2C_IndustryHireGuard {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_HIRE_GUARD];
+        optional int32 ind_id = 2;
+        optional int32 count = 3;  //招募成功数量
+        optional int32 ret = 4;
+}
+
+message C2S_IndustryPrayInfo {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_PARY_INFO];
+
+}
+
+message S2C_IndustryPrayInfo {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_PARY_INFO];
+        optional int32 times = 2;
+}
+
+message C2S_IndustryPray {
+        optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_PARY];
+}
+
+message S2C_IndustryPray {
+        optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_PARY];
+        optional int32 ret = 2;
+        optional int32 pool_id = 3;
+        optional RewardType rwd = 4;
+}
+
+
+message C2S_CropLandLoadInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LAND_LOAD_INFO];
+        optional int32 crop_id = 2;
+}
+
+message S2C_CropLandLoadInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LAND_LOAD_INFO];
+        message Item {
+            optional int64 id = 1;
+            optional int32 x = 2;
+            optional int32 y = 3;
+        }
+        optional int32 crop_id = 2;
+        repeated Item towers = 3;
+        repeated Item cells = 4;
+        repeated IndustryItem industries = 5;
+        repeated IntPair catapult_nums = 6;
+        optional int32 ret = 7;
+}
+
+message C2S_CropLandLoadAllInfo {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LAND_LOAD_ALL_INFO];
+}
+
+message S2C_CropLandLoadAllInfo {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LAND_LOAD_ALL_INFO];
+        message TowerInfo {
+                optional int32 crop_id = 1;
+                optional int64 tower_id = 2;
+                optional int32 pos_x = 3;
+                optional int32 pos_y = 4;
+                optional int32 destruction_time = 5;
+        optional int32 declare_crop_id = 6;
+        optional int32 declare_time = 7;
+        }
+        repeated TowerInfo crop_land_towers = 2;
+}
+
+message C2S_CropLandCreate {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LAND_CREATE];
+        optional int32 pos_x = 2;
+        optional int32 pos_y = 3;
+}
+
+message S2C_CropLandCreate {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LAND_CREATE];
+        optional int32 pos_x = 2;
+        optional int32 pos_y = 3;
+        optional int64 tower_id = 4;
+        optional int32 ret = 5;
+        optional int32 crop_id = 6;
+}
+
+message C2S_CropLandRemove {
+        optional ProtocolType type = 1 [default = C_2_S_CROP_LAND_REMOVE];
+        optional int64 tower_id = 2;
+        enum Action {
+                REMOVE = 1;
+                CANCEL = 2;
+                DO_REMOVE = 3;
+        }
+        optional int32 action = 3;
+}
+
+message S2C_CropLandRemove {
+        optional ProtocolType type = 1 [default = S_2_C_CROP_LAND_REMOVE];
+        optional int64 tower_id = 2;
+        optional int32 action = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_CropLandDeclareBattle {
+    optional ProtocolType type = 1 [default = C_2_S_CROP_LAND_DECLARE_BATTLE];
+    optional int64 tower_id = 2;
+    optional int32 crop_id = 3;
+}
+
+message S2C_CropLandDeclareBattle {
+    optional ProtocolType type = 1 [default = S_2_C_CROP_LAND_DECLARE_BATTLE];
+    optional int32 ret = 2;
+    optional int64 tower_id = 3;
+    optional int32 crop_id = 4;
+    optional int32 declare_time = 5;
+}
+
+message S2C_IndustryRangeTargetChange {
+    optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_RANGE_TARGET_CHANGE];
+    optional int64 industry_id = 2;
+    optional int64 target_id = 3;
+}
+
+message C2S_IndustryResetCatapult {
+    optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_RESET_CATAPULT];
+    optional int32 army_id = 2;
+}
+
+message S2C_IndustryResetCatapult {
+    optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_RESET_CATAPULT];
+    optional int32 ret = 2;
+    optional int32 army_id = 3;
+}
+
+message C2S_IndustryLevelUp {
+    optional ProtocolType type = 1 [default = C_2_S_INDUSTRY_LEVEL_UP];
+    optional int64 ind_id = 2;
+}
+
+message S2C_IndustryLevelUp {
+    optional ProtocolType type = 1 [default = S_2_C_INDUSTRY_LEVEL_UP];
+    optional int32 ret = 2;
+    optional int64 ind_id = 3;
+}

@@ -1,0 +1,407 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message Equip {
+        message Attr {
+            optional int32 type = 1;
+            optional float value = 2;
+            optional int32 id = 3;
+        }
+        optional int64 id = 1;
+        optional int32 temp_id = 2;
+        optional int32 general_id = 3;
+        optional int32 level = 4;
+        optional int32 power = 5;
+        optional int32 state = 6;
+        repeated int32 base_attrs = 7;
+        repeated Attr extra_attrs = 8;
+        repeated Attr total_attrs = 9;
+        repeated int64 recast_from = 10;
+        optional int32 imprint_id = 11;
+        optional int32 temp_imprint_id = 12;
+        repeated Attr imprint_attrs = 13;
+        repeated Attr temp_imprint_attrs = 14;
+        optional int32 link_power = 15;
+        optional int32 refresh_value = 16;
+}
+
+message C2S_EquipmentAction {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_ACTION];
+        optional int64 id = 2;
+        optional bool action_type = 3; //0 update grade, 1 down grade
+        optional bool one_key = 4;
+}
+
+message S2C_EquipmentAction {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_ACTION];
+        optional int32 ret = 2;
+        optional int32 id = 3;
+        optional bool action_type = 4;
+        optional int32 lvl = 6;
+}
+
+message C2S_EquipmentLoadAllResult {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_LOADALL];
+}
+
+message S2C_EquipmentLoadAllResult {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_LOADALL];
+        repeated Equip equips = 2;
+}
+
+message C2S_EquipItem {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_EQUIP_ITEM];
+        optional int32 general_id = 2;
+        optional int64 equip_id = 3;
+}
+
+message S2C_ItemChangeRes {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_EQUIP_ITEM];
+        optional int32 ret = 2;
+        optional int32 general_id = 3;
+        optional int64 req_equip_id = 4;
+        optional int64 old_equip_id = 6;
+}
+
+message C2S_UnEquitItem {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_UNEQUIP_ITEM];
+        optional int32 general_id = 2;
+        optional int64 equip_id = 3;
+}
+
+message C2S_CompositePutInItem {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_COMPOSITE_PUTIN_ITEM];
+        optional int32 dest_pos_type = 2;
+        optional int32 res_pos_type = 3;
+        optional int32 new_item_id = 4;
+}
+
+message S2C_CompositePutInItem {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_COMPOSITE_PUTIN_ITEM];
+        optional bool ret = 2;
+}
+
+message C2S_CompositeTakeOutItem {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_COMPOSITE_TAKEOUT_ITEM];
+        optional int32 pos_type = 2;
+        optional int32 item_id = 3;
+}
+
+message S2C_CompositeTakeOutItem {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_COMPOSITE_TAKEOUT_ITEM];
+        optional bool ret = 2;
+}
+
+message C2S_CompositeItem {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_COMPOSITE_ITEM];
+        optional int32 item_id_first = 2;
+        optional int32 item_id_second = 3;
+}
+
+message S2C_CompositeItem {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_COMPOSITE_ITEM];
+        optional bool ret = 2;
+        optional int32 db_id = 3;
+}
+
+message C2S_EquipGFItem {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_EQUIP_GF_ITEM];
+        optional int32 dest_pos = 2;
+        optional int32 res_pos = 3;
+        optional int32 new_item_id = 4;
+}
+
+message S2C_EquipGFItem {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_EQUIP_GF_ITEM];
+        optional bool ret = 2;
+}
+
+message C2S_UnEquipGFItem {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_UNEQUIP_GF_ITEM];
+        optional int32 pos = 2;
+}
+
+message S2C_UnEquipGFItem {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_UNEQUIP_GF_ITEM];
+        optional bool ret = 2;
+}
+
+message C2S_ExchangeItem {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_EXCHANGE_ITEM];
+        optional int32 general_id_first = 2;
+        optional int32 general_id_second = 3;
+        optional bool is_exchange = 4;
+        repeated int32 poes = 5;
+}
+
+message S2C_ExchangeItem {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_EXCHANGE_ITEM];
+        optional bool ret = 2;
+}
+
+message C2S_EquipBind {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_BIND];
+        optional int32 id = 2;
+        optional int32 bind_type = 3;
+}
+
+message S2C_EquipBind {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_BIND];
+        optional int32 equipment_id = 2;
+        optional int32 bind_type = 4;
+}
+
+message C2S_OneKeyCompositeItem {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_ONE_KEY_COMPOSITE_ITEM];
+}
+
+message S2C_UpdateOneKeyCompositeItem {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_ONE_KEY_COMPOSITE_ITEM];
+        optional string items = 2;
+}
+
+message S2C_AddNewEquipment {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_ADD_NEW];
+        optional Equip equip = 3;
+}
+
+message C2S_EquipmentSell {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_SELL];
+        optional int64 id = 2;
+}
+
+message S2C_EquipmentSell {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_SELL];
+        optional int64 id = 2;
+        optional int32 ret = 3;
+}
+
+
+message C2S_EquipmentCasting {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_CASTING];
+        optional int64 eq_id = 2;
+}
+
+message S2C_EquipmentCasting {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_CASTING];
+        optional int64 eq_id = 2;
+        optional int32 old_temp_id = 3;
+        optional int32 new_temp_id = 4;
+        optional int32 new_lvl = 5;
+}
+
+message C2S_EquipmentSoloLoad {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_SOLO_LOAD];
+}
+
+message S2C_EqipmentSoloLoad {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_SOLO_LOAD];
+        message Solo {
+            optional int64 id = 1;
+            optional int32 temp_id = 2;
+            optional int32 state = 5;
+            repeated int32 attrs = 6;
+        }
+        repeated Solo solos = 2;
+}
+
+message C2S_EquipmentSoloComposite {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_SOLO_COMPOSITE];
+        optional int64 id1 = 2;
+        optional int64 id2 = 3;
+}
+
+message S2C_EquipmentSoloComposite {
+         optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_SOLO_COMPOSITE];
+         optional int64 id1 = 2;
+         optional int64 id2 = 3;
+         optional int64 new_id = 4;
+}
+
+message C2S_EquipmentSoloWear {
+         optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_SOLO_WEAR];
+         optional int32 pos = 3;
+         optional int64 solo_id = 4;
+         optional int32 op_type = 5; //0 take off, 1 wear
+}
+
+message S2C_EquiptmentSoloWear {
+         optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_SOLO_WEAR];
+         optional int32 pos = 3;
+         optional int64 solo_id = 4;
+         optional int64 old_solo_id = 5;
+}
+
+message C2S_EquipmentSoloSell {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_SOLO_SELL];
+        optional int64 id = 2;
+}
+
+message S2C_EquipmentSoloSell {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_SOLO_SELL];
+        optional int64 id = 2;
+}
+
+message SoloPart {
+        optional int32 part = 1;
+        optional int32 id = 2;
+        optional int32 now_exp = 3;
+}
+
+message C2S_EquipmentSoloPartLevelUp {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_SOLO_PART_LEVEL_UP];
+        optional int32 part = 2;
+        optional int32 item_id = 3;
+        optional int32 num = 4;
+}
+
+message S2C_EquipmentSoloPartLevelUp {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_SOLO_PART_LEVEL_UP];
+        optional SoloPart parts = 2;
+}
+
+message OneKeyEquipInfo {
+    optional int64 id = 1;
+    optional int32 level = 2;
+}
+
+message C2S_EquipmentOneKeyAction {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_ONE_KEY_ACTION];
+        repeated OneKeyEquipInfo equips = 2;
+}
+
+message S2C_EquipmentOneKeyAction {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_ONE_KEY_ACTION];
+        repeated OneKeyEquipInfo equips = 2;
+}
+
+message S2C_EquipmentLoadAllEnd {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_LOADALL_END];
+}
+
+message C2S_EquipmentRefresh {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_REFRESH];
+        optional int64 id = 2;
+}
+
+message S2C_EquipmentRefresh {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_REFRESH];
+        optional Equip equip = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_EquipmentRecast {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_RECAST];
+        optional int64 id1 = 2;
+        optional int64 id2 = 3;
+}
+
+message S2C_EquipmentRecast {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_RECAST];
+        optional Equip equip = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_EquipmentRecastConfirm {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_RECAST_CONFIRM];
+        optional int64 id = 2;
+        optional int64 save_id = 3;
+}
+
+message S2C_EquipmentRecastConfirm {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_RECAST_CONFIRM];
+        optional int64 save_id = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_EquipmentDecompose {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_DECOMPOSE];
+        repeated int64 ids = 2;
+}
+
+message S2C_EquipmentDecompose {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_DECOMPOSE];
+        repeated int64 ids = 2;
+}
+
+message C2S_EquipmentImprint {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_IMPRINT];
+        optional int64 eq_id = 2;
+        optional int32 imprint_id = 3;
+}
+
+message S2C_EquipmentImprint {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_IMPRINT];
+        message Attr {
+            optional int32 type = 1;
+            optional float value = 2;
+        }
+        optional int64 eq_id = 2;
+        repeated Attr imprint_attrs = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_EquipmentSaveImprint {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_SAVE_IMPRINT];
+        optional int64 eq_id = 2;
+}
+
+message S2C_EquipmentSaveImprint {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_SAVE_IMPRINT];
+        optional Equip equip = 2;
+        optional int32 ret = 3;
+}
+
+message C2S_EquipmentImprintStone {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_IMPRINT_STONE];
+}
+
+message S2C_EquipmentImprintStone {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_IMPRINT_STONE];
+        message Stone {
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated Stone stones = 2;
+}
+
+message C2S_EquipmentMutiEquip {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_MUTI_EQUIP];
+        optional int32 general_id = 2;
+        repeated int64 equip_ids = 3;
+}
+
+message S2C_EquipmentMutiEquip {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_MUTI_EQUIP];
+        optional int32 ret = 2;
+        optional int32 general_id = 3;
+        repeated int64 equip_ids = 4;
+}
+
+message C2S_EquipmentAppraise {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_APPRAISE];
+        optional int64 eq_id = 2;
+        repeated int32 save_ids = 3;
+}
+
+message S2C_EquipmentAppraise {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_APPRAISE];
+        optional int64 eq_id = 2;
+        repeated int32 save_ids = 3;
+        optional Equip equip = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_EquipmentCompose {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIPMENT_COMPOSE];
+        optional int32 id = 2;
+        optional int32 num = 3;
+}
+
+message S2C_EquipmentCompose {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIPMENT_COMPOSE];
+        optional int32 id = 2;
+        optional int32 num = 3;
+        optional int32 ret = 5;
+}

@@ -1,0 +1,62 @@
+import "protocol_base.proto";
+import "battle_report.proto";
+
+package Lyingdragon.Protocol;
+
+message WorldMonster {
+    optional int64 id = 1;
+    optional int32 group_id = 2;
+    optional int32 army_id = 3;
+    optional int32 pos_x = 4;
+    optional int32 pos_y = 5;
+}
+
+message S2C_WolrdMonster {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_MONSTER_INFO];
+    optional WorldMonster monster = 2;
+}
+
+message C2S_WorldMonsterAtk {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_MONSTER_ATK];
+    optional int64 id = 2;
+    optional int32 army_id = 3;
+}
+
+message S2C_WorldMonsterAtk {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_MONSTER_ATK];
+    optional int64 id = 2;
+    optional int64 atk_id = 3;
+    optional int32 army_id = 4;
+    optional int32 ret = 5;
+    optional int32 result = 6;
+    optional int64 report_id = 7;
+    optional BriefSingleBattleReport brief_report = 8;
+    repeated RewardType rewards = 9;
+}
+
+message C2S_WorldMonsterSearch {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_MONSTER_SEARCH];
+    optional int32 level = 2;
+}
+
+message S2C_WorldMonsterSearch {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_MONSTER_SEARCH];
+    optional int32 ret = 2;
+    optional WorldMonster monster = 3;
+}
+
+message S2C_WorldMonsterRefresh {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_MONSTER_REFRESH];
+}
+
+message C2S_WorldMonsterKillInfo {
+    optional ProtocolType type = 1 [default = C_2_S_WORLD_MONSTER_KILL_INFO];
+}
+
+message S2C_WorldMonsterKillInfo {
+    optional ProtocolType type = 1 [default = S_2_C_WORLD_MONSTER_KILL_INFO];
+    repeated int32 levels = 2;
+}
+
+
+

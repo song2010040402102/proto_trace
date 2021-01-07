@@ -1,0 +1,162 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_ItemsInfo {
+    optional ProtocolType type = 1 [default = C_2_S_ITEM_INFO];
+}
+
+message S2C_ItemsInfo {
+    optional ProtocolType  type = 1 [default = S_2_C_ITEM_INFO];
+    message Item {
+        optional int32 id = 1;
+        optional int32 num = 2;
+    }
+    repeated Item items = 2;
+}
+
+message C2S_ItemCompose {
+    optional ProtocolType type = 1 [default = C_2_S_ITEM_COMPOSE];
+    optional int32 id = 2;
+    optional int32 num = 3;
+}
+
+message S2C_ItemCompose {
+    optional ProtocolType type = 1 [default = S_2_C_ITEM_COMPOSE];
+    optional int32 id = 2;
+    optional int32 ret = 3;
+}
+
+message C2S_ItemSell {
+    optional ProtocolType type = 1 [default = C_2_S_ITEM_SELL];
+    optional int32 id = 2;
+    optional int32 num = 3;
+}
+
+message S2C_ItemSell {
+     optional ProtocolType type = 1 [default = S_2_C_ITEM_SELL];
+     optional int32 id = 2;
+     optional int32 left_num = 3;
+     optional int32 ret = 4;
+}
+
+message C2S_ItemUse {
+    optional ProtocolType type = 1 [default = C_2_S_ITEM_USE];
+    optional int32 id = 2;
+    optional int32 num = 3;
+    repeated int32 select_ids = 4;
+}
+
+message S2C_ItemUse {
+    optional ProtocolType type = 1 [default = S_2_C_ITEM_USE];
+    optional int32 id = 2;
+    repeated RewardType rwds = 3;
+    optional int32 ret = 4;
+}
+message C2S_AccelerateItemList {
+        optional ProtocolType type = 1 [default = C_2_S_ACCELERATE_ITEM_LIST];
+}
+
+message S2C_AccelerateItemList {
+        optional ProtocolType type = 1 [default = S_2_C_ACCELERATE_ITEM_LIST];
+        message Item {
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated Item items = 2;
+}
+
+message C2S_AccelerateItemUse {
+        optional ProtocolType type = 1 [default = C_2_S_ACCELERATE_ITEM_USE];
+        optional int32 item_id = 2;
+        optional int32 num = 3;
+        optional int32 effect_type = 4; //1=building 2=tech
+        optional int32 effect_id = 5;
+}
+
+message  S2C_AccelerateItemUse {
+        optional ProtocolType type = 1 [default = S_2_C_ACCELERATE_ITEM_USE];
+        optional int32 item_id = 2;
+        optional int32 num = 3;
+        optional int32 effect_type = 4; //1=building 2=tech
+        optional int32 effect_id = 5;
+        optional int32 new_cd = 6;
+        optional int32 ret = 7;
+}
+
+message C2S_AccelerateItemBuy {
+        optional ProtocolType type = 1 [default = C_2_S_ACCELERATE_ITEM_BUY];
+        optional int32 id = 2;
+        optional int32 num = 3;
+}
+
+message S2C_AccelerateItemBuy {
+        optional ProtocolType type = 1 [default = S_2_C_ACCELERATE_ITEM_BUY];
+        optional int32 id = 2;
+        optional int32 num = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_BuffItemList {
+        optional ProtocolType type = 1 [default = C_2_S_BUFF_ITEM_LIST];
+}
+
+message S2C_BuffItemList {
+        optional ProtocolType type = 1 [default = S_2_C_BUFF_ITEM_LIST];
+        message Item {
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated Item items = 2;
+}
+
+message C2S_EquipPieceList {
+        optional ProtocolType type = 1 [default = C_2_S_EQUIP_PIECE_LIST];
+}
+
+message S2C_EquipPieceList {
+        optional ProtocolType type = 1 [default = S_2_C_EQUIP_PIECE_LIST];
+        message Item {
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated Item items = 2;
+}
+
+message C2S_BuffItemUse {
+        optional ProtocolType type = 1 [default = C_2_S_BUFF_ITEM_USE];
+        optional int32 id = 2;
+}
+
+message S2C_BuffItemUse {
+        optional ProtocolType type = 1 [default = S_2_C_BUFF_ITEM_USE];
+        optional int32 id = 3;
+        optional int32 ret = 2;
+}
+
+message C2S_WorldAccelerateItemList {
+        optional ProtocolType type = 1 [default = C_2_S_WORLD_ACCELERATE_ITEM_LIST];
+}
+
+message S2C_WorldAccelerateItemList {
+        optional ProtocolType type = 1 [default = S_2_C_WORLD_ACCELERATE_ITEM_LIST];
+        message Item {
+            optional int32 id = 1;
+            optional int32 num = 2;
+        }
+        repeated Item items = 2;
+}
+
+message C2S_UseCollectionItem {
+    optional ProtocolType type = 1 [default = C_2_S_USE_COLLECTION_ITEM];
+    optional int32 id = 2;
+    optional int32 num = 3;
+}
+
+message S2C_UseCollectionItemUse {
+    optional ProtocolType type = 1 [default = S_2_C_USE_COLLECTION_ITEM];
+    optional int32 id = 2;
+    optional int32 num = 3;
+    repeated RewardType rwds = 4;
+    optional int32 ret = 5;
+}

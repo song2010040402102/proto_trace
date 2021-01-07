@@ -1,0 +1,203 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+option optimize_for = SPEED;
+
+message ClientInfo {
+    optional int32 plat_id = 1;//ios 0 /android 1
+    optional string telecom_oper = 2;//运营商
+    optional string reg_channel = 3;//注册渠道
+    optional string device_id = 4;//设备ID,安卓上报IMEI,IOS上报IDFA(报原始信息,不要加密)
+    optional string system_software = 5;//移动终端操作系统版本
+    optional string client_version = 6;//客户端版本
+    optional string system_hardware = 7;//移动终端机型
+    optional string network = 8;//3G/WIFI/2G
+    optional int32 screen_width = 9;//显示屏宽度
+    optional int32 screen_hight = 10;//显示屏高度
+    optional float density = 11;//像素密度
+    optional string cpu_hardware = 12;//cpu类型|频率|核数
+    optional int32 memory = 13;//内存信息单位M
+    optional string GL_render = 14;//opengl render信息
+    optional string game_app_id = 15;//游戏APPID
+    optional string idfv = 16;//ios IDFV
+}
+
+message MidasPara {
+    optional string open_key = 1;
+    optional string pf = 2;
+    optional string pf_key = 3;
+    optional int32 pf_type = 4;
+    optional string session_id = 5;
+    optional string session_type = 6;
+}
+
+message C2S_Login {
+        optional ProtocolType type = 1 [default = C_2_S_ACCOUNT_LOGIN];
+        optional string loginname = 2;
+        optional string platform_name = 3;
+        optional string source = 4;
+        optional string timestamp = 5;
+        optional int32 fcm = 6;
+        optional string ticket = 7;
+        optional string gopen_id = 8;//玩家gopen_id
+        optional int32 score = 9;
+        optional int32 black_tag = 10;
+        optional int32 ugc_tag = 11;
+        optional MidasPara midas_para = 12;
+        optional int32 zone_id = 15;
+}
+
+message S2C_LoginResult {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_LOGIN];
+        message Role {
+                optional int64 id = 2;
+                optional string name = 3;
+                optional int32 country_id = 4;
+                optional int32 level = 5;
+                optional int32 vip_lvl = 6;
+                optional int32 is_default = 8;
+                optional int32 create_time = 9;
+        }
+        optional int32 ret = 2;
+        repeated Role roles = 3;
+        optional string new_name = 4;
+}
+
+message C2S_AccountCreate {
+        optional ProtocolType type = 1 [default = C_2_S_ACCOUNT_CREATE];
+        optional string name = 2;
+        optional int32 country_id = 3;
+        optional string device_id = 4;
+        optional string telecom_oper = 5;
+        optional ClientInfo info = 6;
+        optional int32 born_date = 7;//YYMMdd
+}
+
+message S2C_CreateResult {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_CREATE];
+        optional int32 ret = 2;
+        optional int64 id = 3;
+        optional int32 country_id = 4;
+}
+
+message C2S_AccountLoadChar {
+        optional ProtocolType type = 1 [default = C_2_S_ACCOUNT_LOAD_CHAR];
+        optional int64 role_id = 2;
+        optional string client_version = 3;
+        optional string telecom_oper = 4;
+        optional string network = 5;
+        optional string system_hardware = 6;
+        optional string device_id = 7;
+        optional ClientInfo info = 8;
+}
+
+message S2C_AccountLoadChar {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_LOAD_CHAR];
+        optional string name = 2;
+        optional int32 charged_cash = 3;
+        optional int32 vip_lvl = 4;
+        optional int32 create_time = 5;
+        optional int32 session_key = 6;
+        optional bool first_login = 7;
+        optional int32 ret = 8;
+}
+
+message C2S_RandName {
+        optional ProtocolType type = 1 [default = C_2_S_ACCOUNT_RAND_NAME];
+}
+
+message S2C_RandName {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_RAND_NAME];
+        optional string name = 2;
+}
+
+message S2C_CharLoadEnd {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_LOAD_END];
+}
+
+message S2C_GameTimeUpdate {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_GAME_TIME];
+        optional int32 year = 2;
+        optional int32 season = 3;
+        optional int32 epoch_time = 4;
+}
+
+message C2S_AccountSwapSession {
+        optional ProtocolType type = 1 [default = C_2_S_ACCOUNT_SWAP_SESSION];
+        optional int64 role_id = 2;
+        optional int32 session_key = 3;
+        optional ClientInfo info = 4;
+}
+
+message S2C_AccountSwapSession {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_SWAP_SESSION];
+        optional int32 ret = 2;
+        optional bool first_login = 3;
+}
+
+message S2C_GameServerTime {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_SERVER_TIME];
+        optional int32 open_time = 2;
+        optional int32 open_days = 3;
+}
+
+message S2C_AccountForbidden {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_FORBIDDEN];
+        optional int32 chat_time = 2;
+        optional int32 login_time = 3;
+}
+
+message S2C_AccountServerNode {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_SERVER_NODE];
+        message Node {
+                optional int32 zone_id = 1;
+                optional string server_name = 2;
+                optional string report_address = 3;
+        }
+        optional int32 my_zone_id = 2;
+        repeated Node nodes = 3;
+}
+
+message C2S_AccountLeastPlayerNumCountry {
+        optional ProtocolType type = 1 [default = C_2_S_ACCOUNT_LEAST_PLAYER_NUM_COUNTRY];
+}
+
+message S2C_AccountLeastPlayerNumCountry {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_LEAST_PLAYER_NUM_COUNTRY];
+        optional int32 country_id = 2;
+}
+
+message S2C_AccountKickOff {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_KICK_OFF];
+        optional int32 reason = 2;//1=online duration limit
+}
+
+message C2S_AccountQuery {
+        optional ProtocolType type = 1 [default = C_2_S_ACCOUNT_QUERY];
+        repeated string login_names = 2;
+}
+
+message S2C_AccountQuery {
+        optional ProtocolType type = 1 [default = S_2_C_ACCOUNT_QUERY];
+        message AccountInfo {
+            optional string login_name = 1;
+            optional int64 role_id = 2;
+            optional string name = 3;
+            optional int32 zone_id = 4;
+            optional int32 country_id = 5;
+            optional int32 level = 6;
+            optional int32 img_type = 7;
+            optional int32 img_id = 8;
+            optional bool is_online = 9;
+            optional int32 last_logout_time = 10;
+            optional int32 force_value = 11;
+        }
+        repeated AccountInfo infos = 2;
+}
+
+message S2C_CreditScoreLimit {
+        optional ProtocolType type = 1 [default = S_2_C_CREDIT_SCORE_LIMIT];
+        optional int32 score = 2;
+        optional int32 limit_type = 3;
+}

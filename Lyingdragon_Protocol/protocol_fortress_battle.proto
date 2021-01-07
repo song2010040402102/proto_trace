@@ -1,0 +1,99 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_FortressBattleInfo {
+        optional ProtocolType type = 1 [default = C_2_S_FORTRESS_BATTLE_INFO];
+}
+
+message S2C_FortressBattleInfo {
+        optional ProtocolType type = 1 [default = S_2_C_FORTRESS_BATTLE_INFO];
+        message Battle {
+            optional int32 city_id = 1;
+            optional int32 status = 2;
+            optional int32 battle_time = 3;
+            optional int32 atk_crop = 4;
+            optional int32 def_crop = 5;
+        }
+        repeated Battle battles = 2;
+}
+
+message C2S_FortressBattleDetail {
+        optional ProtocolType type = 1 [default = C_2_S_FORTRESS_BATTLE_DETAIL];
+        optional int32 city_id = 2;
+}
+
+message S2C_FortressBattleDetail {
+        optional ProtocolType type = 1 [default = S_2_C_FORTRESS_BATTLE_DETAIL];
+        message BattleObject {
+            optional int32 type = 1;
+            optional int32 id = 2;
+            optional string name = 3;
+            optional int32 level = 4;
+            optional int32 power = 5;
+            optional int32 pos = 6;
+            optional int32 general_id = 7;
+            optional int32 img_type = 8;
+            optional int32 img_id = 9;
+        }
+        optional int32 city_id = 2;
+        optional int32 status = 3;
+        optional int32 battle_time = 4;
+        optional int32 atk_crop = 5;
+        optional int32 def_crop = 6;
+        repeated BattleObject attackers = 7;
+        repeated BattleObject defensers = 8;
+        optional int32 ret = 9;
+}
+
+message C2S_FortressBattleDeclare {
+        optional ProtocolType type = 1 [default = C_2_S_FORTRESS_BATTLE_DECLARE];
+        optional int32 city_id = 2;
+}
+
+message S2C_FortressBattleDeclare {
+        optional ProtocolType type = 1 [default = S_2_C_FORTRESS_BATTLE_DECLARE];
+        optional int32 city_id = 2;
+        optional int32 crop_id = 3;
+        optional int32 ret = 4;
+        optional int32 battle_time = 5;
+        optional int32 declare_cost = 6;
+}
+
+message C2S_FortressBattleJoin {
+        optional ProtocolType type = 1 [default = C_2_S_FORTRESS_BATTLE_JOIN];
+        optional int32 city_id = 2;
+        optional int32 join_type = 3;
+        optional int32 army_id = 4;
+}
+
+message S2C_FortressBattleJoin {
+        optional ProtocolType type = 1 [default = S_2_C_FORTRESS_BATTLE_JOIN];
+        optional int32 city_id = 2;
+        optional int32 join_type = 3;
+        optional int32 army_id = 4;
+        optional int32 pos = 5;
+        optional int32 ret = 6;
+}
+
+message C2S_FortressBattleQuit {
+        optional ProtocolType type = 1 [default = C_2_S_FORTRESS_BATTLE_QUIT];
+        optional int32 city_id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_FortressBattleQuit {
+        optional ProtocolType type = 1 [default = S_2_C_FORTRESS_BATTLE_QUIT];
+        optional int32 city_id = 2;
+        optional int32 army_id = 3;
+        optional int32 ret = 4;
+}
+
+message S2C_FortressBattleResultNTF {
+        optional ProtocolType type = 1 [default = S_2_C_FORTRESS_BATTLE_RESULT_NTF];
+        optional int32 city_id = 2;
+        optional int32 result = 3;
+        optional int32 atk_crop = 4;
+        optional int32 def_crop = 5;
+        optional int64 report_id = 6;
+}

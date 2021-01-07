@@ -1,0 +1,69 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_LoadRankInfo {
+        optional ProtocolType type = 1 [default = C_2_S_RANK_INFO];
+        optional int32 rank_type = 2;
+        optional int32 page_id = 3;
+}
+
+message S2C_LoadRankInfo {
+        optional ProtocolType type = 1 [default = S_2_C_RANK_INFO];
+        message RankInfo {
+            optional string name = 1;
+            optional int32 country_id = 2;
+            optional int32 attack_value = 3;
+        }
+        optional int32 rank_type = 2;
+        optional int32 player_num = 3;
+        repeated RankInfo  infos = 4;
+}
+
+message S2C_RankSelfInfo {
+        optional ProtocolType type = 1 [default = S_2_C_RANK_SELF_INFO];
+        optional int32 value = 2;
+        optional int32 rank = 3;
+}
+
+message C2S_RankPowerProgress {
+        optional ProtocolType type = 1 [default = C_2_S_RANK_POWER_PROGRESS];
+}
+
+message S2C_RankPowerProgress {
+        optional ProtocolType type = 1 [default = S_2_C_RANK_POWER_PROGRESS];
+        optional int32 general_num = 2;
+        optional int32 general_lv = 3;
+        optional int32 eq_attri_ex = 4;
+        optional int32 transfer_soldier_times = 5;
+        optional int32 general_soul = 6;
+        optional int32 eq_lv = 7;
+        optional int32 medal_lv = 8;
+        optional int32 control_soldier_lvl = 9;
+        optional int32 tech_lv = 10;
+        optional int32 bosom_friend_lv = 11;
+        optional int32 bosom_friend_rate = 12;
+        optional int32 horse_power = 13;
+}
+
+message S2C_RankPowerAttriInfo {
+        optional ProtocolType type = 1 [default = S_2_C_RANK_POWER_ATTRI_INFO];
+        message GeneralPower {
+            optional int32 id = 1;
+            optional int32 value = 2;
+        }
+        optional int32 all_power_value = 2;
+        optional int32 medal_val = 3;
+        optional int32 bosom_friend_val = 4;
+        optional int32 general_soul_val = 5;
+        optional int32 horse_leader_attri = 6;
+        optional int32 horse_attack_attri = 7;
+        optional int32 horse_mentality_attri = 8;
+        optional int32 horse_eq_attri = 9;
+        optional int32 horse_ex_attri = 10;
+        optional double medal_rate = 11;
+        optional double tech_rate = 12;
+        optional double bosom_friend_rate = 13;
+        optional double official_rate = 14;
+        repeated GeneralPower general_powers = 15;
+}

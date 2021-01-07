@@ -1,0 +1,13 @@
+1. Please install wget and killall command if not exists.
+
+2. Modify agent src and dst address in config.yaml. Src is address which client will connect to. Dst is address which game server listen.
+
+3. Run command below to start server.
+
+   cd script && ./run.sh
+
+4. Run command below to update protobuf periodically or place script file of executing update.sh at /etc/cron.daily for updating everyday automatically.
+
+   cd script && ./update.sh
+
+5. View http://server_ip:9120

@@ -1,0 +1,210 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message HorseSkill {
+    optional int32 skill_id = 1;
+    optional int32 level = 2;
+}
+
+message HorseAttr {
+    optional int32 attr_type = 1;
+    optional int32 value = 2;
+    optional double increase = 3;
+}
+
+message HorseInfo {
+    message Attr {
+        optional int32 attr_type = 1;
+        optional int32 value = 2;
+    }
+    optional int64 id = 1;
+    optional int32 exp = 2;
+    optional int32 level = 3;
+    optional int32 pos = 4;
+    optional int32 rank_level = 5;
+    optional int32 template_id = 6;
+    repeated HorseAttr attrs = 7;
+    repeated HorseSkill common_skills = 8;
+    optional int32 special_skill = 9;
+    optional int32 general_id = 10;
+    optional int32 star = 11;
+    optional int32 power = 12;
+    repeated Attr total_attrs = 13;
+}
+
+message C2S_HorseAllInfo {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_ALL_INFO];
+}
+
+message S2C_HorseAllInfo {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_ALL_INFO];
+    repeated HorseInfo horses = 2;
+    optional int32 used_slot_pos = 3;
+}
+
+message C2S_HorseLoadPieceNum {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_LOAD_PIECE_NUM];
+}
+
+message S2C_HorseLoadPieceNum {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_LOAD_PIECE_NUM];
+    message Piece {
+        optional int32 template_id = 1;
+        optional int32 num = 2;
+    }
+    repeated Piece pieces = 2;
+}
+
+message C2S_HorsePieceCompose {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_PIECE_COMPOSE];
+    optional int32 horse_template_id = 2;
+}
+
+message S2C_HorsePieceCompose {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_PIECE_COMPOSE];
+    optional int32 horse_template_id = 2;
+    optional int32 left_piece_num = 3;
+}
+
+message C2S_HorseAddExp {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_ADD_EXP];
+    message Item {
+        optional int32 id = 1;
+        optional int32 num = 2;
+    }
+    optional int64 horse_id = 2;
+    optional int32 is_key = 3;
+    repeated Item items = 4;
+}
+
+message S2C_HorseAddExp {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_ADD_EXP];
+    optional int64 horse_id = 2;
+    optional int32 lvl = 3;
+    optional int32 exp = 4;
+    optional int32 power = 5;
+    optional int32 ret = 6;
+}
+
+message C2S_HorseRankUp {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_RANK_UP];
+    optional int64 horse_id = 2;
+}
+
+message S2C_HorseRankUp {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_RANK_UP];
+    optional int64 horse_id = 2;
+    optional int32 rank_level = 3;
+    optional int32 power = 4;
+    optional int32 ret = 5;
+}
+
+message C2S_HorseJoinBattle {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_JOIN_BATTLE];
+    optional int64 horse_id = 2;
+    optional int32 pos = 3;
+    optional int32 is_join = 4;
+}
+
+message S2C_HorseJoinBattle {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_JOIN_BATTLE];
+    optional int32 pos = 2;
+    optional int64 horse_id = 3;
+    optional int32 is_join = 4;
+}
+
+message C2S_HorseRemove {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_REMOVE];
+    optional int64 horse_id = 2;
+}
+
+message S2C_HorseRemove {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_REMOVE];
+    optional int64 horse_id = 2;
+    repeated RewardType rwds = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_HorseSkillBookUse {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_SKILL_BOOK_USE];
+    optional int32 book_id = 2;
+    optional int64 horse_id = 3;
+}
+
+message S2C_HorseSkillBookUse {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_SKILL_BOOK_USE];
+    optional int64 horse_id = 2 ;
+    repeated HorseSkill skills = 3;
+}
+
+message C2S_HorseRebuild {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_REBUILD];
+    optional int64 horse_id = 2;
+}
+
+message S2C_HorseRebuild {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_REBUILD];
+    optional int64 horse_id = 2;
+}
+
+message C2S_HorseBind {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_BIND];
+    optional int64 horse_id = 2;
+    optional int32 general_id = 3;
+}
+
+message S2C_HorseBind {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_BIND];
+    optional int64 horse_id1 = 2;
+    optional int32 general_id1 = 3;
+    optional int64 horse_id2 = 4;
+    optional int32 general_id2 = 5;
+    optional int32 ret = 6;
+}
+
+message C2S_HorseUnbind {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_UNBIND];
+    optional int32 general_id = 2;
+}
+
+message S2C_HorseUnbind {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_UNBIND];
+    optional int32 general_id = 2;
+    optional int64 horse_id = 3;
+    optional int32 ret = 4;
+}
+
+message C2S_HorseStarUp {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_STAR_UP];
+    optional int64 horse_id = 2;
+    optional int64 cost_id = 3;
+}
+
+message S2C_HorseStarUp {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_STAR_UP];
+    optional int64 horse_id = 2;
+    optional int64 cost_id = 3;
+    optional int32 new_star = 4;
+    optional int32 power = 5;
+    optional int32 ret = 6;
+}
+
+message C2S_HorseExchange {
+    optional ProtocolType type = 1 [default = C_2_S_HORSE_EXCHANGE];
+    optional int32 num = 2;
+}
+
+message S2C_HorseExchange {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_EXCHANGE];
+    optional int32 num = 2;
+    repeated RewardType rwds = 3;
+    optional int32 ret = 4;
+}
+
+message S2C_HorseNoticeAttr {
+    optional ProtocolType type = 1 [default = S_2_C_HORSE_NOTICE_ATTR];
+    optional int64 horse_id = 2;
+    repeated HorseAttr total_attrs = 3;
+}
+

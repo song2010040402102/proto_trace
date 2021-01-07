@@ -1,0 +1,71 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_RequestBattle_PVE {
+        optional ProtocolType type = 1 [default = C_2_S_BATTLE_REQUEST_PVE];
+        optional int32 instance_id = 2;
+        optional int32 npc_id = 3;
+        optional bool is_force_atk = 4;
+        optional bool is_show = 5;
+}
+
+message C2S_RequestJoinOrQuitMutilBattle {
+        optional ProtocolType type = 1 [default = C_2_S_BATTLE_JOIN_OR_QUIT_MUTI_BATTLE];
+        optional bool join_or_quit = 2;
+        optional int32 crops_id = 3;
+        optional int32 world_area_id = 4;
+        optional int32 hour = 5;
+        optional int32 minute = 6;
+}
+
+message S2C_HandleJoinOrQuitRes {
+        optional ProtocolType type = 1 [default = S_2_C_BATTLE_JOIN_OR_QUIT_RES];
+        optional bool join_or_quit = 2;
+        optional int32 ret = 3;
+}
+
+message S2C_DelMemberMutiBattle {
+        optional ProtocolType type = 1 [default = S_2_C_BATTLE_DEL_MEMBER_MUTI_BATTLE];
+        optional int64 acc_id = 2;
+        optional int32 world_area_id = 3;
+        optional int32 hour = 4;
+        optional int32 minute = 5;
+}
+
+message S2C_AddMemberMutilBattle {
+        optional ProtocolType type = 1 [default = S_2_C_BATTLE_ADD_MEMBER_MUTI_BATTLE];
+        optional int32 world_area_id = 2;
+        optional int32 position_id = 3;
+        optional int32 hour = 4;
+        optional int32 minute = 5;
+        optional int32 acc_id = 6;
+        optional string name = 7;
+        optional int32 power = 8;
+        optional int32 img_type = 9;
+        optional int32 img_id = 10;
+}
+
+message S2C_LoadGeneralFightInfo {
+        optional ProtocolType type = 1 [default = S_2_C_BATTLE_LOAD_GENERAL_FIGHT_INFO];
+        optional int32 fight_round = 2;
+        optional int32 remain_time = 3;
+        optional string atk_name = 4;
+        optional int32 atk_cool_time = 5;
+        optional string def_name = 6;
+        optional int32 def_cool_time = 7;
+}
+
+message S2C_AddPassNpcId {
+        optional ProtocolType type = 1 [default = S_2_C_BATTLE_ADD_PASS_NPCID];
+        optional int32 instance_id = 2;
+        optional int32 npc_id = 3;
+}
+
+message S2C_BattleRes {
+        optional ProtocolType type = 1 [default = S_2_C_BATTLE_RES];
+        optional int32 battle_type = 2;
+        optional int64 id  = 3;
+        optional int32 cool_down = 4;
+        optional string server_id = 5;
+}

@@ -1,0 +1,195 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message SuperArenaGeneralInfo {
+        optional int32 id = 1;
+        optional int32 pos = 2;
+}
+
+message C2S_SuperArenaLoadInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_LOAD_INFO];
+}
+
+message S2C_SuperArenaLoadInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_LOAD_INFO];
+        optional int32 rank = 2;
+        optional int32 grade = 3;
+        optional int32 score = 4;
+        optional int32 cd_time = 5;
+        optional int32 battle_num = 6;
+        repeated int32 draw_ids = 7;
+        optional int32 form_id = 8;
+        repeated SuperArenaGeneralInfo generals = 9;
+}
+
+message C2S_SuperArenaUpdateInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_UPDATE_INFO];
+        optional int32 form_id = 2;
+        repeated SuperArenaGeneralInfo general = 3;
+}
+
+message S2C_SuperArenaUpdateInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_UPDATE_INFO];
+        optional int32 ret = 2;
+}
+
+message C2S_SuperArenaLoadBattleList {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_LOAD_BATTLE_LIST];
+}
+
+message SuperArenaRankItem {
+        optional int64 id = 1;
+        optional string role_name = 2;
+        optional int32 country_id = 3;
+        optional int32 score = 4;
+        optional int32 power = 5;
+        optional int32 rank = 6;
+        optional int32 level = 7;
+        optional int32 img_type = 8;
+        optional int32 img_id = 9;
+}
+
+message S2C_SuperArenaLoadBattleList {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_LOAD_BATTLE_LIST];
+        optional int32 grade = 2;
+        repeated SuperArenaRankItem items = 3;
+}
+
+message C2S_SuperArenaOtherInfo {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_LOAD_OTHER_INFO];
+        optional int32 grade = 2;
+        optional int32 rank = 3;
+}
+
+message S2C_SuperArenaOtherInfo {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_LOAD_OTHER_INFO];
+        optional int32 rank = 2;
+        optional int32 form_id = 3;
+        repeated SuperArenaGeneralInfo generals = 4;
+}
+
+message C2S_SuperArenaLoadRank {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_LOAD_RANK];
+        optional int32 grade = 2;
+        optional int32 from = 3;
+        optional int32 to = 4;
+}
+
+message S2C_SuperArenaLoadRank {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_LOAD_RANK];
+        optional int32 grade = 2;
+        repeated SuperArenaRankItem items = 3;
+}
+
+message C2S_SuperArenaBattle {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_BATTLE];
+        optional int32 rank = 2;
+}
+
+message S2C_SuperArenaBattle {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_BATTLE];
+        optional int32 ret = 2; // 1 busy, 2 unknow
+        optional int32 cd_time = 3;
+        optional int32 new_rank = 4;
+        optional int64 report_id = 5;
+        optional int32 battle_ret = 6;
+}
+
+message C2S_SuperArenaDrawReward {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_DRAW_REWARD];
+        optional int32 id = 2;
+}
+
+message S2C_SuperArenaDrawReward {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_DRAW_REWARD];
+        optional int32 ret = 2;
+        optional int32 id = 3;
+}
+
+message C2S_SuperArenaUpgradeGrade {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_UPGRADE_GRADE];
+}
+
+message S2C_SuperArenaUpgradeGrade {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_UPGRADE_GRADE];
+        optional int32 ret = 2;
+        optional int32 grade = 3;
+        optional int64 report_id = 4;
+        optional int32 score = 5;
+}
+
+message C2S_SuperArenaClearCD {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_CLEAR_CD];
+}
+
+message S2C_SuperArenaClearCD {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_CLEAR_CD];
+        optional int32 cd_time = 2;
+}
+
+message C2S_SuperArenaLog {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_LOG];
+}
+
+message S2C_SuperArenaLog {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_LOG];
+        message Log {
+                optional int32 type = 1;
+                optional int64 global_id = 2;
+                optional string role_name = 3;
+                optional int32 create_time = 4;
+                optional int32 battle_ret = 5;
+                optional int64 report_id = 6;
+                optional int32 rank_diff = 7;
+                optional int32 grade = 8;
+        }
+        repeated Log logs = 2;
+}
+
+message C2S_SuperArenaTopLog {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_TOP_LOG];
+}
+
+message S2C_SuperArenaTopLog {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_TOP_LOG];
+        message Log {
+                optional int64 atk_id = 1;
+                optional string atk_name = 2;
+                optional int64 def_id = 3;
+                optional string def_name = 4;
+                optional int32 create_time = 5;
+                optional int32 battle_ret = 6;
+                optional int64 report_id = 7;
+                optional int32 rank = 8;
+        }
+        repeated Log logs = 2;
+}
+
+message C2S_SuperArenaPromoteLog {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_PROMOTE_LOG];
+}
+
+message S2C_SuperArenaPromoteLog {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_PROMOTE_LOG];
+        message Log {
+                optional int32 grade = 1;
+                optional int32 create_time = 2;
+                optional int32 ret = 3;
+                optional int64 report_id = 4;
+        }
+        repeated Log logs = 2;
+}
+
+message C2S_SuperArenaTheme {
+        optional ProtocolType type = 1 [default = C_2_S_SUPER_ARENA_THEME];
+}
+
+message S2C_SuperArenaTheme {
+        optional ProtocolType type = 1 [default = S_2_C_SUPER_ARENA_THEME];
+        message ThemeItem {
+                optional int32 grade = 1;
+                repeated int32 type = 2;
+        }
+        repeated ThemeItem items = 2;
+}

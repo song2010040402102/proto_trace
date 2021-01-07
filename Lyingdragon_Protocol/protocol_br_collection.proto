@@ -1,0 +1,44 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+message BRItem {
+    optional int32 id = 1;
+    optional int32 zone_id = 2;
+    optional int64 report_id = 3;
+    optional int32 collect_time = 4;
+    optional string remark = 5;
+    optional int64 view_id = 6;
+}
+
+message C2S_BRCollectionList {
+        optional ProtocolType type = 1 [default = C_2_S_BR_COLLECTION_LIST];
+}
+
+message S2C_BRCollectionList {
+        optional ProtocolType type = 1 [default = S_2_C_BR_COLLECTION_LIST];
+        repeated BRItem items = 2;
+}
+
+message C2S_BRCollectionAdd {
+        optional ProtocolType type = 1 [default = C_2_S_BR_COLLECTION_ADD];
+        optional int32 zone_id = 2;
+        optional int64 report_id = 3;
+        optional string remark = 5;
+        optional int64 view_id = 6;
+}
+
+message S2C_BRCollectionAdd {
+        optional ProtocolType type = 1 [default = S_2_C_BR_COLLECTION_ADD];
+        optional int32 ret = 2;
+        optional BRItem item = 3;
+}
+
+message C2S_BRCollectionDel {
+        optional ProtocolType type = 1 [default = C_2_S_BR_COLLECTION_DEL];
+        optional int32 id = 2;
+}
+message S2C_BRCollectionDel {
+        optional ProtocolType type = 1 [default = S_2_C_BR_COLLECTION_DEL];
+        optional int32 ret = 2;
+        optional int32 id = 3;
+}

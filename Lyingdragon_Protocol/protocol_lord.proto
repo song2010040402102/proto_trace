@@ -1,0 +1,90 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message LordInfo {
+    optional int64 role_id = 1;
+    optional string name = 2;
+    optional int32 lvl = 3;
+    optional int32 img_type = 4;
+    optional int32 img_id = 5;
+    optional int32 tax = 6;
+    optional int32 total_tax = 7;
+    optional int32 power = 8;
+}
+
+message C2S_LordInfo {
+        optional ProtocolType type = 1 [default = C_2_S_LORD_INFO];
+        optional int64 role_id = 2;//0=myself
+}
+
+message S2C_LordInfo {
+        optional ProtocolType type = 1 [default = S_2_C_LORD_INFO];
+        optional int64 role_id = 2;
+        optional LordInfo lord = 3;
+        repeated LordInfo vassvals = 4;
+        optional string left_message = 5;
+}
+
+message C2S_LordUpdateLeftMessage {
+        optional ProtocolType type = 1 [default = C_2_S_LORD_UPDATE_LEFT_MESSAGE];
+        optional string left_message = 2;
+}
+
+message S2C_LordUpdateLeftMessage {
+        optional ProtocolType type = 1 [default = S_2_C_LORD_UPDATE_LEFT_MESSAGE];
+        optional string left_message = 2;
+}
+
+message C2S_LordAbandon {
+        optional ProtocolType type = 1 [default = C_2_S_LORD_ABANDON];
+        optional int64 id = 2;
+}
+
+message S2C_LordAbandon {
+        optional ProtocolType type = 1 [default = S_2_C_LORD_ABANDON];
+        optional int64 id = 2;
+        optional int64 lord_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_LordRevolt {
+        optional ProtocolType type = 1 [default = C_2_S_LORD_REVOLT];
+}
+
+message S2C_LordRevolt {
+        optional ProtocolType type = 1 [default = S_2_C_LORD_REVOLT];
+        optional int32 result = 2;
+        optional int64 report_id = 3;
+}
+
+message C2S_LordConque {
+        optional ProtocolType type = 1 [default = C_2_S_LORD_CONQUE];
+        optional int64 id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_LordConque {
+        optional ProtocolType type = 1 [default = S_2_C_LORD_CONQUE];
+}
+
+message C2S_LordDrawTax {
+        optional ProtocolType type = 1 [ default = C_2_S_LORD_DRAW_TAX ];
+        optional int64 id = 2;
+}
+
+message S2C_LordDrawTax {
+        optional ProtocolType type = 1 [ default = S_2_C_LORD_DRAW_TAX ];
+        optional int64 id = 2;
+}
+
+message S2C_LordConqueNotify {
+        optional ProtocolType type = 1 [default = S_2_C_LORD_CONQUE_NOTIFY];
+        optional int32 ret = 2;
+        optional int64 report_id = 3;
+        optional int64 atk_id = 4;
+        optional int64 target_id = 5;
+        optional int64 battle_id = 6;
+        optional int32 army_id = 7;
+        repeated RewardType rwds = 8;
+}

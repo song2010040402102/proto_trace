@@ -1,0 +1,118 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <script type="text/javascript">
+        function get_req(url, callback) {
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.open('GET', url, true);
+            httpRequest.send(null);
+            httpRequest.onreadystatechange = function () {
+                callback(httpRequest.readyState, httpRequest.status, httpRequest.responseText);
+            };
+        }
+    </script>
+</head>
+
+<body>
+    <div id="proto_trace">
+        <el-table :data="tableData.filter(data => !search || data.loginname.toLowerCase().includes(search.toLowerCase()) || data.msg.toLowerCase().includes(search.toLowerCase()))" :height="document.documentElement.clientHeight*0.9">
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <span> {{ props.row.msg }} </span>
+                <span> {{ props.row.detail }} </span>
+              </template>
+            </el-table-column>
+            <el-table-column sortable label="time" prop="ts" width="300px" align="center">
+            </el-table-column>
+            <el-table-column label="loginname" prop="loginname" width="300px" align="center">
+            </el-table-column>
+            <el-table-column label="send/recv" prop="dir" width="150px" align="center"
+                :filters="[{text: 'send', value: 'send' }, {text: 'recv', value: 'recv'}]"
+                :filter-method="filter_tag" filter-placement="bottom-end">
+            </el-table-column>
+            <el-table-column label="id" prop="id" width="150px" align="center">
+            </el-table-column>
+            <el-table-column label="message" prop="msg" width="400px" align="center">
+            </el-table-column>
+            <el-table-column label="" prop="detail" show-overflow-tooltip="true" align="left">
+                <template slot="header" slot-scope="scope">
+                    <el-input v-model="search" size="mini" placeholder="Please input loginname or message to search" clearable></el-input>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div style="margin-top: 20px">
+            <el-button type="primary" @click="do_switch" round>{{ state }}</el-button>
+            <el-button type="primary" @click="do_clear" round>clear</el-button>
+            <el-tag style="margin-left: 10px">{{ tableData.length }}</el-tag>
+            <el-tag style="margin-left: 10px">{{ lastMsg }}</el-tag>
+        </div>
+    </div>
+    <script>
+        var g_protoTrace = new Vue({el:'#proto_trace',
+            data:{
+                tableData: [],
+                search: '',
+                lastMsg: 'None',
+                state: "start",
+                timer: null
+            },
+            methods: {
+                do_switch() {
+                    if (this.state == "start") {
+                        this.get_log();
+                        this.state = "stop";
+                    } else {
+                        clearInterval(this.timer);
+                        this.state = "start";
+                    }
+                },
+                do_clear() {
+                    this.$confirm('clear all?', 'Notice', {
+                      confirmButtonText: 'Ok',
+                      cancelButtonText: 'Cancel',
+                      type: 'warning'
+                    }).then(() => {
+                        this.tableData = [];
+                        this.lastMsg = 'None';
+                    }).catch(() => {
+
+                    });
+                },
+                get_log() {
+                    var obj = this;
+                    var max = 2000;
+                    this.timer = setInterval(function(){
+                        get_req("log", function(state, code, res) {
+                            if (state == 4 && code == 200) {
+                                var logs = JSON.parse(res);
+                                for (var i = 0; i < logs.length; i++) {
+                                    console.log(logs[i]);
+                                }
+                                if (logs.length >= max) {
+                                    obj.tableData = logs.slice(logs.length-max);
+                                } else {
+                                    if (obj.tableData.length + logs.length > max) {
+                                        obj.tableData = obj.tableData.slice(obj.tableData.length+logs.length-max);
+                                    }
+                                    for (var i = 0; i < logs.length; i++) {
+                                        obj.tableData.push(logs[i]);
+                                    }
+                                }
+                                if (obj.tableData.length > 0) {
+                                    obj.lastMsg = obj.tableData[obj.tableData.length-1].msg;
+                                }
+                            }
+                        });
+                    }, 500);
+                },
+                filter_tag(value, row) {
+                    return row.dir === value;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

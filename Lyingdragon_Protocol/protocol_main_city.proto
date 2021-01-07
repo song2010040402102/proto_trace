@@ -1,0 +1,216 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_MainCityBuildingList {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_BUILDING_LIST];
+        optional int64 role_id = 2;
+}
+
+message S2C_MainCityBuildingList {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_BUILDING_LIST];
+        message Building {
+                optional int32 id = 1;
+                optional int32 level = 2;
+                optional int32 cd_time = 3;
+                optional bool is_building = 4;
+                optional int32 general_id = 5;
+                optional int32 pos_x = 6;
+                optional int32 pos_y = 7;
+                optional int32 index = 8;
+        }
+        repeated Building buildings = 2;
+        optional int64 role_id = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_MainCityWallInfo {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_WALL_INFO];
+        optional int64 role_id = 2;
+}
+
+message S2C_MainCityWallInfo {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_WALL_INFO];
+        optional int32 ret = 2;
+        optional int64 role_id = 3;
+        message Wall {
+            optional int32 last_recover_time = 1 ;
+            optional int32 last_repair_time = 2 ;
+            optional int32 repair_num = 3 ;
+            optional int32 npc_defeat_time = 4 ;
+            optional int32 cur_hp = 5 ;
+        }
+        optional Wall wall = 4;
+}
+
+message S2C_MainCityBuildingUpdateLevel {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_BUILDING_UPDATE_LVL];
+        message BuildingItem {
+            optional int32 id = 1;
+            optional int32 lvl = 2;
+        }
+        repeated BuildingItem items = 2;
+}
+
+message C2S_MainCityBuildingLevelUp {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_BUILDING_LEVEL_UP];
+        optional int32 id = 2;
+        optional int32 general_id = 3;
+        optional bool use_pos = 4;
+        optional int32 pos_x = 5;
+        optional int32 pos_y = 6;
+}
+
+message S2C_MainCityBuildingLevelUp {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_BUILDING_LEVEL_UP];
+        optional int32 id = 2;
+        optional int32 cd_time = 3;
+        optional int32 general_id = 4;
+        optional int32 ret = 5; //0 suc, 1 not exist id, 2 max lvl, 3 in building, 4 xml error, 5 cost not enough, 6 general id err
+        optional bool use_pos = 6;
+        optional int32 pos_x = 7;
+        optional int32 pos_y = 8;
+}
+
+message C2S_MainCityBuildingFinishNow {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_BUILDING_FINISH_NOW];
+        repeated int32 ids = 2;
+}
+
+message S2C_MainCityBuildingFinishNow {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_BUILDING_FINISH_NOW];
+        message Build {
+            optional int32 id = 1;
+            optional int32 level = 2;
+        }
+        repeated Build builds= 2;
+}
+
+message C2S_MainCityFarmInfo {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_FARM_INFO];
+        optional int32 resource_type = 2;
+}
+
+message ResourceInfo {
+    optional int32 resource_type = 1;
+    optional int32 collect_time = 2;
+    optional int32 num = 3;
+}
+
+message S2C_MainCityFarmInfo {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_FARM_INFO];
+        repeated ResourceInfo info = 2;
+}
+
+message C2S_MainCityFarmCollect {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_FARM_COLLECT];
+        optional int32 resource_type = 2;
+}
+
+message S2C_MainCityFarmCollect {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_FARM_COLLECT];
+        optional int32 ret = 2;
+        repeated ResourceInfo info = 3;
+}
+
+message C2S_MainCityEventLoad {
+        optional ProtocolType type = 1[default = C_2_S_MAIN_CITY_EVENT_LOAD];
+}
+
+message S2C_MainCityEventNotify {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_EVENT_NOTIFY];
+        message Event {
+            optional int32 id = 1;
+            optional int32 select_time = 2;
+        }
+        repeated Event events = 2;
+}
+
+message C2S_MainCityEventSelect {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_EVENT_SELECT];
+        optional int32 id = 2;
+        optional int32 index = 3;
+}
+
+message S2C_MainCityEventSelect {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_EVENT_SELECT];
+        optional int32 id = 2;
+        optional int32 index = 3;
+        optional int32 select_time = 4;
+        repeated RewardType rwds = 5;
+}
+
+message C2S_MainCityBuildingNew {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_BUILDING_NEW];
+        optional int32 id = 2;
+        optional int32 pos_x = 3;
+        optional int32 pos_y = 4;
+}
+
+message S2C_MainCityBuildingNew {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_BUILDING_NEW];
+        optional int32 id = 2;
+        optional int32 index = 3;
+        optional int32 pos_x = 4;
+        optional int32 pos_y = 5;
+        optional int32 ret = 6;
+}
+
+message C2S_MainCityBuildingMove {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_BUILDING_MOVE];
+        optional int32 id = 2;
+        optional int32 index = 3;
+        optional int32 new_pos_x = 4;
+        optional int32 new_pos_y = 5;
+}
+
+message S2C_MainCityBuildingMove {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_BUILDING_MOVE];
+        optional int32 id = 2;
+        optional int32 index = 3;
+        optional int32 new_pos_x = 4;
+        optional int32 new_pos_y = 5;
+        optional int32 ret = 6;
+}
+
+message C2S_MainCityBuildingRecycle {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_BUILDING_RECYCLE];
+        optional int32 id = 2;
+        repeated int32 index = 3;
+}
+
+message S2C_MainCityBuildingRecycle {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_BUILDING_RECYCLE];
+        optional int32 id = 2;
+        repeated int32 index = 3;
+        repeated RewardType rewards = 4;
+        optional int32 ret = 5;
+}
+
+message C2S_MainCityBuildingImmediateFinish {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_BUILDING_IMMEDIATE_FINISH];
+        optional int32 id = 2;
+        optional int32 general_id = 3;
+}
+
+message S2C_MainCityBuildingImmediateFinish {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_BUILDING_IMMEDIATE_FINISH];
+        optional int32 id = 2;
+        optional int32 general_id = 3;
+        optional int32 ret = 4;
+        message Build {
+            optional int32 id = 1;
+            optional int32 level = 2;
+        }
+        optional Build build= 5;
+}
+
+message C2S_MainCityRepairWall {
+        optional ProtocolType type = 1 [default = C_2_S_MAIN_CITY_REPAIR_WALL];
+}
+
+message S2C_MainCityRepairWall {
+        optional ProtocolType type = 1 [default = S_2_C_MAIN_CITY_REPAIR_WALL];
+        optional int32 ret = 2;
+        optional int32 wall_hp = 3;
+}

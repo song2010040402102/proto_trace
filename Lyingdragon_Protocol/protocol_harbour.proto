@@ -1,0 +1,173 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_HarbourSeaIntensify {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_SEA_INTENSIFY];
+        optional int32 general_id = 2;
+}
+
+message S2C_HarbourSeaIntensify {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_SEA_INTENSIFY];
+        optional int32 ret = 2;
+        optional int32 general_id = 3;
+}
+
+message C2S_HarbourRoleInfo {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_ROLE_INFO];
+}
+
+message S2C_HarbourRoleInfo {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_ROLE_INFO];
+        optional int32 harbour_id = 2;
+        optional int32 to_harbour_id = 3;
+        optional int32 rob_num = 4;
+        optional int32 be_rob_num = 5;
+        optional int32 sail_time = 6;
+
+        message BuyTimes {
+                optional int32 item_id = 1;
+                optional int32 times = 2;
+        }
+        repeated BuyTimes buy = 7;
+
+        message TechInfo {
+                optional int32 id = 1;
+                optional int32 lvl = 2;
+                optional int32 upgrade_time = 3;
+        }
+        repeated TechInfo techs = 8;
+
+        message CommodityInfo {
+                optional int32 item_id = 1;
+                optional int32 num = 2;
+        }
+        repeated CommodityInfo commodities = 9;
+        optional int32 wave_id = 10; //pirate wave
+        optional int32 left_soldier_num = 11;
+}
+
+message C2S_HarbourTechUpgrade {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_TECH_UPGRADE];
+        optional int32 tech_id = 2;
+}
+
+message S2C_HarbourTechUpgrade {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_TECH_UPGRADE];
+        optional int32 tech_id = 2;
+        optional int32 upgrade_time = 3;
+}
+
+message C2S_HarbourSail {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_SAIL];
+        optional int32 to_id = 2;
+}
+
+message S2C_HarbourSail {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_SAIL];
+        optional int32 to_id = 2;
+        optional int32 sail_time = 3;
+}
+
+message C2S_HarbourCaravanInfo {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_CARAVAN_INFO];
+}
+
+message CaravanInfo {
+        optional int64 role_id = 1;
+        optional string role_name = 2;
+        optional int32 level = 3;
+        optional int32 country_id = 4;
+        optional int32 crop_id = 5;
+        optional string crop_name = 6;
+        optional int32 cur_capacity = 7;
+        optional int32 sum_capacity = 8;
+        optional int32 from_id = 9;
+        optional int32 to_id = 10;
+        optional int32 sail_time = 11;
+}
+message S2C_HarbourCaravanInfo {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_CARAVAN_INFO];
+        repeated CaravanInfo caravans = 2;
+}
+
+message C2S_HarbourRob {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_ROB];
+        optional int64 role_id = 2;
+}
+
+message S2C_HarbourRob {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_ROB];
+        optional int32 ret = 2; // 1 be rob limit, 2 not in sail
+        optional bool is_win = 3;
+        optional int64 report_id = 4;
+        optional int32 silver = 5;
+        optional int32 gold = 6;
+}
+
+message C2S_HarbourInfo {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_INFO];
+}
+
+message CommodityInfo {
+        optional int32 item_id = 1;
+        optional int32 left_num = 2; // -1 mean not limit
+        optional int32 sell_price = 3;
+        optional int32 buy_price = 4;
+}
+message HarbourItem {
+        optional int32 harbour_id = 1;
+        repeated CommodityInfo info = 2;
+}
+message S2C_HarbourInfo {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_INFO];
+        optional int32 notify = 2; //0 all, 1 one
+        repeated HarbourItem items = 3;
+}
+
+message CommodityItem {
+        optional int32 item_id = 1;
+        optional int32 num = 2;
+}
+
+message C2S_HarbourExchange {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_EXCHANGE];
+        optional int32 exchange_type = 2; // 1 buy, 2 sell
+        repeated CommodityItem items = 3;
+}
+
+message S2C_HarbourExchange {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_EXCHANGE];
+        optional int32 exchange_type = 2;
+        repeated CommodityItem items = 3;
+}
+
+message C2S_HarbourPirate {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_PIRATE];
+        optional bool is_all = 2;
+}
+
+message S2C_HarbourPirate {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_PIRATE];
+        message ReportItem {
+                optional bool is_win = 1;
+                optional int32 wave_id = 2;
+                optional int64 report_id = 3;
+        }
+        repeated ReportItem reports = 2;
+        optional int32 left_soldier_num = 3;
+}
+
+message C2S_HarbourTechChange {
+        optional ProtocolType type = 1 [default = C_2_S_HARBOUR_TECH_CHANGE];
+        optional int32 tech_id = 2;
+        optional int32 state = 3; // 1 levelup, 2 cancel
+}
+
+message S2C_HarbourTechChange {
+        optional ProtocolType type = 1 [default = S_2_C_HARBOUR_TECH_CHANGE];
+        optional int32 ret = 2;
+        optional int32 tech_id = 3;
+        optional int32 state = 4;
+        optional int32 lvl = 5;
+}

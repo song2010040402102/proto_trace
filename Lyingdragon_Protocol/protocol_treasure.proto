@@ -1,0 +1,27 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_TreasureLoad {
+    optional ProtocolType type = 1[default = C_2_S_TREASURE_LOAD];
+}
+
+message S2C_TreasureLoad {
+    optional ProtocolType type = 1[default = S_2_C_TREASURE_LOAD];
+    optional int32 token_num = 2;
+    optional int32 total_appraisal_times = 3;
+}
+
+message C2S_TreasureAppraisal {
+    optional ProtocolType type = 1[default = C_2_S_TREASURE_APPRAISAL];
+    optional int32  is_ten = 2;
+}
+
+message S2C_TreasureAppraisal {
+    optional ProtocolType type = 1[default = S_2_C_TREASURE_APPRAISAL];
+    optional int32 token_num = 2;
+    optional int32 total_appraisal_times = 3;
+    repeated RewardType rwds = 4;
+}
+
+

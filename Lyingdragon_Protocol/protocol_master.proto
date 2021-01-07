@@ -1,0 +1,84 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message MasterSkillInfo {
+        optional int32 id = 1;
+        optional int32 point = 2;
+}
+
+message C2S_LoadMasterInfo {
+        optional ProtocolType type = 1 [default = C_2_S_MASTER_LOAD_INFO];
+}
+
+message S2C_LoadMasterInfo {
+        optional ProtocolType type = 1 [default = S_2_C_MASTER_LOAD_INFO]; 
+        repeated int32 extra_points = 2;
+        repeated MasterSkillInfo skills = 3;
+}
+
+message C2S_AllocMasterSkill {
+        optional ProtocolType type = 1 [default = C_2_S_MASTER_ALLOC_SKILL];
+        optional int32 id = 2;
+}
+
+message S2C_AllocMasterSkill {
+        optional ProtocolType type = 1 [default = S_2_C_MASTER_ALLOC_SKILL];
+        optional int32 skill_type = 2;
+        optional int32 id = 3;
+        optional int32 point = 4;
+        optional int32 extra_point = 5;
+}
+
+message C2S_ResetMasterSkill {
+        optional ProtocolType type = 1 [default = C_2_S_MASTER_RESET_SKILL];
+        optional int32 skill_type = 2;
+}
+
+message S2C_ResetMasterSkill {
+        optional ProtocolType type = 1 [default = S_2_C_MASTER_RESET_SKILL];
+        optional int32 skill_type = 2;
+        optional int32 extra_point = 3;
+        repeated MasterSkillInfo skills = 4;
+}
+
+message C2S_LoadMasterExp {
+        optional ProtocolType type = 1 [default = C_2_S_MASTER_LOAD_EXP];
+}
+
+message S2C_LoadMasterExp {
+        optional ProtocolType type = 1 [default = S_2_C_MASTER_LOAD_EXP];
+        optional int32 lvl = 2;
+        optional int32 exp = 3;
+}
+
+message C2S_SetMasterHeadPortrait {
+        optional ProtocolType type = 1 [default = C_2_S_MASTER_SET_HEAD_PORTRAIT];
+        optional int32 img_type = 2;
+        optional int32 img_id = 3;
+}
+
+message C2S_MasterTitleInfo {
+        optional ProtocolType type = 1 [default = C_2_S_MASTER_TITLE_INFO];
+}
+
+message S2C_MasterTitleInfo {
+        optional ProtocolType type = 1 [default = S_2_C_MASTER_TITLE_INFO];
+        optional int32 select = 2;
+        optional int32 officer = 3;
+        optional int32 athletic_rank = 4;
+}
+
+message C2S_MasterTitleSelect {
+        optional ProtocolType type = 1 [default = C_2_S_MASTER_TITLE_SELECT];
+        optional int32 title = 2;
+}
+
+message C2S_SendBuyMiliToryOrderTimes {
+        optional ProtocolType type = 1 [default = C_2_S_MASTER_SEND_BUY_MILITORY_ORDER_TIMES];
+}
+
+message S2C_SendBuyMilitoryOrderTimes {
+        optional ProtocolType type = 1 [default = S_2_C_MASTER_SEND_BUY_MILITORY_ORDER_TIMES];
+        optional int32 times = 2;
+}

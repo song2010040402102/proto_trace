@@ -1,0 +1,156 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_NationBattleEmpireInfo {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_POWER_LOG];
+}
+
+message S2C_NationBattlePowerLog {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_POWER_LOG];
+        message Log {
+                optional int32 crop_id = 1;
+                optional int32 power_id = 2;
+                optional int32 time = 3;
+                optional int32 year = 4;
+                optional int32 season = 5;
+        }
+        repeated Log logs = 2;
+}
+
+message S2C_NationBattleResultNotify {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_RESULT_NOTIFY];
+        message ArmyState {
+            optional int32 army_id = 1;
+            optional int32 state = 2;
+            optional int32 dead_cd = 4;
+        }
+        optional int32 city_id = 2;
+        optional int32 is_win = 3;
+        optional int32 crop_id = 4;
+        repeated ArmyState states = 5;
+}
+
+message S2C_NationBattleBattleStartTime {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_BATTLE_START_TIME];
+        optional int32 time = 2;
+}
+
+message C2S_NationBattlePowerInfo {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_POWER_INFO];
+}
+
+message S2C_NationBattlePowerInfo {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_POWER_INFO];
+        optional int32 power_id = 2;
+        repeated int32 draw_ids = 3;
+        optional int32 empire_reward = 4;
+        repeated int32 power_ids = 5;
+}
+
+message C2S_NationBattlePowerActionDraw {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_POWER_ACTION_DRAW];
+        optional int32 id = 2;
+}
+
+message S2C_NationBattlePowerActionDraw {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_POWER_ACTION_DRAW];
+        optional int32 ret = 2;
+        optional int32 id = 3;
+}
+
+message C2S_NationBattleCityExpel {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_CITY_EXPEL];
+        optional int32 city_id = 2;
+        optional int64 role_id = 3;
+}
+
+message S2C_NationBattleCityExpel {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_CITY_EXPEL];
+        optional int32 city_id = 2;
+        optional int64 role_id = 3;
+}
+
+message DraftInfo {
+        optional int32 general_id = 1;
+        optional int32 num = 2;
+}
+message C2S_NationBattleDraftSoldier {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_DRAFT_SOLDIER];
+        optional int32 army_id = 2;
+        repeated DraftInfo generals = 3;
+}
+
+message S2C_NationBattleDraftSoldier {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_DRAFT_SOLDIER];
+        optional int32 army_id = 2;
+        repeated DraftInfo generals = 3;
+        optional int32 ret = 4;
+}
+
+message C2S_NationBattleEmpireReward {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_EMPIRE_REWARD];
+}
+
+message S2C_NationBattleEmpireReward {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_EMPIRE_REWARD];
+        optional int32 ret = 2;
+}
+
+message C2S_NationBattleSupplySoldierSet {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_SUPPLY_SOLDIER_SET];
+        optional bool is_supply_soldier = 2;
+}
+
+message S2C_NationBattleSupplySoldierSet {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_SUPPLY_SOLDIER_SET];
+        optional bool is_supply_soldier = 2;
+}
+
+message S2C_NationBattleArriveNotify {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_ARRIVE_NOTIFY];
+        message ArmyInfo {
+            optional int64 role_id = 1;
+            optional string name  = 2;
+            optional int32 army_id = 3;
+            optional bool is_attack = 4;
+            optional int32 main_general = 5;
+            optional int32 city_id = 6;
+            optional int32 crop_id = 7;
+            optional int32 state = 8;
+        }
+        repeated ArmyInfo infos = 2;
+}
+
+message S2C_NationBattleDismissArmy {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_DISMISS_ARMY];
+        optional int64 role_id = 2;
+        optional int32 army_id = 3;
+}
+
+message S2C_NationBattleCityOccupied {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_CITY_OCCUPIED];
+        optional int32 old_city = 2;
+        optional int32 new_city = 3;
+}
+
+message C2S_NationBattleAbandonCity {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_ABANDON_CITY];
+        optional int32 city_id = 2;
+}
+
+message S2C_NationBattleAbandonCity {
+        optional ProtocolType type = 1 [default = S_2_C_NATION_BATTLE_ABANDON_CITY];
+        optional int32 city_id = 2;
+        optional int32 crop_id = 3;
+}
+
+message C2S_NationBattleDrawOccupyCity {
+        optional ProtocolType type = 1 [default = C_2_S_NATION_BATTLE_DRAW_OCCUPY_CITY];
+        optional int32 city_id = 2;
+}
+
+message S2C_NationBattleDrawOccupyCity {
+        optional ProtocolType type = 1 [default = S_C_2_NATION_BATTLE_DRAW_OCCUPY_CITY];
+        optional int32 city_id = 2;
+}

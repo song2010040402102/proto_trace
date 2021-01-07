@@ -1,0 +1,78 @@
+import "protocol_base.proto";
+
+package Lyingdragon.Protocol;
+
+message C2S_HuntLoad {
+        optional ProtocolType type = 1 [default = C_2_S_HUNT_LOAD];
+}
+
+message S2C_HuntLoad {
+        optional ProtocolType type = 1 [default = S_2_C_HUNT_LOAD];
+        optional int32 hunt_num = 2;
+}
+
+message C2S_HuntStart {
+        optional ProtocolType type = 1 [default = C_2_S_HUNT_START];
+}
+
+message S2C_HuntStart {
+        optional ProtocolType type = 1 [default = S_2_C_HUNT_START];
+        message Animals {
+            optional int32 animal_id = 1;
+            optional int32 num = 2;
+        }
+        repeated Animals animals = 2;
+        optional int32 hunt_num = 3;
+}
+
+message C2S_HuntKill {
+        optional ProtocolType type = 1 [default = C_2_S_HUNT_KILL];
+        optional int32 animal_id = 2;
+}
+
+message S2C_HuntKill {
+        optional ProtocolType type = 1 [default = S_2_C_HUNT_KILL];
+        repeated RewardType rwds = 2;
+        optional int32 lose_money = 3;
+}
+
+message C2S_HuntEscape {
+        optional ProtocolType type = 1 [default = C_2_S_HUNT_ESCAPE];
+        optional int32 animal_id = 2;
+}
+
+message S2C_HuntEscape {
+        optional ProtocolType type = 1 [default = S_2_C_HUNT_ESCAPE];
+        optional int32 dec_num = 2;
+}
+
+message C2S_HuntFinish {
+        optional ProtocolType type = 1 [default = C_2_S_HUNT_FINISH];
+        optional int32 times = 2;
+}
+
+message S2C_HuntFinish {
+        optional ProtocolType type = 1 [default = S_2_C_HUNT_FINISH];
+        optional int32 times = 2;
+        repeated RewardType rwds = 3;
+        optional int32 hunt_num = 4;
+        optional int32 lose_money = 5;
+}
+
+message C2S_HuntEnd {
+        optional ProtocolType type = 1 [default = C_2_S_HUNT_END];
+}
+
+message S2C_HuntEnd {
+        optional ProtocolType type = 1 [default = S_2_C_HUNT_END];
+}
+
+message C2S_HuntHitRate {
+        optional ProtocolType type =  1 [default = C_2_S_HUNT_HIT_RATE];
+        optional int32 hit_num = 2;
+        optional int32 total_num = 3;
+}
+
+message S2C_HuntHitRate {
+        optional ProtocolType type = 1 [default = S_2_C_HUNT_HIT_RATE];
+}
